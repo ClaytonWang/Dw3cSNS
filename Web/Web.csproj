@@ -152,8 +152,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="RouteDebugger">
-      <HintPath>..\packages\routedebugger.2.1.4.0\lib\net40\RouteDebugger.dll</HintPath>
+    <Reference Include="RouteDebugger, Version=2.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\routedebugger.2.1.5\lib\net40\RouteDebugger.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Spacebuilder.Identifier, Version=4.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
