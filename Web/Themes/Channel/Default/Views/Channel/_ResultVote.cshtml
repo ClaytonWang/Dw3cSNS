@@ -1,0 +1,163 @@
+﻿@{  
+    VoteThread voteThread = ViewData.Get<VoteThread>("VoteThread", null);
+    IEnumerable<VoteOption> voteOptions = ViewData.Get<IEnumerable<VoteOption>>("VoteOptions", null);
+    IEnumerable<VoteRecord> voteRecords = ViewData.Get<IEnumerable<VoteRecord>>("VoteRecords", null);
+    bool isHasVoted = ViewData.Get<bool>("IsHasVoted", false);
+    int i = 0;
+    if (voteThread.MemberCount == 0) { voteThread.MemberCount = 1; }
+    int voteCount = voteRecords.Count() == 0 ? 1 : voteRecords.Count();
+}
+
+<!--投票介绍使用详情页面的样式-->
+@if (voteThread.VoteType)
+{
+    <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-cont spb-vote-result">
+        <div class="tn-box-content tn-widget-content tn-corner-bottom">
+            <div class="tn-main-heading tn-border-gray tn-border-bottom">
+                <h2>投票选项<em>最多选 @voteThread.OptionType 项</em></h2>
+            </div>
+            <div class="spb-vote-text">
+                @foreach (var item in voteOptions)
+                {
+                    <div class="spb-vote-item tn-border-gray tn-helper-clearfix">
+                        <div class="tn-text">
+                            @if (item.LinkPath!="none") { <a href="@item.LinkPath">@item.OptionName</a> }
+                           else{<p>@item.OptionName</p>}
+                        </div>
+                        <div class="tn-count">
+                            @{ i = item.VoteCount * 100 / voteCount;
+                                <text> @i %</text>
+                            }
+                        </div>
+                        <div class="spb-vote-progress tn-bg-gray">
+                            <div class="spb-vote-progress-bar tn-bg-deep" style="width: @i%"></div>
+                        </div>
+                    </div>
+                }
+                @* <div class="spb-vote-item tn-border-gray tn-helper-clearfix">
+                    <div class="tn-text">文本文本文本文本文本文本文本文本文本文本文本文本文本文本</div>
+                    <div class="tn-count">30%</div>
+                    <div class="spb-vote-progress tn-bg-gray">
+                        <div class="spb-vote-progress-bar tn-bg-deep" style="width: 30%"></div>
+                    </div>
+                </div>
+                <div class="spb-vote-item tn-border-gray tn-helper-clearfix">
+                    <div class="tn-text">文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本</div>
+                    <div class="tn-count">20%</div>
+                    <div class="spb-vote-progress tn-bg-gray">
+                        <div class="spb-vote-progress-bar tn-bg-deep" style="width: 20%"></div>
+                    </div>
+                </div>*@
+            </div>
+            <div class="spb-vote-hint">
+                @* <div class="tn-cue-highlight tn-corner-all tn-message-box">
+                    <p>此投票包含隐藏内容，投票可见</p>
+                </div>*@
+                @if (voteThread.HiddenText != "")
+                {
+                    <div class="tn-cue-tips tn-corner-all tn-message-box tn-border-gray tn-bg-gray">
+                        <p>@Html.Raw(voteThread.HiddenText)</p>
+                    </div>
+                }
+            </div>
+            @if (!voteThread.VoteResult && !isHasVoted)
+            {
+                <ul class="tn-checkbox-list">
+                    <li class="tn-inline-list">
+                        <label for="label"><a href="#" name="vote">进行投票</a></label>
+                    </li>
+                </ul>
+            }
+            <div class="spb-vote-feedback tn-helper-clearfix">
+                @*  <button class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-primary"><span class="tn-button-text">投票</span></button>*@
+                <button type="submit" class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-disabled"><span class="tn-button-text">已投票</span></button>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-cont spb-vote-result">
+        <div class="tn-box-content tn-widget-content tn-corner-bottom">
+            <div class="tn-main-heading tn-border-gray tn-border-bottom">
+                <h2>投票选项<em>最多选 @voteThread.OptionType 项</em></h2>
+            </div>
+            <div class="spb-vote-text spb-vote-photo">
+                @foreach (var item in voteOptions)
+                {
+                    <div class="spb-vote-photo-item tn-helper-clearfix">
+                        <div class="tn-img tn-border-gray">
+                            <a href="@item.LinkPath">
+                                <img src="@item.FeaturedImage" width="80px"  height="80px"/></a>
+                        </div>
+                        <div class="spb-vote-item tn-border-gray tn-helper-clearfix">
+                            <div class="tn-text">
+                                @if (item.LinkPath!="none") { <a href="@item.LinkPath">@item.OptionName</a> }
+                           else{<p>@item.OptionName</p>}
+
+                            </div>
+                            <div class="tn-count">
+                                @{ 
+                    i = (item.VoteCount * 100 / voteCount);                                  
+                                    <text> @i %</text>
+                                }
+                            </div>
+                            <div class="spb-vote-progress tn-bg-gray">
+                                <div class="spb-vote-progress-bar tn-bg-deep" style="width:@i%"></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @*<div class="spb-vote-photo-item tn-helper-clearfix">
+                    <div class="tn-img tn-border-gray"><a href="#">
+                        <img src="http://ww4.sinaimg.cn/square/683f54d6jw1euh0ulbjvjj20hs0dcgnd.jpg" /></a></div>
+                    <div class="spb-vote-item tn-border-gray tn-helper-clearfix">
+                        <div class="tn-text">文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本</div>
+                        <div class="tn-count">20%</div>
+                        <div class="spb-vote-progress tn-bg-gray">
+                            <div class="spb-vote-progress-bar tn-bg-deep" style="width: 20%"></div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="spb-vote-photo-item tn-helper-clearfix">
+                    <div class="tn-img tn-border-gray"><a href="#">
+                        <img src="http://ww4.sinaimg.cn/square/683f54d6jw1euh0ulbjvjj20hs0dcgnd.jpg" /></a></div>
+                    <div class="spb-vote-item tn-border-gray tn-helper-clearfix">
+                        <div class="tn-text">文本文本文本文本文本文本文本文本文本文本文本文本文本文本</div>
+                        <div class="tn-count">30%</div>
+                        <div class="spb-vote-progress tn-bg-gray">
+                            <div class="spb-vote-progress-bar tn-bg-deep" style="width: 30%"></div>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+            <div class="spb-vote-hint">
+                @*   <div class="tn-cue-highlight tn-corner-all tn-message-box">
+                    <p>此投票包含隐藏内容，投票可见</p>
+                </div>*@
+                <div class="tn-cue-tips tn-corner-all tn-message-box tn-border-gray tn-bg-gray">
+                    <p>@Html.Raw(voteThread.HiddenText)</p>
+                </div>
+            </div>
+            @if (!voteThread.VoteResult && !isHasVoted)
+            {
+                <ul class="tn-checkbox-list">
+                    <li class="tn-inline-list">
+                        <label for="label"><a href="#" name="vote">进行投票</a></label>
+                    </li>
+                </ul>
+            }
+            <div class="spb-vote-feedback tn-helper-clearfix">
+                @* <button class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-primary"><span class="tn-button-text">投票</span></button>*@
+                <button type="submit" class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-disabled"><span class="tn-button-text">已投票</span></button>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function () {
+        $("a[name='vote']").click(function () {
+            window.location.reload(true);
+        });
+    });
+</script>

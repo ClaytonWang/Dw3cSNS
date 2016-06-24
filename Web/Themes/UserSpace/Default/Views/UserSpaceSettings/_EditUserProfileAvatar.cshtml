@@ -1,0 +1,55 @@
+﻿@using Spacebuilder.Common.Configuration
+@{
+    ISettingsManager<UserProfileSettings> userProfileSettingsManager = DIContainer.Resolve<ISettingsManager<UserProfileSettings>>();
+    UserProfileSettings userProfileSettings = userProfileSettingsManager.Get();
+    Html.Script("~/Bundle/Scripts/ImageCrop");
+    Html.Style("~/Bundle/Styles/ImageCrop");
+}
+<div class="tn-border-gray tn-corner-all tnc-upload-avatar">
+    <div id="queueImage">
+    </div>
+    @Html.Uploadify("uploadifyAvatar", "jpeg,jpg,png", 5120,
+                                                UploadFileOptions.New()
+                                                .SetMultiple(false)
+                                                .SetPreventCaching(true)
+                                                .SetQueueSizeLimit(1)
+                                                .SetRemoveCompleted(true)
+                                                .SetUploadLimit(100)
+                                                .MergeUploadifyFormData("CurrentUserIdToken", Utility.EncryptTokenForUploadfile(0.1, UserContext.CurrentUser.UserId))
+                                                .SetQueueId("queueImage")
+                                                .MergeUploadifyCallBack("onUploadSuccess", "sucessUploadify")
+                                                .SetUploaderUrl(SiteUrls.Instance()._EditAvatar(Tunynet.Utilities.WebUtility.UrlEncode(Url.SpaceKey()))),
+                                                ButtonOptions.New()
+                                                .SetText("上传"))
+    <div class="tn-text-note tnc-remarks">
+        您可以上传 JPG、PNG（文件大小上限为 5MB），图片尺寸下限为@(userProfileSettings.AvatarHeight)&times;@(userProfileSettings.AvatarWidth)
+        px。
+        @Html.Hidden("x1", 0)
+        @Html.Hidden("y1", 0)
+        @Html.Hidden("w", 0)
+        @Html.Hidden("h", 0)
+    </div>
+</div>
+<div id="_AvatarImageAsyn" class="tnc-avatar-pic tn-helper-clearfix">
+    @Html.Action("_EditAvatarAsyn", new { spaceKey = Url.SpaceKey() })
+</div>
+@Html.ScriptBlock(@<script type="text/javascript">
+                       $.ajaxSetup({ cache: false });
+                       function sucessUploadify(file, data, response) {
+                           var error = $.parseJSON(data).error;
+                           if (error) {
+                               $.dialog.tips(error, 1.5, 0);
+                           }
+                           refreshImage();
+                       }
+
+                       function refreshImage() {
+                           $(".tn-avatar-original").html("<span class=\"tnc-no-avatar tn-text-note\">请选择您要上传的图片</span>");
+                           $(".tn-avatar-big").html(""); $(".tn-avatar-big").css("background-color", "#f3f3f3");
+                           $(".tn-avatar-medium").html(""); $(".tn-avatar-medium").css("background-color", "#f3f3f3");
+                           $(".tn-avatar").html(""); $(".tn-avatar").css("background-color", "#f3f3f3");
+                           $(".tn-avatar-mini").html(""); $(".tn-avatar-mini").css("background-color", "#f3f3f3");
+                           $(".tnc-avatar-btn").hide();
+                           $("#_AvatarImageAsyn").load('@SiteUrls.Instance()._EditAvatarAsyn(Url.SpaceKey())');
+                       }
+</script>)

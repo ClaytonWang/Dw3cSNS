@@ -1,0 +1,119 @@
+﻿@model VoteThread
+
+@{
+    int attachmentLength = ViewData.Get<int>("attachmentLength", 0);
+    string allowedFileExtensions = ViewData.Get<string>("allowedFileExtensions", null);
+    
+    }
+
+@using (Html.BeginHead())
+{
+    @Styles.Render("~/Bundle/Styles/Site")
+    @Html.RenderStyles()
+    @Scripts.Render("~/Bundle/Scripts/jQuery")
+
+}
+<div class="tnc-mode-icon">
+    <a class="tn-icon tn-smallicon-cross" href="javascript:void(0);" onclick="closeTipBlock();"></a>
+</div>
+<h3>
+    投票
+</h3>
+<div class="tnc-mode-ctn">
+    @using (Html.BeginAjaxForm("_Create_vote", "Microblog", FormMethod.Post, new AjaxFormOptions { }))
+    {
+      <p>投票标题</p>
+        <input name="Title" type="text" />
+      <p>投票说明</p>
+        <input name="Body"  type="text" />
+       
+              <input type="button" name="addOption" value="添加" />  
+        <div name="text_change" >
+            <a>文字投票</a>
+            <input type="hidden" value="true" name="VoteType" />
+
+            <span class="tn-icon tn-icon-add" data-name="addNewMember" title="添加成员"></span>
+           `
+        <a id="option_1">1.  <input name="text_options" type="text" value="" /> </a> 
+        <a id="option_2">2.  <input name="text_options" type="text" value="" /> </a> 
+        </div>
+        <div name="image_change" style="display:none">
+            <a>照片投票</a>
+          <input name="image_options_1" type="text" value="" /> 
+
+        </div>
+               
+      <p>单选/多选</p>
+        <select name="OptionType">
+            <option value="1">单选</option>
+            <option value="2">最多选2项</option>
+        </select>
+      <p>结束时间</p>
+       @Html.DateTimePicker("EndDate", new DateTimePicker().SetDateFormat("yyyy-MM-dd").SetMaxDate("10Y").SetMinDate("-10Y"))
+      <p>投票结果</p>
+        <input type="radio" name="VoteResult"  value="true"/><a>仅投票后可见</a> 
+        <input type="radio" name="VoteResult" value="false"/><a>任何人可见</a>
+      <p>隐藏文字</p>
+         <input name="HiddenText" type="text" />
+        
+        <input name="" type="submit" value="提交"/>
+    }
+</div>
+<div class="spb-photo-upload-main">
+                <div id="queueManage" class="spb-photo-upload-row"></div>
+                <div id="queueImages" style="display: none" class="spb-photo-upload-row spb-photo-edit">
+
+                    @*完成上传跳转到照片列表*@
+
+                    <form id="completePhotoForm" action="@*@SiteUrls.Instance().CompleteUpload()*@" method="post">
+                        <div class="spb-photo-edit-list">
+                            <ul id="imgList" class="tn-helper-clearfix">
+                            </ul>
+                        </div>
+                    </form>
+                </div>                
+                <div id="uploadButton" class="spb-photo-upload-row">
+                    <div id="removeWhenSubmit">
+                        @Html.Uploadify("uploadEventPhoto", TenantTypeIds.Instance().Microblog(), allowedFileExtensions, buttonOptions: new ButtonOptions().SetText("选择照片").SetWidth(90),
+                    uploadFileOptions: new UploadFileOptions()
+                  .SetFileObjName("fileData")
+                  .SetUploaderUrl(SiteUrls.Instance()._UploadVotePhoto(TenantTypeIds.Instance().Microblog()))
+                  .MergeUploadifyCallBack("onUploadSuccess", "OnUploadSuccess")
+                  .SetAutoUpload(true)
+                  .SetMultiple(true)
+                  .SetPreventCaching(true)
+                  .SetQueueId("queueManage")
+                  .SetQueueSizeLimit(1)
+                  .SetRemoveCompleted(true)
+                  .MergeUploadifyFormData("CurrentUserIdToken", Utility.EncryptTokenForUploadfile(0.1, UserContext.CurrentUser.UserId))
+                  .MergeUploadifyFormData("resize", true))
+                        <div id="queueManage"></div>
+                    </div>
+                    @Html.LinkButton("完成上传", "", HighlightStyles.Primary, ButtonSizes.Large, htmlAttributes: new { id = "completeUpload", style = "display:none;" })
+                </div>
+                   <img src="~/jinhu_trunk/Uploads/Microblog/00000/2015年/7月17日/3c33ed30459242739b1ac898f9f0c5ab.jpg" />
+            </div>
+
+<script type="text/javascript">
+    $(function () { 
+        $("input[name='addOption']").live("click", function () {
+            //var name = $(this).attr("id").substring(4);<img src="" />
+            var optionNum = 0;
+            var div = $("div[name='text_change']");
+            div.append("<input name='text_options' type='text' value='' /> ");
+            var select = $("select[name='select_1']");
+            var arry1 = select.find('option');
+            arry1.each(function (n) { optionNum = n + 2;});          
+            select.append( " <option value='" + optionNum + "'>最多选" + optionNum + "项</option>");
+       }) 
+    });
+    function OnUploadSuccess(file, data, response) {
+        $.get("@SiteUrls.Instance().", function (data) {
+
+        });
+                           }
+</script>
+
+ @Scripts.Render("~/Bundle/Scripts/Site")
+    @Html.RenderScripts()
+    @Html.RenderScriptBlocks()

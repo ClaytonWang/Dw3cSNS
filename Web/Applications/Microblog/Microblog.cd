@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Spacebuilder.Microblog.MicroblogService">
+    <Position X="5.75" Y="1" Width="2.25" />
+    <Members>
+      <Field Name="microBlogFavoriteRepository" Hidden="true" />
+      <Field Name="microblogRepository" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>wAAAAAAAAAAAABBIAAAAAAAAABEAIEAAAAAAAAAAAgA=</HashCode>
+      <FileName>Services\MicroblogService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Spacebuilder.Microblog.IMicroblogFavoriteRepository" Collapsed="true">
+    <Position X="3.25" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\IMicroblogFavoriteRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Spacebuilder.Microblog.IMicroblogRepository" Collapsed="true">
+    <Position X="3.5" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\IMicroblogRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

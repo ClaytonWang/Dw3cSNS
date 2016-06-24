@@ -1,0 +1,45 @@
+﻿@{
+    int attachmentLength = ViewData.Get<int>("attachmentLength", 0);
+    string allowedFileExtensions = ViewData.Get<string>("allowedFileExtensions", null);
+    int imageId = ViewData.Get<int>("imageId", 0);
+}
+
+<div class="tn-bubble-arrow"><b class="tn-arrow-b1 tn-border-gray"></b><b class="tn-arrow-b2 tn-widget-bubble"></b></div>
+<div class="tn-bubble-content tn-widget-content tn-border-gray tn-corner-all">
+    @Html.Uploadify("uploadEventPhoto", TenantTypeIds.Instance().Microblog(), allowedFileExtensions, buttonOptions: new ButtonOptions().SetText("选择照片"),
+                      uploadFileOptions: new UploadFileOptions()
+                      .SetFileObjName("fileData")
+                      .SetUploaderUrl(SiteUrls.Instance()._UploadVotePhoto(TenantTypeIds.Instance().Microblog()))
+                      .MergeUploadifyCallBack("onUploadSuccess", "OnUploadSuccess")
+                      .SetAutoUpload(true)
+                      .SetMultiple(true)
+                      .SetPreventCaching(true)
+                      .SetQueueId("queueManage")
+                      .SetQueueSizeLimit(1)
+                      .SetRemoveCompleted(true)
+                      .MergeUploadifyFormData("CurrentUserIdToken", Utility.EncryptTokenForUploadfile(0.1, UserContext.CurrentUser.UserId))
+                      .MergeUploadifyFormData("resize", true))   
+    <div class="tb-edit-btn">
+        <button class="tn-button tn-corner-all tn-button-text-only tn-button-default" type="button" onclick="blankImage()"><span class="tn-button-text">删除</span></button>
+        <button class="tn-button tn-corner-all tn-button-text-only tn-button-default" type="button" onclick="goback()"><span class="tn-button-text">取消</span></button>
+    </div>
+</div>
+ @Html.ScriptBlock(@<script type="text/javascript">
+                       function OnUploadSuccess(file, data, response) {                         
+                           $("div[id='voteOption_" + @imageId + "']").find("a:first").html("<img src=" + data + " />");
+                           $("div[id='voteOption_" + @imageId + "']").find("input[name='voteOptionImage']").attr("value", data);
+                           $("div[id='voteOption_Image_" + @imageId + "']").html("");
+                       }
+                       function blankImage()
+                       {
+                           $("div[id='voteOption_" + @imageId + "']").find("a:first").html("<span class='tn-icon tn-icon-add-picture'></span>");
+                           $("div[id='voteOption_" + @imageId + "']").find("input[name='voteOptionImage']").attr("value", "");
+                           $("div[id='voteOption_Image_" + @imageId + "']").html("");
+                       }
+                       function goback()
+                       {
+                           $("div[id='voteOption_Image_" + @imageId + "']").html("");
+                       }
+                       $(function () {
+                       });
+</script>)
