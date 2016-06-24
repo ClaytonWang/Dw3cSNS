@@ -22,7 +22,7 @@ using DevTrends.MvcDonutCaching;
 namespace Spacebuilder.Bar.Controllers
 {
     /// <summary>
-    /// Èº×éÌù°É¹ÜÀí
+    /// ç¾¤ç»„è´´å§ç®¡ç†
     /// </summary>
     [TitleFilter(IsAppendSiteName = true)]
     [Themed(PresentAreaKeysOfBuiltIn.GroupSpace, IsApplication = true)]
@@ -42,15 +42,15 @@ namespace Spacebuilder.Bar.Controllers
         private BarSettings barSettings = DIContainer.Resolve<ISettingsManager<BarSettings>>().Get();
 
 
-        #region ÏêÏ¸ÏÔÊ¾
+        #region è¯¦ç»†æ˜¾ç¤º
         /// <summary>
-        /// Ìû×ÓÏêÏ¸ÏÔÊ¾Ò³Ãæ
+        /// å¸–å­è¯¦ç»†æ˜¾ç¤ºé¡µé¢
         /// </summary>
-        /// <param name="threadId">Ìû×Óid</param>
-        /// <param name="pageIndex">»ØÌûÒ³Âë</param>
-        /// <param name="onlyLandlord">Ö»¿´Â¥Ö÷</param>
-        /// <param name="sortBy">ÅÅĞò·½Ê½</param>
-        /// <returns>Ìû×ÓÏêÏ¸ÏÔÊ¾Ò³Ãæ</returns>
+        /// <param name="threadId">å¸–å­id</param>
+        /// <param name="pageIndex">å›å¸–é¡µç </param>
+        /// <param name="onlyLandlord">åªçœ‹æ¥¼ä¸»</param>
+        /// <param name="sortBy">æ’åºæ–¹å¼</param>
+        /// <returns>å¸–å­è¯¦ç»†æ˜¾ç¤ºé¡µé¢</returns>
         [HttpGet]
         public ActionResult Detail(string spaceKey, long threadId, int pageIndex = 1, bool onlyLandlord = false, SortBy_BarPost sortBy = SortBy_BarPost.DateCreated, long? postId = null, long? childPostIndex = null)
         {
@@ -65,14 +65,14 @@ namespace Spacebuilder.Bar.Controllers
             if (section == null || section.TenantTypeId != TenantTypeIds.Instance().Group())
                 return HttpNotFound();
 
-            //ÑéÖ¤ÊÇ·ñÍ¨¹ıÉóºË
+            //éªŒè¯æ˜¯å¦é€šè¿‡å®¡æ ¸
             long currentSpaceUserId = UserIdToUserNameDictionary.GetUserId(spaceKey);
             if (!authorizer.IsAdministrator(BarConfig.Instance().ApplicationId) && barThread.UserId != currentSpaceUserId
                 && (int)barThread.AuditStatus < (int)(new AuditService().GetPubliclyAuditStatus(BarConfig.Instance().ApplicationId)))
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
-                    Title = "ÉĞÎ´Í¨¹ıÉóºË",
-                    Body = "ÓÉÓÚµ±Ç°Ìû×ÓÉĞÎ´Í¨¹ıÉóºË£¬ÄúÎŞ·¨ä¯ÀÀµ±Ç°ÄÚÈİ¡£",
+                    Title = "å°šæœªé€šè¿‡å®¡æ ¸",
+                    Body = "ç”±äºå½“å‰å¸–å­å°šæœªé€šè¿‡å®¡æ ¸ï¼Œæ‚¨æ— æ³•æµè§ˆå½“å‰å†…å®¹ã€‚",
                     StatusMessageType = StatusMessageType.Hint
                 }));
 
@@ -83,12 +83,12 @@ namespace Spacebuilder.Bar.Controllers
             Category category = categoryService.Get(barThread.CategoryId ?? 0);
             string keyWords = string.Join(",", barThread.TagNames);
 
-            pageResourceManager.SetMetaOfKeywords(category != null ? category.CategoryName + "," + keyWords : keyWords);//ÉèÖÃKeyordsÀàĞÍµÄMeta
-            pageResourceManager.SetMetaOfDescription(HtmlUtility.TrimHtml(barThread.GetResolvedBody(), 120));//ÉèÖÃDescriptionÀàĞÍµÄMeta
+            pageResourceManager.SetMetaOfKeywords(category != null ? category.CategoryName + "," + keyWords : keyWords);//è®¾ç½®Keyordsç±»å‹çš„Meta
+            pageResourceManager.SetMetaOfDescription(HtmlUtility.TrimHtml(barThread.GetResolvedBody(), 120));//è®¾ç½®Descriptionç±»å‹çš„Meta
 
             ViewData["EnableRating"] = barSettings.EnableRating;
 
-            //¸üĞÂä¯ÀÀ¼ÆÊı
+            //æ›´æ–°æµè§ˆè®¡æ•°
             CountService countService = new CountService(TenantTypeIds.Instance().BarThread());
             countService.ChangeCount(CountTypes.Instance().HitTimes(), barThread.ThreadId, barThread.UserId, 1, false);
 
@@ -104,7 +104,7 @@ namespace Spacebuilder.Bar.Controllers
         }
 
         /// <summary>
-        /// Ìû°ÉÏêÏ¸ÏÔÊ¾Ò³
+        /// å¸–å§è¯¦ç»†æ˜¾ç¤ºé¡µ
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -120,8 +120,8 @@ namespace Spacebuilder.Bar.Controllers
             {
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
-                    Title = "Ã»ÓĞÈ¨ÏŞ",
-                    Body = "´ËÈº×é»¹Î´Í¨¹ıÉóºË£¬²»ÄÜ²é¿´",
+                    Title = "æ²¡æœ‰æƒé™",
+                    Body = "æ­¤ç¾¤ç»„è¿˜æœªé€šè¿‡å®¡æ ¸ï¼Œä¸èƒ½æŸ¥çœ‹",
                     StatusMessageType = StatusMessageType.Hint
                 }));
             }
@@ -138,7 +138,7 @@ namespace Spacebuilder.Bar.Controllers
                 ViewData["currentThreadCategory"] = currentThreadCategory;
             }
 
-            //Èôµ±Ç°ÓÃ»§ÊÇÔÚä¯ÀÀ×Ô¼ºµÄÌû×ÓÁĞ±í£¬»òÕßÊÇ¹ÜÀíÔ±£¬ÔòºöÂÔÉóºË£»
+            //è‹¥å½“å‰ç”¨æˆ·æ˜¯åœ¨æµè§ˆè‡ªå·±çš„å¸–å­åˆ—è¡¨ï¼Œæˆ–è€…æ˜¯ç®¡ç†å‘˜ï¼Œåˆ™å¿½ç•¥å®¡æ ¸ï¼›
             bool ignoreAudit = currentUser != null && UserContext.CurrentUser.UserId == currentUser.UserId || authorizer.IsAdministrator(BarConfig.Instance().ApplicationId);
             if (isPosted.HasValue)
             {
@@ -152,12 +152,12 @@ namespace Spacebuilder.Bar.Controllers
         }
         #endregion
 
-        #region ±à¼­µÄ·½·¨
+        #region ç¼–è¾‘çš„æ–¹æ³•
         /// <summary>
-        /// ±à¼­Ìû×Ó
+        /// ç¼–è¾‘å¸–å­
         /// </summary>
-        /// <param name="spaceKey">Èº×éÃû</param>
-        /// <param name="threadId">Ìû×Óid</param>
+        /// <param name="spaceKey">ç¾¤ç»„å</param>
+        /// <param name="threadId">å¸–å­id</param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult Edit(string spaceKey, long? threadId)
@@ -183,8 +183,8 @@ namespace Spacebuilder.Bar.Controllers
                 {
                     return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                     {
-                        Body = "Ã»ÓĞÈ¨ÏŞ±à¼­" + barThread.Subject + "£¡",
-                        Title = "Ã»ÓĞÈ¨ÏŞ",
+                        Body = "æ²¡æœ‰æƒé™ç¼–è¾‘" + barThread.Subject + "ï¼",
+                        Title = "æ²¡æœ‰æƒé™",
                         StatusMessageType = StatusMessageType.Hint
                     }));
                 }
@@ -197,12 +197,12 @@ namespace Spacebuilder.Bar.Controllers
                     return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                     {
                         Body = errorMessage,
-                        Title = "Ã»ÓĞÈ¨ÏŞ",
+                        Title = "æ²¡æœ‰æƒé™",
                         StatusMessageType = StatusMessageType.Hint
                     }, Request.RawUrl));
                 }
             }
-            pageResourceManager.InsertTitlePart(threadId.HasValue ? "±à¼­Ìû×Ó" : "·¢Ìû");
+            pageResourceManager.InsertTitlePart(threadId.HasValue ? "ç¼–è¾‘å¸–å­" : "å‘å¸–");
             if (threadId.HasValue && barThread == null)
                 return HttpNotFound();
 
@@ -214,11 +214,11 @@ namespace Spacebuilder.Bar.Controllers
         }
 
         /// <summary>
-        /// ±à¼­»ØÌûÒ³Ãæ
+        /// ç¼–è¾‘å›å¸–é¡µé¢
         /// </summary>
-        /// <param name="spaceKey">Èº×éÃû</param>
-        /// <param name="postId">»ØÌûid</param>
-        /// <returns>±à¼­»ØÌûÒ³Ãæ</returns>
+        /// <param name="spaceKey">ç¾¤ç»„å</param>
+        /// <param name="postId">å›å¸–id</param>
+        /// <returns>ç¼–è¾‘å›å¸–é¡µé¢</returns>
         [HttpGet]
         public ActionResult EditPost(long threadId, long? postId)
         {
@@ -227,8 +227,8 @@ namespace Spacebuilder.Bar.Controllers
             {
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
-                    Body = "Ã»ÓĞÕÒµ½ÄãÒª±à¼­µÄ»ØÌû",
-                    Title = "Ã»ÓĞÕÒµ½»ØÌû",
+                    Body = "æ²¡æœ‰æ‰¾åˆ°ä½ è¦ç¼–è¾‘çš„å›å¸–",
+                    Title = "æ²¡æœ‰æ‰¾åˆ°å›å¸–",
                     StatusMessageType = StatusMessageType.Hint
                 }));
             }
@@ -242,19 +242,19 @@ namespace Spacebuilder.Bar.Controllers
                 {
                     return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                     {
-                        Body = "ÄúÃ»ÓĞÈ¨ÏŞ±à¼­´Ë»ØÌû",
-                        Title = "Ã»ÓĞÈ¨ÏŞ"
+                        Body = "æ‚¨æ²¡æœ‰æƒé™ç¼–è¾‘æ­¤å›å¸–",
+                        Title = "æ²¡æœ‰æƒé™"
                     }));
                 }
                 if (post == null)
                 {
                     return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                     {
-                        Body = "Ã»ÓĞÕÒµ½ÄãÒª±à¼­µÄ»ØÌû",
-                        Title = "Ã»ÓĞÕÒµ½»ØÌû"
+                        Body = "æ²¡æœ‰æ‰¾åˆ°ä½ è¦ç¼–è¾‘çš„å›å¸–",
+                        Title = "æ²¡æœ‰æ‰¾åˆ°å›å¸–"
                     }));
                 }
-                pageResourceManager.InsertTitlePart("±à¼­»ØÌû");
+                pageResourceManager.InsertTitlePart("ç¼–è¾‘å›å¸–");
             }
             else
             {
@@ -267,10 +267,10 @@ namespace Spacebuilder.Bar.Controllers
                     return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                     {
                         Body = errorMessage,
-                        Title = "Ã»ÓĞÈ¨ÏŞ"
+                        Title = "æ²¡æœ‰æƒé™"
                     }));
                 }
-                pageResourceManager.InsertTitlePart("·¢±í»ØÌû");
+                pageResourceManager.InsertTitlePart("å‘è¡¨å›å¸–");
             }
 
             BarPostEditModel postModel = null;
@@ -295,14 +295,14 @@ namespace Spacebuilder.Bar.Controllers
         }
         #endregion
 
-        #region ÁĞ±íÒ³Ãæ
+        #region åˆ—è¡¨é¡µé¢
         /// <summary>
-        /// ÓÃ»§Ìû×ÓÁĞ±í
+        /// ç”¨æˆ·å¸–å­åˆ—è¡¨
         /// </summary>
-        /// <param name="userName">ÓÃ»§Ãû</param>
-        /// <param name="isPosted">ÊÇ·ñÊÇ»ØÌû</param>
-        /// <param name="pageIndex">Ò³Âë</param>
-        /// <param name="spaceKey">Èº×éÃû</param>
+        /// <param name="userName">ç”¨æˆ·å</param>
+        /// <param name="isPosted">æ˜¯å¦æ˜¯å›å¸–</param>
+        /// <param name="pageIndex">é¡µç </param>
+        /// <param name="spaceKey">ç¾¤ç»„å</param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult UserThreads(string spaceKey, bool isPosted = false, int pageIndex = 1)
@@ -310,17 +310,17 @@ namespace Spacebuilder.Bar.Controllers
             IUser currentUser = UserContext.CurrentUser;
             long sectionId = GroupIdToGroupKeyDictionary.GetGroupId(spaceKey);
 
-            //Èôµ±Ç°ÓÃ»§ÊÇÔÚä¯ÀÀ×Ô¼ºµÄÌû×ÓÁĞ±í£¬»òÕßÊÇ¹ÜÀíÔ±£¬ÔòºöÂÔÉóºË£»
+            //è‹¥å½“å‰ç”¨æˆ·æ˜¯åœ¨æµè§ˆè‡ªå·±çš„å¸–å­åˆ—è¡¨ï¼Œæˆ–è€…æ˜¯ç®¡ç†å‘˜ï¼Œåˆ™å¿½ç•¥å®¡æ ¸ï¼›
             bool ignoreAudit = currentUser != null && UserContext.CurrentUser.UserId == currentUser.UserId || authorizer.IsAdministrator(BarConfig.Instance().ApplicationId);
             PagingDataSet<BarThread> pds = barThreadService.GetUserThreads(TenantTypeIds.Instance().Group(), currentUser.UserId, ignoreAudit, isPosted, pageIndex, sectionId);
             if (Request.IsAjaxRequest())
                 return PartialView("~/Applications/Bar/Views/Bar/_ListInGroup.cshtml", pds);
             var group = groupService.Get(spaceKey);
             pageResourceManager.InsertTitlePart(group.GroupName);
-            string title = isPosted ? "ÎÒµÄ»ØÌû" : "ÎÒµÄÌû×Ó";
+            string title = isPosted ? "æˆ‘çš„å›å¸–" : "æˆ‘çš„å¸–å­";
             if (UserContext.CurrentUser != null && UserContext.CurrentUser.UserId != currentUser.UserId)
             {
-                title = isPosted ? currentUser.DisplayName + "µÄ»ØÌû" : currentUser.DisplayName + "µÄÌû×Ó";
+                title = isPosted ? currentUser.DisplayName + "çš„å›å¸–" : currentUser.DisplayName + "çš„å¸–å­";
                 ViewData["isOwner"] = false;
             }
             pageResourceManager.InsertTitlePart(title);
@@ -329,7 +329,7 @@ namespace Spacebuilder.Bar.Controllers
         }
 
         /// <summary>
-        /// ±êÇ©ÏÔÊ¾Ìû×ÓÁĞ±í
+        /// æ ‡ç­¾æ˜¾ç¤ºå¸–å­åˆ—è¡¨
         /// </summary>
         /// <returns></returns>
         public ActionResult ListByTag(string spaceKey, string tagName, SortBy_BarThread? sortBy, bool? isEssential, int pageIndex = 1)
@@ -358,13 +358,13 @@ namespace Spacebuilder.Bar.Controllers
         }
         #endregion
 
-        #region ¹ÜÀíÒ³Ãæ
+        #region ç®¡ç†é¡µé¢
         /// <summary>
-        /// Ç°Ì¨¹ÜÀíÌû°ÉÒ³Ãæ£¨¹ÜÀíÌû×Ó£©
+        /// å‰å°ç®¡ç†å¸–å§é¡µé¢ï¼ˆç®¡ç†å¸–å­ï¼‰
         /// </summary>
-        /// <param name="model">ÓÃ»§Ìî³äµÄÊµÌå</param>
-        /// <param name="pageIndex">µ±Ç°Ò³Âë</param>
-        /// <returns>ºóÌ¨¹ÜÀíÌû°ÉÒ³Ãæ</returns>
+        /// <param name="model">ç”¨æˆ·å¡«å……çš„å®ä½“</param>
+        /// <param name="pageIndex">å½“å‰é¡µç </param>
+        /// <returns>åå°ç®¡ç†å¸–å§é¡µé¢</returns>
         [HttpGet]
         public ActionResult ManageThreads(string spaceKey, ManageThreadEditModel model, int pageIndex = 1)
         {
@@ -374,17 +374,17 @@ namespace Spacebuilder.Bar.Controllers
             {
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
-                    Body = string.Format("ÄúÃ»ÓĞÈ¨ÏŞ¹ÜÀí {0} £¡", section == null ? "" : section.Name),
-                    Title = "Ã»ÓĞÈ¨ÏŞ",
+                    Body = string.Format("æ‚¨æ²¡æœ‰æƒé™ç®¡ç† {0} ï¼", section == null ? "" : section.Name),
+                    Title = "æ²¡æœ‰æƒé™",
                     StatusMessageType = StatusMessageType.Hint
                 }));
             }
             var group = groupService.Get(spaceKey);
             pageResourceManager.InsertTitlePart(group.GroupName);
 
-            pageResourceManager.InsertTitlePart("Ìû°É¹ÜÀí");
+            pageResourceManager.InsertTitlePart("å¸–å§ç®¡ç†");
 
-            List<SelectListItem> SelectListItem_TrueAndFlase = new List<SelectListItem> { new SelectListItem { Text = "ÊÇ", Value = true.ToString() }, new SelectListItem { Text = "·ñ", Value = false.ToString() } };
+            List<SelectListItem> SelectListItem_TrueAndFlase = new List<SelectListItem> { new SelectListItem { Text = "æ˜¯", Value = true.ToString() }, new SelectListItem { Text = "å¦", Value = false.ToString() } };
 
             ViewData["IsEssential"] = new SelectList(SelectListItem_TrueAndFlase, "Value", "Text", model.IsEssential);
             ViewData["IsSticky"] = new SelectList(SelectListItem_TrueAndFlase, "Value", "Text", model.IsSticky);
@@ -404,11 +404,11 @@ namespace Spacebuilder.Bar.Controllers
         }
 
         /// <summary>
-        /// ¹ÜÀí»ØÌûÒ³Ãæ
+        /// ç®¡ç†å›å¸–é¡µé¢
         /// </summary>
-        /// <param name="pageIndex">µ±Ç°Ò³Âë</param>
-        /// <param name="model">»ØÌû¹ÜÀíµÄmodel</param>
-        /// <returns>¹ÜÀí»ØÌû</returns>
+        /// <param name="pageIndex">å½“å‰é¡µç </param>
+        /// <param name="model">å›å¸–ç®¡ç†çš„model</param>
+        /// <returns>ç®¡ç†å›å¸–</returns>
         [HttpGet]
         public ActionResult ManagePosts(string spaceKey, ManagePostsEditModel model, int pageIndex = 1)
         {
@@ -419,15 +419,15 @@ namespace Spacebuilder.Bar.Controllers
             {
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
-                    Title = "Ã»ÓĞÈ¨ÏŞ",
-                    Body = "Äú¿ÉÄÜÃ»ÓĞÈ¨ÏŞ±à¼­´ËÌû°É"
+                    Title = "æ²¡æœ‰æƒé™",
+                    Body = "æ‚¨å¯èƒ½æ²¡æœ‰æƒé™ç¼–è¾‘æ­¤å¸–å§"
                 }));
             }
 
             var group = groupService.Get(spaceKey);
             pageResourceManager.InsertTitlePart(group.GroupName);
 
-            pageResourceManager.InsertTitlePart("»ØÌû¹ÜÀí");
+            pageResourceManager.InsertTitlePart("å›å¸–ç®¡ç†");
 
             BarPostQuery query = model.AsBarPostQuery();
             query.SectionId = section.SectionId;
@@ -439,10 +439,10 @@ namespace Spacebuilder.Bar.Controllers
         }
 
         /// <summary>
-        /// ¹ÜÀíÌû×ÓÀà±ğ
+        /// ç®¡ç†å¸–å­ç±»åˆ«
         /// </summary>
         /// <param name="spaceKey"></param>
-        /// <param name="pageIndex">µ±Ç°Ò³Âë</param>
+        /// <param name="pageIndex">å½“å‰é¡µç </param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult ManageThreadCategories(string spaceKey, int pageIndex = 1)
@@ -453,26 +453,26 @@ namespace Spacebuilder.Bar.Controllers
             {
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
-                    Body = "ÄúÃ»ÓĞÈ¨ÏŞ±à¼­´ËÌû°ÉµÄ·ÖÀà",
-                    Title = "Ã»ÓĞÈ¨ÏŞ"
+                    Body = "æ‚¨æ²¡æœ‰æƒé™ç¼–è¾‘æ­¤å¸–å§çš„åˆ†ç±»",
+                    Title = "æ²¡æœ‰æƒé™"
                 }));
             }
             var group = groupService.Get(spaceKey);
             pageResourceManager.InsertTitlePart(group.GroupName);
 
-            pageResourceManager.InsertTitlePart("Àà±ğ¹ÜÀí");
+            pageResourceManager.InsertTitlePart("ç±»åˆ«ç®¡ç†");
             ViewData["SectionId"] = sectionId;
             return View(categoryService.GetOwnerCategories(sectionId, TenantTypeIds.Instance().BarThread()));
         }
 
         #endregion
 
-        #region ¸¨Öú·½·¨
+        #region è¾…åŠ©æ–¹æ³•
         /// <summary>
-        /// µİ¹é»ñÈ¡ËùÓĞµÄ¸¸·ÖÀàµÄ¼¯ºÏ£¨°üº¬µ±Ç°·ÖÀà£©
+        /// é€’å½’è·å–æ‰€æœ‰çš„çˆ¶åˆ†ç±»çš„é›†åˆï¼ˆåŒ…å«å½“å‰åˆ†ç±»ï¼‰
         /// </summary>
-        /// <param name="category">µ±Ç°Àà±ğ</param>
-        /// <param name="allParentCategories">ËùÓĞµÄ¸¸Àà±ğ</param>
+        /// <param name="category">å½“å‰ç±»åˆ«</param>
+        /// <param name="allParentCategories">æ‰€æœ‰çš„çˆ¶ç±»åˆ«</param>
         private void RecursiveGetAllParentCategories(Category category, ref List<Category> allParentCategories)
         {
             if (category == null)
@@ -484,14 +484,14 @@ namespace Spacebuilder.Bar.Controllers
         }
         #endregion
 
-        #region ¾Ö²¿Ò³Ãæ
+        #region å±€éƒ¨é¡µé¢
 
         /// <summary>
-        /// ±êÇ©ÔÆ
+        /// æ ‡ç­¾äº‘
         /// </summary>
-        /// <param name="spaceKey">Èº×éÃû</param>
-        /// <param name="topNum">Ç°NÌõÊı¾İ</param>
-        /// <returns>±êÇ©ÔÆ</returns>
+        /// <param name="spaceKey">ç¾¤ç»„å</param>
+        /// <param name="topNum">å‰Næ¡æ•°æ®</param>
+        /// <returns>æ ‡ç­¾äº‘</returns>
         [HttpGet]
         [DonutOutputCache(CacheProfile = "Stable")]
         public ActionResult _TagCloud(string spaceKey, int topNum = 20)
@@ -503,7 +503,7 @@ namespace Spacebuilder.Bar.Controllers
         }
 
         /// <summary>
-        /// ±êÇ©ÔÆÍ¼
+        /// æ ‡ç­¾äº‘å›¾
         /// </summary>
         /// <param name="spaceKey"></param>
         /// <returns></returns>
@@ -517,10 +517,10 @@ namespace Spacebuilder.Bar.Controllers
         }
 
         /// <summary>
-        /// Ìû×ÓËÑË÷Ò³Ãæ
+        /// å¸–å­æœç´¢é¡µé¢
         /// </summary>
-        /// <param name="spaceKey">Ìù°ÉÃû³Æ</param>
-        /// <returns>Ìû×ÓËÑË÷Ò³Ãæ</returns>
+        /// <param name="spaceKey">è´´å§åç§°</param>
+        /// <returns>å¸–å­æœç´¢é¡µé¢</returns>
         [HttpGet]
         [DonutOutputCache(CacheProfile = "Stable")]
         public ActionResult _BarThreadSearch(string spaceKey)
@@ -530,15 +530,15 @@ namespace Spacebuilder.Bar.Controllers
         }
         #endregion
 
-        #region ËÑË÷Ò³Ãæ
+        #region æœç´¢é¡µé¢
 
         /// <summary>
-        /// Èº×éÄÚËÑË÷Ìû×Ó
+        /// ç¾¤ç»„å†…æœç´¢å¸–å­
         /// </summary>
-        /// <param name="spaceKey">Èº×éÃû</param>
-        /// <param name="keyword">¹Ø¼ü×Ö</param>
-        /// <param name="pageIndex">Ò³Âë</param>
-        /// <returns>Èº×éÄÚËÑË÷Ìû×Ó</returns>
+        /// <param name="spaceKey">ç¾¤ç»„å</param>
+        /// <param name="keyword">å…³é”®å­—</param>
+        /// <param name="pageIndex">é¡µç </param>
+        /// <returns>ç¾¤ç»„å†…æœç´¢å¸–å­</returns>
         public ActionResult Search(string spaceKey, string keyword, BarSearchRange term = BarSearchRange.ALL, int pageIndex = 1)
         {
             long barSectionId = GroupIdToGroupKeyDictionary.GetGroupId(spaceKey);
@@ -559,37 +559,37 @@ namespace Spacebuilder.Bar.Controllers
             query.Term = term;
 
             query.PageIndex = pageIndex;
-            query.PageSize = 20;//Ã¿Ò³¼ÇÂ¼Êı
+            query.PageSize = 20;//æ¯é¡µè®°å½•æ•°
             query.Keyword = keyword;
             query.Range = section.SectionId.ToString();
 
-            //»ñÈ¡Èº×éÌù°ÉµÄÌû×Ó
+            //è·å–ç¾¤ç»„è´´å§çš„å¸–å­
             query.TenantTypeId = TenantTypeIds.Instance().Group();
 
-            //¸ù¾İÌû°Éid²éÑ¯Ìû°ÉÃû×Ö
+            //æ ¹æ®å¸–å§idæŸ¥è¯¢å¸–å§åå­—
             query.TenantTypeId = section.TenantTypeId;
             ViewData["barname"] = section.Name;
             ViewData["TenantTypeId"] = section.TenantTypeId;
 
-            //µ÷ÓÃËÑË÷Æ÷½øĞĞËÑË÷
+            //è°ƒç”¨æœç´¢å™¨è¿›è¡Œæœç´¢
             BarSearcher BarSearcher = (BarSearcher)SearcherFactory.GetSearcher(BarSearcher.CODE);
             PagingDataSet<BarEntity> BarEntities = BarSearcher.Search(query);
 
             if (Request.IsAjaxRequest())
                 return View("~/Applications/Bar/Views/Bar/_ListSearchThread.cshtml", BarEntities);
 
-            //ÉèÖÃÒ³ÃæMeta
+            //è®¾ç½®é¡µé¢Meta
             if (string.IsNullOrWhiteSpace(query.Keyword))
             {
-                pageResourceManager.InsertTitlePart("Èº×éÌû×ÓËÑË÷");//ÉèÖÃÒ³ÃæTitle
+                pageResourceManager.InsertTitlePart("ç¾¤ç»„å¸–å­æœç´¢");//è®¾ç½®é¡µé¢Title
             }
             else
             {
-                pageResourceManager.InsertTitlePart('¡°' + query.Keyword + '¡±' + "µÄÏà¹ØÌû×Ó");//ÉèÖÃÒ³ÃæTitle
+                pageResourceManager.InsertTitlePart('â€œ' + query.Keyword + 'â€' + "çš„ç›¸å…³å¸–å­");//è®¾ç½®é¡µé¢Title
             }
 
-            pageResourceManager.SetMetaOfKeywords("Ìû°ÉËÑË÷");//ÉèÖÃKeyordsÀàĞÍµÄMeta
-            pageResourceManager.SetMetaOfDescription("Ìû°ÉËÑË÷");//ÉèÖÃDescriptionÀàĞÍµÄMeta
+            pageResourceManager.SetMetaOfKeywords("å¸–å§æœç´¢");//è®¾ç½®Keyordsç±»å‹çš„Meta
+            pageResourceManager.SetMetaOfDescription("å¸–å§æœç´¢");//è®¾ç½®Descriptionç±»å‹çš„Meta
 
             return View(BarEntities);
         }
@@ -599,22 +599,22 @@ namespace Spacebuilder.Bar.Controllers
     }
 
     /// <summary>
-    /// Èº×éÌû°É¹ÜÀí²Ëµ¥
+    /// ç¾¤ç»„å¸–å§ç®¡ç†èœå•
     /// </summary>
     public enum ManageSubMenu
     {
         /// <summary>
-        /// ¹ÜÀíÌû×Ó
+        /// ç®¡ç†å¸–å­
         /// </summary>
         ManageThread,
 
         /// <summary>
-        /// ¹ÜÀí»ØÌû
+        /// ç®¡ç†å›å¸–
         /// </summary>
         ManagePost,
 
         /// <summary>
-        /// ¹ÜÀí·Ö×é
+        /// ç®¡ç†åˆ†ç»„
         /// </summary>
         ManageCategroy
     }
