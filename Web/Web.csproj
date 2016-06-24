@@ -17,7 +17,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <SccAuxPath>
     </SccAuxPath>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -2149,7 +2149,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>4682</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4682/</IISUrl>
+          <IISUrl>http://localhost:8001</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
