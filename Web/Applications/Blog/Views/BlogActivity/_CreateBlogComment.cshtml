@@ -30,7 +30,7 @@
             评论了
             @Html.Link(thread.Author, SiteUrls.Instance().SpaceHome(thread.UserId), null, new { @class = "tn-author" }, hyperLinkTarget)
             @Html.IdentificationType(thread.UserId)
-            的日志
+            的文章
             @Html.Link(thread.ResolvedSubject, url, thread.Subject, new { @class = "tn-title" }, HyperLinkTarget._blank)
         </div>
         <div class="tnc-dynamic-commentbox spb-status-textarea tnc-textsize-small">

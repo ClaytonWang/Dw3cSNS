@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationName_Blog" xml:space="preserve">
-    <value>日志</value>
+    <value>文章</value>
   </data>
   <data name="CountObject_Blog" xml:space="preserve">
-    <value>日志</value>
+    <value>文章</value>
   </data>
   <data name="Description_ModeratedUser_CreateBlogThreadDenied" xml:space="preserve">
-    <value>您现在处于管制状态，不能发日志</value>
+    <value>您现在处于管制状态，不能发文章</value>
   </data>
   <data name="Reproduced_Subject_Prefix" xml:space="preserve">
     <value>[转]</value>

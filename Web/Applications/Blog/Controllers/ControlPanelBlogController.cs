@@ -21,7 +21,7 @@ using Tunynet.UI;
 namespace Spacebuilder.Blog.Controllers
 {
     /// <summary>
-    /// 后台日志管理控制器
+    /// 后台文章管理控制器
     /// </summary>
     [ManageAuthorize(CheckCookie = false)]
     [TitleFilter(TitlePart = "内容管理", IsAppendSiteName = true)]
@@ -34,10 +34,10 @@ namespace Spacebuilder.Blog.Controllers
         public CategoryService categoryService { get; set; }
 
         /// <summary>
-        /// 日志管理
+        /// 文章管理
         /// </summary>
         /// <param name="auditStatus">审批状态</param>
-        /// <param name="categoryId">日志类别id</param>
+        /// <param name="categoryId">文章类别id</param>
         /// <param name="subjectKeywords">标题关键字</param>
         /// <param name="isEssential">是否加精</param>
         /// <param name="userId">作者id</param>
@@ -75,7 +75,7 @@ namespace Spacebuilder.Blog.Controllers
 
             PagingDataSet<BlogThread> blogs = blogService.GetsForAdmin(null, auditStatus, categoryId, isEssential, blogUserId, subjectKeywords, pageSize, pageIndex);
 
-            pageResourceManager.InsertTitlePart("日志管理");
+            pageResourceManager.InsertTitlePart("文章管理");
 
             return View(blogs);
         }
@@ -83,7 +83,7 @@ namespace Spacebuilder.Blog.Controllers
         /// <summary>
         /// 更新审核状态
         /// </summary>
-        /// <param name="threadIds">日志id</param>
+        /// <param name="threadIds">文章id</param>
         /// <param name="isApprove">审核状态，true为通过审核，false为不通过审核</param>
         public JsonResult _UpdateAuditStatus(IEnumerable<long> threadIds, bool isApprove)
         {
@@ -94,7 +94,7 @@ namespace Spacebuilder.Blog.Controllers
         /// <summary>
         /// 更新审核状态
         /// </summary>
-        /// <param name="threadIds">日志id</param>
+        /// <param name="threadIds">文章id</param>
         /// <param name="isApprove">审核状态，true为通过审核，false为不通过审核</param>
         public JsonResult _UpdateAuditStatu(long threadId, bool isApprove)
         {
@@ -104,9 +104,9 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 删除日志
+        /// 删除文章
         /// </summary>
-        /// <param name="threadIds">日志id列表</param>
+        /// <param name="threadIds">文章id列表</param>
         [HttpPost]
         public JsonResult _Delete(IEnumerable<long> threadIds)
         {
@@ -115,13 +115,13 @@ namespace Spacebuilder.Blog.Controllers
                 blogService.Delete(blog);
             }
 
-            return Json(new StatusMessageData(StatusMessageType.Success, "批量删除日志成功！"));
+            return Json(new StatusMessageData(StatusMessageType.Success, "批量删除文章成功！"));
         }
 
         /// <summary>
         /// 批量设置/取消精华
         /// </summary>
-        /// <param name="threadIds">日志id列表</param>
+        /// <param name="threadIds">文章id列表</param>
         /// <param name="isEssential">是否精华，true为加精，false为取消精华</param>
         [HttpPost]
         public ActionResult _SetEssential(List<long> threadIds, bool isEssential)
@@ -133,7 +133,7 @@ namespace Spacebuilder.Blog.Controllers
 
 
         /// <summary>
-        /// 设置日志分类（页面）
+        /// 设置文章分类（页面）
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -146,9 +146,9 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 设置日志分类（表单提交）
+        /// 设置文章分类（表单提交）
         /// </summary>
-        /// <param name="threadIds">日志id列表</param>
+        /// <param name="threadIds">文章id列表</param>
         /// <param name="categoryId">分类id</param>
         /// <returns></returns>
         [HttpPost]
@@ -171,12 +171,12 @@ namespace Spacebuilder.Blog.Controllers
             }
             else
             {
-                return Json(new StatusMessageData(StatusMessageType.Error, "请选择要设置的日志！"));
+                return Json(new StatusMessageData(StatusMessageType.Error, "请选择要设置的文章！"));
             }
         }
 
         /// <summary>
-        /// 日志后台管理右侧统计
+        /// 文章后台管理右侧统计
         /// </summary>
         [HttpGet]
         public ActionResult _ManageBlogRightMenu()

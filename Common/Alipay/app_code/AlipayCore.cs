@@ -87,9 +87,9 @@ namespace Com.Alipay
         }
 
         /// <summary>
-        /// 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
+        /// 写文章，方便测试（看网站需求，也可以改成把记录存入数据库）
         /// </summary>
-        /// <param name="sWord">要写入日志里的文本内容</param>
+        /// <param name="sWord">要写入文章里的文本内容</param>
         public static void LogResult(string sWord)
         {
             string strPath = HttpContext.Current.Server.MapPath("log");

@@ -13,9 +13,6 @@
         <a id="button-search" href="#" class="tn-button tn-button-text-only tn-button-large tn-button-primary"><span class="tn-button-text">搜索</span></a>
     }
 }
-@section Aside{
-    @Html.AjaxAction("_SearchHistories", "Channel", new { searcherCode = searcherCode, Area = "Common" })
-}
 
 <div class="tn-box tn-widget tn-widget-content tn-corner-all tnc-search-results">
     <div class="tn-box-content tn-widget-content tn-corner-all">

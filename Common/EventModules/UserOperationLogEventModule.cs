@@ -16,7 +16,7 @@ using Tunynet.Logging;
 namespace Spacebuilder.Common.EventModules
 {
     /// <summary>
-    /// User操作日志处理
+    /// User操作文章处理
     /// </summary>
     public class UserOperationLogEventMoudle : IEventMoudle, IOperationLogSpecificPartProcesser<User>
     {
@@ -34,7 +34,7 @@ namespace Spacebuilder.Common.EventModules
 
         void UserOperationLogEventMoudle_BatchAfter(IEnumerable<User> senders, CommonEventArgs eventArgs)
         {
-            //只有批量激活用户、取消激活用户、管制用户、取消管制用户时，才记录到操作日志
+            //只有批量激活用户、取消激活用户、管制用户、取消管制用户时，才记录到操作文章
             if (eventArgs.EventOperationType == EventOperationType.Instance().ActivateUser() ||
             eventArgs.EventOperationType == EventOperationType.Instance().CancelActivateUser() ||
             eventArgs.EventOperationType == EventOperationType.Instance().ModerateUser() ||
@@ -119,11 +119,11 @@ namespace Spacebuilder.Common.EventModules
         }
 
         /// <summary>
-        /// 处理操作日志具体信息部分（把User、eventOperationType转化成ISpecificOperationLogInformation）
+        /// 处理操作文章具体信息部分（把User、eventOperationType转化成ISpecificOperationLogInformation）
         /// </summary>
-        /// <param name="entity">日志操作对象</param>
+        /// <param name="entity">文章操作对象</param>
         /// <param name="eventOperationType">操作类型</param>
-        /// <param name="operationLogSpecificPart">具体的操作日志信息接口</param>
+        /// <param name="operationLogSpecificPart">具体的操作文章信息接口</param>
         void IOperationLogSpecificPartProcesser<User>.Process(User entity, string eventOperationType, IOperationLogSpecificPart operationLogSpecificPart)
         {
             operationLogSpecificPart.ApplicationId = 0;
@@ -136,7 +136,7 @@ namespace Spacebuilder.Common.EventModules
         }
 
         /// <summary>
-        /// 处理带历史数据变更的操作日志部分
+        /// 处理带历史数据变更的操作文章部分
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="eventOperationType"></param>

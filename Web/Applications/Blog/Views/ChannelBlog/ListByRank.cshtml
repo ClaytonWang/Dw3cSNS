@@ -11,7 +11,7 @@
     @Html.Action("_UserRank", "ChannelBlog", new { topNum = 5 })
     <div class="tn-box tn-widget tn-widget-content tn-corner-all">
         <div class="tn-box-header tn-widget-header tn-corner-top tn-border-bottom">
-            <h3 class="tn-helper-reset">日志标签</h3>
+            <h3 class="tn-helper-reset">文章标签</h3>
         </div>
         <p class="tn-tags-hot">
             @Html.Action("_TagCloud", "Channel", new { tenantTypeId = TenantTypeIds.Instance().BlogThread(), Area = "Common" })
@@ -23,13 +23,13 @@
     <div class="tn-tabs">
         <ul class="tn-tabs-nav tn-border-gray tn-border-bottom tn-helper-clearfix">
             <li class="tn-widget-content tn-border-gray tn-border-trl  @if (rank=="new")
-                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("new")">最新日志</a></li>
+                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("new")">最新文章</a></li>
             <li class="tn-widget-content tn-border-gray tn-border-trl  @if (rank=="hot")
-                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("hot")">热门日志</a></li>
+                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("hot")">热门文章</a></li>
             <li class="tn-widget-content tn-border-gray tn-border-trl  @if (rank=="comment")
-                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("comment")">热评日志</a></li>
+                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("comment")">热评文章</a></li>
             <li class="tn-widget-content tn-border-gray tn-border-trl  @if (rank=="isessential")
-                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("isessential")">精华日志</a></li>
+                {<text>tn-tabs-selected</text>}"><a href="@SiteUrls.Instance().BlogListByRank("isessential")">精华文章</a></li>
         </ul>
    </div>   
     <div class="tn-box-content tn-widget-content tn-corner-all">

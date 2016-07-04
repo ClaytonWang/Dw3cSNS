@@ -278,7 +278,7 @@ namespace Tunynet.Common
 
             ChangeSystemTradePoints(-tradePoints);
 
-            //3、生成操作日志            
+            //3、生成操作文章            
             OperationLogService logService = Tunynet.DIContainer.Resolve<OperationLogService>();
             IOperatorInfoGetter operatorInfoGetter = DIContainer.Resolve<IOperatorInfoGetter>();
             if (operatorInfoGetter == null)

@@ -14,7 +14,7 @@ using Spacebuilder.Common;
 namespace Spacebuilder.Group.EventModules
 {
     /// <summary>
-    /// 处理群组操作日志
+    /// 处理群组操作文章
     /// </summary>
     public class GroupOperationLogEventModule : IEventMoudle
     {
@@ -30,7 +30,7 @@ namespace Spacebuilder.Group.EventModules
 
 
         /// <summary>
-        /// 群组操作日志事件处理
+        /// 群组操作文章事件处理
         /// </summary>
         private void GroupOperationLogEventModule_After(GroupEntity senders, CommonEventArgs eventArgs)
         {

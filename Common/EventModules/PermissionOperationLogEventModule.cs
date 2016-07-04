@@ -15,7 +15,7 @@ using Tunynet.Logging;
 namespace Spacebuilder.Common.EventModules
 {
     /// <summary>
-    /// Permission操作日志处理
+    /// Permission操作文章处理
     /// </summary>
     public class PermissionOperationLogEventMoudle : IEventMoudle
     {

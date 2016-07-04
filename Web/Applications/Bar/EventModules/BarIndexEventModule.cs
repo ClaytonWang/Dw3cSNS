@@ -42,7 +42,7 @@ namespace Spacebuilder.Bar.EventModules
 
         #region 标签增量索引
         /// <summary>
-        /// 为日志添加标签时触发
+        /// 为文章添加标签时触发
         /// </summary>
         private void AddTagsToBar_BatchAfter(IEnumerable<string> senders, TagEventArgs eventArgs)
         {

@@ -18,7 +18,7 @@ using Tunynet.Utilities;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志索引文档
+    /// 文章索引文档
     /// </summary>
     public class BlogIndexDocument
     {
@@ -46,13 +46,13 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// BlogThread转换成<see cref="Lucene.Net.Documents.Document"/>
         /// </summary>
-        /// <param name="blogThread">日志实体</param>
+        /// <param name="blogThread">文章实体</param>
         /// <returns>Lucene.Net.Documents.Document</returns>
         public static Document Convert(BlogThread blogThread)
         {
             Document doc = new Document();
 
-            //索引日志基本信息
+            //索引文章基本信息
             doc.Add(new Field(BlogIndexDocument.ThreadId, blogThread.ThreadId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field(BlogIndexDocument.TenantTypeId, blogThread.TenantTypeId, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field(BlogIndexDocument.OwnerId, blogThread.OwnerId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -67,13 +67,13 @@ namespace Spacebuilder.Blog
             doc.Add(new Field(BlogIndexDocument.AuditStatus, ((int)blogThread.AuditStatus).ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field(BlogIndexDocument.PrivacyStatus, ((int)blogThread.PrivacyStatus).ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
-            //索引日志tag
+            //索引文章tag
             foreach (string tagName in blogThread.TagNames)
             {
                 doc.Add(new Field(BlogIndexDocument.Tag, tagName.ToLower(), Field.Store.YES, Field.Index.ANALYZED));
             }
 
-            //索引日志用户分类名称
+            //索引文章用户分类名称
             IEnumerable<string> ownerCategoryNames = blogThread.OwnerCategoryNames;
             if (ownerCategoryNames != null)
             {
@@ -83,7 +83,7 @@ namespace Spacebuilder.Blog
                 }
             }
 
-            //索引日志站点分类ID
+            //索引文章站点分类ID
             long? siteCategoryId = blogThread.SiteCategoryId;
             if (siteCategoryId.HasValue)
             {
@@ -96,7 +96,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// BlogThread批量转换成<see cref="Lucene.Net.Documents.Document"/>
         /// </summary>
-        /// <param name="blogThreads">日志实体</param>
+        /// <param name="blogThreads">文章实体</param>
         /// <returns>Lucene.Net.Documents.Document</returns>
         public static IEnumerable<Document> Convert(IEnumerable<BlogThread> blogThreads)
         {

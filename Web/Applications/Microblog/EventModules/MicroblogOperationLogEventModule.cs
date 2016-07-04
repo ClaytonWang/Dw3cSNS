@@ -19,7 +19,7 @@ using Spacebuilder.Common;
 namespace Spacebuilder.Microblog.EventModules
 {
     /// <summary>
-    /// 处理微博操作日志
+    /// 处理微博操作文章
     /// </summary>
     public class MicroblogOperationLogEventModule : IEventMoudle
     {
@@ -35,7 +35,7 @@ namespace Spacebuilder.Microblog.EventModules
 
 
         /// <summary>
-        /// 微博操作日志事件处理
+        /// 微博操作文章事件处理
         /// </summary>
         private void MicroblogOperationLogEventModule_After(MicroblogEntity senders, CommonEventArgs eventArgs)
         {

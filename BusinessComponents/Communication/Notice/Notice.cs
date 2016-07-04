@@ -119,7 +119,7 @@ namespace Tunynet.Common
         }
 
         /// <summary>
-        /// 所属对象名称（例如：日志）
+        /// 所属对象名称（例如：文章）
         /// </summary>
         [Ignore]
         public string Owner

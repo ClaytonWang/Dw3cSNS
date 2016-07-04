@@ -76,7 +76,7 @@ namespace Spacebuilder.Common
             string manageIndexUrl = SiteUrls.Instance().ManageIndex();
             string rebuildIndexUrl = SiteUrls.Instance().RebuildIndex(code);
 
-            #region 操作日志
+            #region 操作文章
             OperationLogEntry log = new OperationLogEntry();
             log.DateCreated = DateTime.UtcNow;
             log.OperatorUserId = currentUser.UserId;

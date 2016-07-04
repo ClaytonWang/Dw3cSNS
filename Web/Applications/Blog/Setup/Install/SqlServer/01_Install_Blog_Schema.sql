@@ -119,7 +119,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'租户类型Id
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'OwnerId'))
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'拥有者Id（例如：用户Id、群组Id）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'OwnerId'
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'UserId'))
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'日志作者UserId' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'UserId'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'文章作者UserId' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'UserId'
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'Author'))
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'作者' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'Author'
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'Subject'))
@@ -131,7 +131,7 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'摘要' , @lev
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'IsDraft'))
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否草稿' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'IsDraft'
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'IsLocked'))
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否锁定（锁定的日志不允许评论）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'IsLocked'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否锁定（锁定的文章不允许评论）' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'IsLocked'
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'IsEssential'))
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否精华' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'spb_BlogThreads', @level2type=N'COLUMN',@level2name=N'IsEssential'
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'SCHEMA',N'dbo', N'TABLE',N'spb_BlogThreads', N'COLUMN',N'IsSticky'))

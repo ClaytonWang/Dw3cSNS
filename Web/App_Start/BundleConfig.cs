@@ -21,29 +21,30 @@ namespace Spacebuilder.Web
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            //»ù´¡ÑùÊ½
+            //åŸºç¡€æ ·å¼
             bundles.Add(new StyleBundle("~/Bundle/Styles/Site")
                 .Include("~/Themes/Shared/Styles/tn.core_src.css", new FixCssRewrite())
                 .Include("~/Themes/Shared/Styles/tn.widgets_src.css", new FixCssRewrite())
                 .Include("~/Themes/Shared/Styles/tn.theme_src.css", new FixCssRewrite())
                 .Include("~/Themes/Shared/Styles/common.css", new FixCssRewrite())
-                .Include("~/Scripts/jquery/artDialog/skins/default.css", new FixCssRewrite()));
+                .Include("~/Scripts/jquery/artDialog/skins/default.css", new FixCssRewrite())
+                .Include("~/Themes/Shared/bootstrap/css/font-awesome.css", new FixCssRewrite()));
 
-            //´úÂë¸ßÁÁ²å¼şÑùÊ½
+            //ä»£ç é«˜äº®æ’ä»¶æ ·å¼
             bundles.Add(new StyleBundle("~/Bundle/Styles/CodeHighlighter")
                 .Include("~/Scripts/syntaxHighlighter/styles/shCore.css", new FixCssRewrite())
                 .Include("~/Scripts/syntaxHighlighter/styles/shThemeDefault.css", new FixCssRewrite()));
 
-            //Í¼Æ¬µ¯³ö²ãÑùÊ½
+            //å›¾ç‰‡å¼¹å‡ºå±‚æ ·å¼
             bundles.Add(new StyleBundle("~/Bundle/Styles/FancyBox")
                 .Include("~/Scripts/jquery/fancybox/jquery.fancybox.css", new FixCssRewrite())
                 .Include("~/Scripts/jquery/fancybox/helpers/jquery.fancybox-buttons.css", new FixCssRewrite()));
 
-            //ÑÕÉ«Ñ¡ÔñÆ÷ÑùÊ½
+            //é¢œè‰²é€‰æ‹©å™¨æ ·å¼
             bundles.Add(new StyleBundle("~/Bundle/Styles/ColorPicker")
                 .Include("~/Scripts/jquery/ColorSelect/css/jquery.bigcolorpicker.css", new FixCssRewrite()));
 
-            //Í¼Æ¬²Ã¼ô
+            //å›¾ç‰‡è£å‰ª
             bundles.Add(new StyleBundle("~/Bundle/Styles/ImageCrop")
                 .Include("~/Scripts/jquery/Jcrop/jquery.Jcrop.css", new FixCssRewrite()));
 
@@ -51,11 +52,11 @@ namespace Spacebuilder.Web
             bundles.Add(new StyleBundle("~/Bundle/Styles/BootStrap")
                 .Include("~/Themes/Shared/bootstrap/css/bootstrap.min.css", new FixCssRewrite()));
 
-            //jQueryÀà¿â
+            //jQueryç±»åº“
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/jQuery")
             .Include("~/Scripts/jquery/jquery-1.7.1.js"));
 
-            //Õ¾µã»ù´¡½Å±¾
+            //ç«™ç‚¹åŸºç¡€è„šæœ¬
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/Site")
                 .Include("~/Scripts/jquery/jquery.cookie.js")
                 .Include("~/Scripts/jquery/jquery.hoverIntent.js")
@@ -104,13 +105,13 @@ namespace Spacebuilder.Web
                 .Include("~/Scripts/tunynet/jqueryUI.js")
                 .Include("~/Scripts/tunynet/emailAutoComplete.js"));
 
-            //¶àÎÄ¼şÉÏ´«¿Ø¼ş
+            //å¤šæ–‡ä»¶ä¸Šä¼ æ§ä»¶
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/Uploadify")
             .Include("~/Scripts/jquery/uploadify/jquery.uploadify-3.1.js")
             //.Include("~/Scripts/tunynet/uploadify.js")
             );
 
-            //@ºÃÓÑ¿Ø¼ş
+            //@å¥½å‹æ§ä»¶
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/AtUser")
             .Include("~/Scripts/jquery/AtUser/jquery.caret.js")
             .Include("~/Scripts/jquery/AtUser/jquery.atwho.js")
@@ -118,20 +119,20 @@ namespace Spacebuilder.Web
             .Include("~/Scripts/tunynet/atUser.js")
             );
 
-            //TinyMCE±à¼­Æ÷
+            //TinyMCEç¼–è¾‘å™¨
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/HtmlEditor")
                 .Include("~/Scripts/jquery/Jeditable/jquery.jeditable.js")
                 .Include("~/Scripts/tinymce/jquery.tinymce.js")
                 .Include("~/Scripts/tunynet/htmlEditor.js"));
 
-            //°Ù¶È±à¼­Æ÷
+            //ç™¾åº¦ç¼–è¾‘å™¨
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/UEditor")
                 .Include("~/Scripts/UEditor/ueditor.init.js")
                 .Include("~/Scripts/UEditor/ueditor.config.js")
                 .Include("~/Scripts/UEditor/ueditor.all.js")
                 .Include("~/Scripts/tunynet/emotionSelector.js")
                 .Include("~/Scripts/jquery/Jeditable/jquery.jeditable.js"));
-            //°Ù¶È±à¼­2
+            //ç™¾åº¦ç¼–è¾‘2
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/UMditor")
                 .Include("~/Scripts/UMditor/ueditor.init.js")
                 .Include("~/Scripts/UMditor/ueditor.config.js")
@@ -139,32 +140,32 @@ namespace Spacebuilder.Web
                 .Include("~/Scripts/tunynet/emotionSelector.js")
                 .Include("~/Scripts/jquery/Jeditable/jquery.jeditable.js"));
 
-            //Html±à¼­Æ÷ÖĞµÄ´úÂë¸ßÁÁ²å¼ş
+            //Htmlç¼–è¾‘å™¨ä¸­çš„ä»£ç é«˜äº®æ’ä»¶
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/CodeHighlighter")
             .Include("~/Scripts/syntaxHighlighter/scripts/shCore-2.0.296.js")
             .Include("~/Scripts/syntaxHighlighter/scripts/shLegacy-2.0.296.js")
             .Include("~/Scripts/syntaxHighlighter/scripts/shBrushAllLanguage-2.0.296.js")
             );
 
-            //ÕÕÆ¬ÏêÇéÒ³
+            //ç…§ç‰‡è¯¦æƒ…é¡µ
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/photoViewer")
             .Include("~/Scripts/jquery/imgareaselect/jquery.imgareaselect-0.9.8.js")
             .Include("~/Scripts/jquery/Jcrop/jquery.Jcrop.Js")
             .Include("~/Scripts/jquery/jQueryRotate-2.1.js")
             .Include("~/Scripts/tunynet/plugins/jquery.photoViewer.js"));
 
-            //Í¼Æ¬²Ã¼ô
+            //å›¾ç‰‡è£å‰ª
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/ImageCrop")
             .Include("~/Scripts/jquery/imgareaselect/jquery.imgareaselect-0.9.8.js")
             .Include("~/Scripts/jquery/Jcrop/jquery.Jcrop.Js"));
 
 
-            //ÑÕÉ«Ñ¡ÔñÆ÷
+            //é¢œè‰²é€‰æ‹©å™¨
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/ColorPicker")
             .Include("~/Scripts/tunynet/plugins/jquery.iColorPicker.js")
             .Include("~/Scripts/jquery/ColorSelect/js/jquery.bigcolorpicker.js"));
 
-            //ÆµµÀ»ÃµÆ²¥·Å²å¼ş
+            //é¢‘é“å¹»ç¯æ’­æ”¾æ’ä»¶
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/SliderKit")
             .Include("~/Scripts/jquery/sliderkit/jquery.easing.1.3.js")
             .Include("~/Scripts/jquery/jquery.mousewheel-3.0.6.pack.js")
@@ -177,7 +178,7 @@ namespace Spacebuilder.Web
 
 
 
-            //ÕıÎÄÖĞÊ¹ÓÃµÄÍ¼Æ¬µ¯³ö²ã
+            //æ­£æ–‡ä¸­ä½¿ç”¨çš„å›¾ç‰‡å¼¹å‡ºå±‚
             bundles.Add(new ScriptBundle("~/Bundle/Scripts/FancyBox")
             .Include("~/Scripts/jquery/fancybox/jquery.fancybox.js")
             .Include("~/Scripts/jquery/fancybox/helpers/jquery.fancybox-buttons.js"));

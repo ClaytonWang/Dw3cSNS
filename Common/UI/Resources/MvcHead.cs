@@ -51,7 +51,7 @@ namespace Spacebuilder.Common
             TagBuilder tagBuilder = new TagBuilder("head");
             _writer.WriteLine(tagBuilder.ToString(TagRenderMode.StartTag));
             _writer.WriteLine("<meta http-equiv=\"Content-Type\" content=\"text/html; charset={0}\" />", charset);
-
+            _writer.WriteLine("<meta name=\"viewport\" content=\"width = device-width\" />");
             if (string.IsNullOrEmpty(title))
             {
                 if (pageResourceManager.IsAppendSiteName)

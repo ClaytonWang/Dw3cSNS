@@ -90,16 +90,16 @@ namespace Spacebuilder.Blog
             TenantAttachmentSettings.RegisterSettings(tenantAttachmentSettingsElement);
             TenantCommentSettings.RegisterSettings(tenantCommentSettingsElement);
 
-            //注册日志正文解析器
+            //注册文章正文解析器
             containerBuilder.Register(c => new BlogBodyProcessor()).Named<IBodyProcessor>(TenantTypeIds.Instance().Blog()).SingleInstance();
 
             //注册EventModule
             containerBuilder.Register(c => new BlogActivityReceiverGetter()).Named<IActivityReceiverGetter>(ActivityOwnerTypes.Instance().Blog().ToString()).SingleInstance();
 
             //注册全文检索搜索器
-            containerBuilder.Register(c => new BlogSearcher("日志", "~/App_Data/IndexFiles/Blog", true, 3)).As<ISearcher>().Named<ISearcher>(BlogSearcher.CODE).SingleInstance();
+            containerBuilder.Register(c => new BlogSearcher("文章", "~/App_Data/IndexFiles/Blog", true, 3)).As<ISearcher>().Named<ISearcher>(BlogSearcher.CODE).SingleInstance();
 
-            //日志应用数据统计
+            //文章应用数据统计
             containerBuilder.Register(c => new BlogApplicationStatisticDataGetter()).Named<IApplicationStatisticDataGetter>(this.ApplicationKey).SingleInstance();
         }
 
@@ -110,7 +110,7 @@ namespace Spacebuilder.Blog
         {
             base.Load();
 
-            //注册日志计数服务
+            //注册文章计数服务
             CountService countService = new CountService(TenantTypeIds.Instance().BlogThread());
             
             
@@ -121,7 +121,7 @@ namespace Spacebuilder.Blog
             //需要统计阶段计数时，需注册每日计数服务
             countService.RegisterCountPerDay();
 
-            //注册日志浏览计数服务
+            //注册文章浏览计数服务
             countService.RegisterStageCount(CountTypes.Instance().HitTimes(), 7);
 
             //注册用户计数服务

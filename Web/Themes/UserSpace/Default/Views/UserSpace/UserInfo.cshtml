@@ -55,10 +55,10 @@
         </span>
         @if (isSameUser)
         {
-            if (ThemeService.Validate(PresentAreaKeysOfBuiltIn.UserSpace, UserIdToUserNameDictionary.GetUserId(Url.SpaceKey())))
+            @*if (ThemeService.Validate(PresentAreaKeysOfBuiltIn.UserSpace, UserIdToUserNameDictionary.GetUserId(Url.SpaceKey())))
             {
             @Html.LinkButton(string.Empty, SiteUrls.Instance()._ThemeSettings(PresentAreaKeysOfBuiltIn.UserSpace, user.UserId, true, user.IsUseCustomStyle), size: ButtonSizes.Large, iconType: IconTypes.Skin, htmlAttributes: new { plugin = "dialog" })
-            }
+            }*@
             <a class="tn-button tn-corner-all tn-button-primary tn-button-large" href="@SiteUrls.Instance().EditUserProfile(Url.SpaceKey())" title="编辑资料">
                 <span class="tn-button-text">编辑资料</span></a>
             <div class="tn-instructions">

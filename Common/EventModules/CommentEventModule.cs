@@ -47,7 +47,7 @@ namespace Spacebuilder.Common
                 var senderUser = sender.User();
                 if (urlGetter == null || commentedObject == null)
                     return;
-                //日志有新评论时，自动通知原作者
+                //文章有新评论时，自动通知原作者
                 var toUserIds = new List<long>();
                 //评论相关的atuserid
                 List<long> userids = new AtUserService(TenantTypeIds.Instance().Comment()).GetAtUserIds(sender.Id);

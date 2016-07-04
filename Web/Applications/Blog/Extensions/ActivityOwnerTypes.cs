@@ -22,7 +22,7 @@ namespace Spacebuilder.Blog
     public static class ActivityOwnerTypesExtension
     {
         /// <summary>
-        /// 日志
+        /// 文章
         /// </summary>
         public static int Blog(this ActivityOwnerTypes ActivityOwnerTypes)
         {

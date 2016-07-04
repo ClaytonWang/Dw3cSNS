@@ -42,7 +42,7 @@ namespace Web
 
             Starter.Start();
 
-            //记录Windows事件日志
+            //记录Windows事件文章
             //if (!EventLog.SourceExists(".NET Runtime"))
             //{
             //    EventLog.CreateEventSource(".NET Runtime", "Application");
@@ -65,7 +65,7 @@ namespace Web
             //    return;
             //}
 
-            //记录Windows事件日志
+            //记录Windows事件文章
             //HttpRuntime runtime = (HttpRuntime)typeof(System.Web.HttpRuntime).InvokeMember("_theRuntime",
             //                                                                            BindingFlags.NonPublic
             //                                                                            | BindingFlags.Static

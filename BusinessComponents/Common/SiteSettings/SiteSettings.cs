@@ -68,7 +68,7 @@ namespace Tunynet.Common
             set { siteKey = value; }
         }
 
-        string defaultSiteName = "近乎";
+        string defaultSiteName = "前端○简文";
         /// <summary>
         /// 站点名称
         /// </summary>
@@ -79,7 +79,7 @@ namespace Tunynet.Common
         }
 
 
-        string defaultSiteDescription = "基于asp.net mvc 最强大SNS社区软件";
+        string defaultSiteDescription = "交流技术，沟通想法";
         /// <summary>
         /// 站点描述
         /// </summary>
@@ -89,7 +89,7 @@ namespace Tunynet.Common
             set { defaultSiteDescription = value; }
         }
 
-        string searchMetaDescription = "“近乎”是一款业内领先的SNS社区软件。借助预置的微博、群组、日志、相册、贴吧、问答等应用模块，可以帮助客户快速搭建以用户为中心、用户乐于贡献内容、互动无处不在、易于运营的社区网站。它采用了业内领先的技术体系架构、隐私保护功能、用户评价体系、优异的缓存技术、全文检索技术。可以承载千万级的数据，具备优异的扩展性并提供丰富的API，方便用户进行定制开发或者二次开发。";
+        string searchMetaDescription = "前端○简文是一个基于内容分享的社区";
         /// <summary>
         /// 页面头信息的description
         /// </summary>
@@ -99,7 +99,7 @@ namespace Tunynet.Common
             set { searchMetaDescription = value; }
         }
 
-        string searchMetaKeyWords = "近乎,SNS社区软件处不在、易于运营的社区网站。";
+        string searchMetaKeyWords = "前端○简文,前端开发";
         /// <summary>
         /// 页面头信息的KeyWord
         /// </summary>

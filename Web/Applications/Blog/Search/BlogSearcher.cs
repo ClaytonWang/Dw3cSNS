@@ -21,7 +21,7 @@ using Tunynet.Search;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志搜索器
+    /// 文章搜索器
     /// </summary>
     public class BlogSearcher : ISearcher
     {
@@ -33,7 +33,7 @@ namespace Spacebuilder.Blog
         private PubliclyAuditStatus publiclyAuditStatus;
         private SearchedTermService searchedTermService = new SearchedTermService();
         public static string CODE = "BlogSearcher";
-        public static string WATERMARK = "搜索日志";
+        public static string WATERMARK = "搜索文章";
 
         /// <summary>
         /// 构造函数
@@ -178,7 +178,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 添加索引
         /// </summary>
-        /// <param name="blogThread">待添加的日志</param>
+        /// <param name="blogThread">待添加的文章</param>
         public void Insert(BlogThread blogThread)
         {
             Insert(new BlogThread[] { blogThread });
@@ -187,7 +187,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 添加索引
         /// </summary>
-        /// <param name="blogThreads">待添加的日志</param>
+        /// <param name="blogThreads">待添加的文章</param>
         public void Insert(IEnumerable<BlogThread> blogThreads)
         {
             IEnumerable<Document> docs = BlogIndexDocument.Convert(blogThreads);
@@ -197,7 +197,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 删除索引
         /// </summary>
-        /// <param name="blogThreadId">待删除的日志Id</param>
+        /// <param name="blogThreadId">待删除的文章Id</param>
         public void Delete(long blogThreadId)
         {
             searchEngine.Delete(blogThreadId.ToString(), BlogIndexDocument.ThreadId);
@@ -206,7 +206,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 删除索引
         /// </summary>
-        /// <param name="blogThreadIds">待删除的日志Id列表</param>
+        /// <param name="blogThreadIds">待删除的文章Id列表</param>
         public void Delete(IEnumerable<long> blogThreadIds)
         {
             foreach (var blogThreadId in blogThreadIds)
@@ -218,7 +218,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 更新索引
         /// </summary>
-        /// <param name="blogThread">待更新的日志</param>
+        /// <param name="blogThread">待更新的文章</param>
         public void Update(BlogThread blogThread)
         {
             Document doc = BlogIndexDocument.Convert(blogThread);
@@ -228,7 +228,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 更新索引
         /// </summary>
-        /// <param name="blogThreads">待更新的日志集合</param>
+        /// <param name="blogThreads">待更新的文章集合</param>
         public void Update(IEnumerable<BlogThread> blogThreads)
         {
             IEnumerable<Document> docs = BlogIndexDocument.Convert(blogThreads);
@@ -240,7 +240,7 @@ namespace Spacebuilder.Blog
 
         #region 搜索
         /// <summary>
-        /// 日志分页搜索
+        /// 文章分页搜索
         /// </summary>
         /// <param name="blogQuery">搜索条件</param>
         /// <returns>符合搜索条件的分页集合</returns>
@@ -266,11 +266,11 @@ namespace Spacebuilder.Blog
             PagingDataSet<Document> searchResult = searchEngine.Search(query, filter, sort, blogQuery.PageIndex, blogQuery.PageSize);
             IEnumerable<Document> docs = searchResult.ToList<Document>();
 
-            //解析出搜索结果中的日志ID
+            //解析出搜索结果中的文章ID
             List<long> blogThreadIds = new List<long>();
-            //获取索引中日志的标签
+            //获取索引中文章的标签
             Dictionary<long, IEnumerable<string>> blogTags = new Dictionary<long, IEnumerable<string>>();
-            //获取索引中日志的用户分类名
+            //获取索引中文章的用户分类名
             Dictionary<long, IEnumerable<string>> blogOwnerCategoryNames = new Dictionary<long, IEnumerable<string>>();
 
             foreach (Document doc in docs)
@@ -281,7 +281,7 @@ namespace Spacebuilder.Blog
                 blogOwnerCategoryNames[blogThreadId] = doc.GetValues(BlogIndexDocument.OwnerCategoryName).ToList<string>();
             }
 
-            //根据日志ID列表批量查询日志实例
+            //根据文章ID列表批量查询文章实例
             IEnumerable<BlogThread> blogThreadList = blogThreadService.GetBlogThreads(blogThreadIds);
 
             foreach (var blogThread in blogThreadList)
@@ -310,7 +310,7 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 获取匹配的前几条日志热词
+        /// 获取匹配的前几条文章热词
         /// </summary>
         /// <param name="keyword">要匹配的关键字</param>
         /// <param name="topNumber">前N条</param>
@@ -338,7 +338,7 @@ namespace Spacebuilder.Blog
             //范围
             Dictionary<string, BoostLevel> fieldNameAndBoosts = new Dictionary<string, BoostLevel>();
 
-            //如果查的是相关日志
+            //如果查的是相关文章
             if (blogQuery.IsRelationBlog)
             {
                 fieldNameAndBoosts.Add(BlogIndexDocument.Subject, BoostLevel.Hight);
@@ -414,7 +414,7 @@ namespace Spacebuilder.Blog
             }
 
             //筛选
-            //全部、某人的日志
+            //全部、某人的文章
             if (blogQuery.AllId != 0)
             {
                 if (blogQuery.LoginId != 0)
@@ -427,7 +427,7 @@ namespace Spacebuilder.Blog
                 }
             }
 
-            //过滤可以显示的日志
+            //过滤可以显示的文章
             switch (publiclyAuditStatus)
             {
                 case PubliclyAuditStatus.Again:

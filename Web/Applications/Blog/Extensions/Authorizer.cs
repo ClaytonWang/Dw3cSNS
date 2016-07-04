@@ -19,13 +19,13 @@ using System.Linq;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志权限验证
+    /// 文章权限验证
     /// </summary>
     public static class AuthorizerExtension
     {
         /// <summary>
-        /// 撰写日志/转载日志
-        /// 空间主人撰写空间用户的日志
+        /// 撰写文章/转载文章
+        /// 空间主人撰写空间用户的文章
         /// </summary>
         public static bool BlogThread_Create(this Authorizer authorizer, string spaceKey)
         {
@@ -34,17 +34,17 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 撰写日志/转载日志
-        /// 空间主人撰写空间用户的日志
+        /// 撰写文章/转载文章
+        /// 空间主人撰写空间用户的文章
         /// </summary>
         public static bool BlogThread_Create(this Authorizer authorizer, string spaceKey, out string errorMessage)
         {
             IUser currentUser = UserContext.CurrentUser;
-            errorMessage = "没有权限写日志";
+            errorMessage = "没有权限写文章";
 
             if (currentUser == null)
             {
-                errorMessage = "您必须先登录，才能写日志";
+                errorMessage = "您必须先登录，才能写文章";
                 return false;
             }
 
@@ -55,17 +55,17 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 撰写日志/转载日志(暂时用于移动端)
-        /// 空间主人撰写空间用户的日志
+        /// 撰写文章/转载文章(暂时用于移动端)
+        /// 空间主人撰写空间用户的文章
         /// </summary>
         public static bool BlogThread_Create(this Authorizer authorizer, IUser currentUser, out string errorMessage)
         {
             //IUser currentUser = UserContext.CurrentUser;
-            errorMessage = "没有权限写日志";
+            errorMessage = "没有权限写文章";
 
             if (currentUser == null)
             {
-                errorMessage = "您必须先登录，才能写日志";
+                errorMessage = "您必须先登录，才能写文章";
                 return false;
             }
 
@@ -76,8 +76,8 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 编辑日志
-        /// 空间主人或管理员可以编辑空间用户的日志（置顶也使用该规则）
+        /// 编辑文章
+        /// 空间主人或管理员可以编辑空间用户的文章（置顶也使用该规则）
         /// </summary>
         public static bool BlogThread_Edit(this Authorizer authorizer, BlogThread blogThread)
         {
@@ -97,8 +97,8 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 删除日志
-        /// 空间主人或管理员可以删除空间用户的日志
+        /// 删除文章
+        /// 空间主人或管理员可以删除空间用户的文章
         /// </summary>
         public static bool BlogThread_Delete(this Authorizer authorizer, BlogThread blogThread)
         {
@@ -117,9 +117,9 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 查看日志
-        /// 仅自己可见的只能是日志作者或管理员可以查看
-        /// 部分可见的只能是日志作者、指定可见的用户或管理员可以查看
+        /// 查看文章
+        /// 仅自己可见的只能是文章作者或管理员可以查看
+        /// 部分可见的只能是文章作者、指定可见的用户或管理员可以查看
         /// </summary>
         public static bool BlogThread_View(this Authorizer authorizer, BlogThread blogThread)
         {
@@ -154,8 +154,8 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 管理日志
-        /// 管理员可以管理所有日志，精华、管理员推荐也使用该规则
+        /// 管理文章
+        /// 管理员可以管理所有文章，精华、管理员推荐也使用该规则
         /// </summary>
         public static bool BlogThread_Manage(this Authorizer authorizer)
         {
@@ -168,7 +168,7 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 关注日志
+        /// 关注文章
         /// 必须是登录用户
         /// </summary>
         public static bool BlogThread_Follow(this Authorizer authorizer)
@@ -182,13 +182,13 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 评论日志
-        /// 1.锁定的日志不允许评论；
+        /// 评论文章
+        /// 1.锁定的文章不允许评论；
         /// 2.对于匿名用户，根据站点匿名用户；
         /// </summary>
         public static bool BlogComment_Create(this Authorizer authorizer, BlogThread blogThread)
         {
-            //锁定的日志不允许评论
+            //锁定的文章不允许评论
             if (blogThread.IsLocked)
             {
                 return false;

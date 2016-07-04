@@ -5,7 +5,7 @@
     var userId = "";
     var num = "0";
     var loginId = "0";
-    //搜索如果没有登录，只显示"当前空间主人的日志"，并且选中"当前空间主人的日志"
+    //搜索如果没有登录，只显示"当前空间主人的文章"，并且选中"当前空间主人的文章"
     if (currentUser == null)
     {
         userId = spaceUser.UserId.ToString();
@@ -13,13 +13,13 @@
     }
     else
     {
-        //如果当前登录用户是当前空间的用户，搜索只显示我的日志，并且选中我的日志
+        //如果当前登录用户是当前空间的用户，搜索只显示我的文章，并且选中我的文章
         if (currentUser.UserId == spaceUser.UserId)
         {
             num = "1";
             loginId = currentUser.UserId.ToString();
         }
-        //如果当前登录用户不是当前空间的用户，搜索显示我的日志和"当前空间主人的日志"，并且选中"当前空间主人的日志"
+        //如果当前登录用户不是当前空间的用户，搜索显示我的文章和"当前空间主人的文章"，并且选中"当前空间主人的文章"
         else
         {
             userId = spaceUser.UserId.ToString();
@@ -38,18 +38,18 @@
     </div>
 </div>
 @*如果不是空间主人*@
-@if (currentUser == null || currentUser.UserId != spaceUser.UserId)
+@*@if (currentUser == null || currentUser.UserId != spaceUser.UserId)
 {
 <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-blog-subscribe">
     <div class="tn-box-content tn-widget-content tn-corner-all">
         <ul class="tn-subscribe tn-list">
-            <li><a class="tn-action tn-action-text-icon" href="@SiteUrls.Instance().BlogRss(Url.SpaceKey())"><span class="tn-icon tn-icon-feed"></span><span class="tn-action-text">订阅日志</span></a></li>
+            <li><a class="tn-action tn-action-text-icon" href="@SiteUrls.Instance().BlogRss(Url.SpaceKey())"><span class="tn-icon tn-icon-feed"></span><span class="tn-action-text">订阅文章</span></a></li>
         </ul>
     </div>
 </div>
-}
+}*@
 @Html.ScriptBlock(@<script type="text/javascript">
-    $("#blog-keyword").watermark("搜索日志");
+    $("#blog-keyword").watermark("搜索文章");
     $(function () {
         $("#blog-search").click(function () {
             searchblog();

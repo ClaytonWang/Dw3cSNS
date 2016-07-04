@@ -68,7 +68,7 @@ namespace Spacebuilder.Group
         {
             //设计要点
             //1、使用AuditService设置审核状态；
-            //2、需要触发的事件参见《设计说明书-日志》     
+            //2、需要触发的事件参见《设计说明书-文章》     
             //3、单独调用标签服务设置标签
             //4、使用 IdGenerator.Next() 生成GroupId
             EventBus<GroupEntity>.Instance().OnBefore(group, new CommonEventArgs(EventOperationType.Instance().Create()));

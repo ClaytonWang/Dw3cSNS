@@ -1,15 +1,18 @@
 ﻿@{
     SiteSettings siteSettings = ViewData.Get<SiteSettings>("SiteSettings", null);
 }
-<div class="tn-footer-legal">
+@*<div class="footer-link">
     @if (siteSettings != null)
     {
         <p>
             @Html.Raw(siteSettings.Links)
         </p>
     }
+</div>*@
+<div class="tn-footer-legal">
     <p>
-        Powered by <a href="http://www.jinhusns.com" target="_blank">近乎</a> v4.3 ©2005-2015 Tunynet Inc.
+        Copyright © @DateTime.Now.Year
+        <a href="http://www.dw3c.com/">前端开发</a> | ©<a href="http://dw3c.com" target="_blank">dw3c.com </a> All Rights Reserved | <a href="http://www.miitbeian.gov.cn/">沪ICP备13027045号</a>
         @if (siteSettings != null)
         {
             @Html.Raw(siteSettings.BeiAnScript)
@@ -19,5 +22,6 @@
 </div>
 <div class="tn-return-to-top" id="to_top">
     <a href="#" class="tn-button tn-corner-all tn-button-secondary tn-button-hollow tn-button-icon-only">
-        <span class="tn-icon tn-icon-top"></span><span class="tn-button-text">返回顶部</span></a>
+        <span class="tn-icon tn-icon-top"></span><span class="tn-button-text">返回顶部</span>
+    </a>
 </div>

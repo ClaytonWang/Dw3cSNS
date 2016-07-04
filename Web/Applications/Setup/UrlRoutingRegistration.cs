@@ -11,7 +11,7 @@ using System.Configuration;
 namespace Spacebuilder.Setup
 {
     /// <summary>
-    /// 日志路由设置
+    /// 文章路由设置
     /// </summary>
     public class UrlRoutingRegistration : AreaRegistration
     {

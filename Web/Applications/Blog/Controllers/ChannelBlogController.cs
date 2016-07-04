@@ -24,9 +24,9 @@ using DevTrends.MvcDonutCaching;
 namespace Spacebuilder.Blog.Controllers
 {
     /// <summary>
-    /// 日志频道控制器
+    /// 文章频道控制器
     /// </summary>
-    [TitleFilter(TitlePart = "日志", IsAppendSiteName = true)]
+    [TitleFilter(TitlePart = "", IsAppendSiteName = true)]
     [Themed(PresentAreaKeysOfBuiltIn.Channel, IsApplication = true)]
     [AnonymousBrowseCheck]
     public class ChannelBlogController : Controller
@@ -40,10 +40,10 @@ namespace Spacebuilder.Blog.Controllers
         private BlogSettings blogSettings = DIContainer.Resolve<ISettingsManager<BlogSettings>>().Get();
         private IUser currentUser = UserContext.CurrentUser;
 
-        #region 日志频道页面
+        #region 文章频道页面
 
         /// <summary>
-        /// 日志频道首页
+        /// 文章频道首页
         /// </summary>
         public ActionResult Home(int pageIndex = 1)
         {
@@ -53,7 +53,7 @@ namespace Spacebuilder.Blog.Controllers
                 return PartialView("_List", blogs);
             }
 
-            //获取推荐日志
+            //获取推荐文章
             //图片推荐（幻灯片）
             IEnumerable<RecommendItem> recommendPicItems = recommendService.GetTops(5, blogSettings.RecommendPicTypeId);
             int linkCount = recommendPicItems.Where(n => n.IsLink).Where(n => !string.IsNullOrEmpty(n.FeaturedImage)).Count();
@@ -69,13 +69,13 @@ namespace Spacebuilder.Blog.Controllers
 
             ViewData["recommendCount"] = recommendCount;
             ViewData["recommendWordItems"] = recommendWordItems;
-            pageResourceManager.InsertTitlePart("日志首页");
+            pageResourceManager.InsertTitlePart("首页");
 
             return View(blogs);
         }
 
         /// <summary>
-        /// 日志分类列表页
+        /// 文章分类列表页
         /// </summary>
         /// <param name="categoryId">分类id</param>
         public ActionResult ListByCategory(long categoryId, int pageIndex = 1)
@@ -98,37 +98,37 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 日志排行页
+        /// 文章排行页
         /// </summary>
-        /// <param name="rank">区分最新日志，热门日志，热评日志，精华日志</param>
+        /// <param name="rank">区分最新文章，热门文章，热评文章，精华文章</param>
         //[DonutOutputCache(CacheProfile = "Stable")]
         public ActionResult ListByRank(string rank, int pageIndex = 1)
         {
             PagingDataSet<BlogThread> blogs = null;
 
-            //最新日志
+            //最新文章
             if (rank == "new")
             {
                 blogs = blogService.Gets(TenantTypeIds.Instance().User(), null, false, true, null, null, null, SortBy_BlogThread.DateCreated_Desc, 20, pageIndex);
-                pageResourceManager.InsertTitlePart("最新日志");
+                pageResourceManager.InsertTitlePart("最新文章");
             }
-            //热门日志
+            //热门文章
             else if (rank == "hot")
             {
                 blogs = blogService.Gets(TenantTypeIds.Instance().User(), null, false, true, null, null, null, SortBy_BlogThread.StageHitTimes, 20, pageIndex);
-                pageResourceManager.InsertTitlePart("热门日志");
+                pageResourceManager.InsertTitlePart("热门文章");
             }
-            //热评日志
+            //热评文章
             else if (rank == "comment")
             {
                 blogs = blogService.Gets(TenantTypeIds.Instance().User(), null, false, true, null, null, null, SortBy_BlogThread.CommentCount, 20, pageIndex);
-                pageResourceManager.InsertTitlePart("热评日志");
+                pageResourceManager.InsertTitlePart("热评文章");
             }
-            //精华日志
+            //精华文章
             else
             {
                 blogs = blogService.Gets(TenantTypeIds.Instance().User(), null, false, true, null, null, true, SortBy_BlogThread.DateCreated_Desc, 20, pageIndex);
-                pageResourceManager.InsertTitlePart("精华日志");
+                pageResourceManager.InsertTitlePart("精华文章");
             }
 
             ViewData["rank"] = rank;
@@ -136,7 +136,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 标签显示日志列表
+        /// 标签显示文章列表
         /// </summary>
         public ActionResult ListByTag(string tagName, int pageIndex = 1)
         {
@@ -189,7 +189,7 @@ namespace Spacebuilder.Blog.Controllers
             Dictionary<long, long> userThreadCount = new Dictionary<long, long>();
             foreach (long userId in userIds)
             {
-                //用户日志数
+                //用户文章数
                 long threadCount = ownerDataService.GetLong(userId, OwnerDataKeys.Instance().ThreadCount());
                 userThreadCount[userId] = threadCount;
             }
@@ -199,7 +199,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 热评日志
+        /// 热评文章
         /// </summary>
         [ChildActionOnly]
         [DonutOutputCache(CacheProfile = "Stable")]
@@ -211,7 +211,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 推荐日志
+        /// 推荐文章
         /// </summary>
         [DonutOutputCache(CacheProfile = "Frequently")]
         public ActionResult _Recommend(int topNum = 6, string recommendTypeId = null)
@@ -222,10 +222,10 @@ namespace Spacebuilder.Blog.Controllers
 
         #endregion
 
-        #region 日志全文检索
+        #region 文章全文检索
 
         /// <summary>
-        /// 日志搜索
+        /// 文章搜索
         /// </summary>
         public ActionResult Search(BlogFullTextQuery query)
         {
@@ -262,18 +262,18 @@ namespace Spacebuilder.Blog.Controllers
             //设置页面Meta
             if (string.IsNullOrWhiteSpace(query.Keyword))
             {
-                pageResourceManager.InsertTitlePart("日志搜索");//设置页面Title
+                pageResourceManager.InsertTitlePart("文章搜索");//设置页面Title
             }
             else
             {
-                pageResourceManager.InsertTitlePart(query.Keyword + "的相关日志");//设置页面Title
+                pageResourceManager.InsertTitlePart(query.Keyword + "的相关文章");//设置页面Title
             }
 
             return View(blogThreads);
         }
 
         /// <summary>
-        /// 日志全局搜索
+        /// 文章全局搜索
         /// </summary>
         public ActionResult _GlobalSearch(BlogFullTextQuery query, int topNumber)
         {
@@ -288,7 +288,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 日志快捷搜索
+        /// 文章快捷搜索
         /// </summary>
         public ActionResult _QuickSearch(BlogFullTextQuery query, int topNumber)
         {
@@ -305,7 +305,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 日志搜索自动完成
+        /// 文章搜索自动完成
         /// </summary>
         public JsonResult SearchAutoComplete(string keyword, int topNumber)
         {

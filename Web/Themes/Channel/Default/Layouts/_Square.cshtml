@@ -3,6 +3,7 @@
 @using (Html.BeginHead())
 {
     @Styles.Render("~/Bundle/Styles/Site")
+    @Styles.Render("~/Bundle/Styles/BootStrap")
     @Html.RenderStyles() 
      @Scripts.Render("~/Bundle/Scripts/jQuery")
 }
@@ -14,29 +15,49 @@
             </div>
         </div>
         <div id="tn-content" class="tn-content-bg">
-            <div class="tn-wrapper">
-                @Html.AdvertisingPosition("10000000001")
-                <div class="tn-grid-3-1">
-                    <div class="tn-unit tn-first">
-                        <div class="tnc-main">
-                            @RenderBody()
-                        </div>
+            <div class="tn-grid-1-3">
+                <div class="tn-unit tn-first">
+                    <div class="tnc-aside">
+                        @RenderSection("Aside", required: false)
                     </div>
-                    <div class="tn-unit">
-                        <div class="tnc-aside">
-                            @RenderSection("Aside")
-                        </div>
+                </div>
+                <div class="tn-unit">
+                    <div class="page-title">
+                        <ul>
+                            <li><a href="#">发现</a></li>
+                            <li><a href="#">关注</a></li>
+                            <li><a href="#">精选</a></li>
+                        </ul>
+                    </div>
+                
+
+                    <div class="tnc-main">
+                        @RenderBody()
                     </div>
                 </div>
             </div>
         </div>
         <div id="tn-footer" class="tn-footer-bg">
             <div class="tn-wrapper">
-                @Html.Action("_SiteLinks", "Channel", new { area = "Common" })
+                @*@Html.Action("_SiteLinks", "Channel", new { area = "Common" })*@
                 @Html.Action("_Footer", "Channel", new { area = "Common" })
             </div>
         </div>
     </div>
+    <div class="tn-search-box">
+        @using (Html.BeginForm("GlobalSearch", "Channel", FormMethod.Get, new { id = "quickSearchForm" }))
+        {
+            <input type="text" class="tn-search-input tn-input-medium tn-border-gray tn-border-tbl"
+                   id="keyword" name="keyword" autocomplete="off" />
+            <span id="button-search-header" class="tn-search-button tn-search-ico-button tn-border-gray tn-bg-gray required">
+                <button class="btn btn-default">
+                    <span class="tn-icon tn-smallicon-find">搜索</span>
+                </button>
+            </span>
+        }
+    </div>
+
+    @Html.Action("_QuickSearch", "Channel", new { area = "Common" })
     @Scripts.Render("~/Bundle/Scripts/Site")
     @RenderSection("Scripts", false)
     @Html.RenderScripts()

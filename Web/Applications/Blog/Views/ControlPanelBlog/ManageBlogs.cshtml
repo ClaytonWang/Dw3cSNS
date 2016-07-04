@@ -27,10 +27,10 @@
                         <div class="tn-box-content tn-widget-content tn-corner-bottom">
                             <ul class="tn-side-menu tnc-operation">
                                 <li class="tn-border-dashed tn-border-gray tn-border-bottom"><a href="@SiteUrls.Instance().ManageSiteCategories(TenantTypeIds.Instance().BlogThread())">
-                                    <span class="tn-icon tn-smallicon-slide-next" title="日志类别管理"></span>日志类别管理</a>
+                                    <span class="tn-icon tn-smallicon-slide-next" title="文章类别管理"></span>文章类别管理</a>
                                 </li>
                                 <li class="tn-border-dashed tn-border-gray tn-border-bottom"><a href="@SiteUrls.Instance().ManageTags(TenantTypeIds.Instance().BlogThread())">
-                                    <span class="tn-icon tn-smallicon-slide-next" title="日志标签管理"></span>日志标签管理</a>
+                                    <span class="tn-icon tn-smallicon-slide-next" title="文章标签管理"></span>文章标签管理</a>
                                 </li>
                             </ul>
                         </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="tnc-ctn-center">
             <h1>
-                <span>日志管理</span></h1>
+                <span>文章管理</span></h1>
             <div class="tnc-ctnright-list">
                 <div class="tn-manager-search tn-helper-clearfix">
                     <div class="tnc-search-adminform">
@@ -180,7 +180,7 @@
                                                    {
                                                     <li>@Html.Link("取消精华", SiteUrls.Instance()._BlogControlPanelSetEssential(blog.ThreadId, false), "取消精华", new { @class = "tn-item-link tnui-set-essential" })</li>
                                                    }
-                                                   <li>@Html.Link("删除", SiteUrls.Instance()._BlogControlPanelDelete(blog.ThreadId), "删除日志", new { @class = "tn-item-link tnui-delete-blogid" })</li>
+                                                   <li>@Html.Link("删除", SiteUrls.Instance()._BlogControlPanelDelete(blog.ThreadId), "删除文章", new { @class = "tn-item-link tnui-delete-blogid" })</li>
                                                    @if (blog.AuditStatus == AuditStatus.Success)
                                                    {
                                                    <li>@Html.Link("推荐", SiteUrls.Instance()._RecommendItem(TenantTypeIds.Instance().BlogThread(), blog.ThreadId, blog.Subject, userId: blog.UserId), "推荐", new { @class = "tn-item-link tnui-set-category", plugin = "dialog" })</li>
@@ -246,7 +246,7 @@
             e.preventDefault();
 
             if (!$("input[name='threadIds']:checked").length) {
-                alert("请至少选择一条日志进行操作！");
+                alert("请至少选择一条文章进行操作！");
                 return false;
             }
 
@@ -264,7 +264,7 @@
             e.preventDefault();
 
             if (!$("input[name='threadIds']:checked").length) {
-                alert("请至少选择一条日志进行操作！");
+                alert("请至少选择一条文章进行操作！");
                 return false;
             }
 
@@ -297,7 +297,7 @@
             e.preventDefault();
 
             if (!$("input[name='threadIds']:checked").length) {
-                alert("请至少选择一条日志进行操作！");
+                alert("请至少选择一条文章进行操作！");
                 return false;
             }
 
@@ -331,7 +331,7 @@
             var blogIds = getCheckedIds();
             if (blogIds == null || blogIds == "") {
                 $(this).removeAttr("plugin");
-                alert("请至少选择一条日志进行操作！");
+                alert("请至少选择一条文章进行操作！");
                 return;
             }
             else {

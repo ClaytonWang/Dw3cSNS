@@ -1,0 +1,197 @@
+﻿@model PagingDataSet<VoteThread>
+@{
+    Layout = "_ControlPanel";
+    var userId = ViewData.Get<long?>("userId", null);
+    AuditStatus? auditStatus = Request.QueryString.Get<AuditStatus?>("auditStatus", null);
+    SelectList categoryList = ViewData.Get<SelectList>("categoryList", null);
+    var spaceKey = UserContext.CurrentUser.UserName;  
+}
+<div class="tn-block tnc-ctnborder">
+    <div class="tnc-main">
+        <div class="tnc-rightvar tn-open">
+            <div class="tnc-settings-icon" plugin="ShortcutMenu">
+                <a href="#"></a>
+            </div>
+           
+        </div>
+        <div class="tnc-ctn-center">
+            <h1><span>投票管理</span></h1>
+            <div class="tnc-ctnright-list">
+                <div class="tn-manager-search tn-helper-clearfix">
+                    <div class="tnc-search-adminform">
+                        @using (Html.BeginForm("ManageVote", "ControlPanelContent", FormMethod.Get))
+                        { 
+                            <div class="tn-form-row">
+                                <label class="tn-form-label">
+                                    标题关键字：</label>
+                                @Html.TextBox("subjectKeyWord", Request.QueryString.Get<string>("subjectKeyWord", string.Empty), InputWidthTypes.Medium)
+                            </div>
+                            <div class="tn-form-row">
+                                <label class="tn-form-label">
+                                    发布人：</label>
+                                @Html.UserSelector("userId", userId)
+                            </div>
+                            <div class="tn-form-row">
+                                <label class="tn-form-label">
+                                    审核状态：</label>
+                                @(Html.EnumDropDownList<AuditStatus?>("auditStatus", auditStatus, "全部", new { @class = "tn-dropdownlist" }))
+                            </div>                           
+                            <div class="tn-form-row">
+                                <label class="tn-form-label">
+                                    发布时间：
+                                </label>
+                                @Html.DateTimePicker("minDate", new DateTimePicker().SetDateFormat("yyyy-MM-dd").SetMaxDate("0").SetMinDate("-10Y"))
+                                到
+                                @Html.DateTimePicker("maxDate", new DateTimePicker().SetDateFormat("yyyy-MM-dd").SetMaxDate("10Y").SetMinDate("-10Y"))
+                            </div>
+                            <div class="tn-form-row">
+                                <label class="tn-form-label">
+                                </label>
+                                @Html.Button("搜索", ButtonTypes.Submit, HighlightStyles.Primary, htmlAttributes: new { @class = "tn-button-text", id = "searchContentItems" })
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="tnc-content-manage">
+                    <div class="tn-list-header">
+                        <div class="tn-toolbar-area">
+                         @*   @Html.LinkButton("发布活动", SiteUrls.Instance().EditEvent(), iconType: IconTypes.SmallAdd, htmlAttributes: new { id = "add-Event" })*@
+                            @Html.LinkButton("通过审核", SiteUrls.Instance().VoteUpdateAuditStatus(true), iconType: IconTypes.SmallAccept, htmlAttributes: new { id = "audit-success" })
+                            @Html.LinkButton("不通过审核", SiteUrls.Instance().VoteUpdateAuditStatus(false), iconType: IconTypes.SmallStop, htmlAttributes: new { id = "audit-fail" })
+                            @*@Html.LinkButton("设置分类", SiteUrls.Instance()._BlogControlPanelSetCategory(), iconType: IconTypes.SmallSet, htmlAttributes: new { id = "set-category" })*@
+                            @Html.LinkButton("删除", SiteUrls.Instance()._DeleteVoteThreads(spaceKey), iconType: IconTypes.SmallCross, htmlAttributes: new { id = "contentitem-delete" })
+                        </div>
+                    </div>
+                    <form id="form-contentitem" method="post" action="#" novalidate="novalidate">
+                        <table class="tn-table-grid">
+                            <tbody>
+                                <tr class="tn-table-grid-header">
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">
+                                        <input type="checkbox" name="checkbox" id="select-all" class="tn-checkbox">
+                                    </th>
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">标题
+                                    </th>
+                                  @*  <th class="tn-border-gray tn-border-bottom tn-text-note">开始时间
+                                    </th>
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">截至时间
+                                    </th>*@
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">创建人
+                                    </th>
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">投票人数
+                                    </th>
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">审核状态
+                                    </th>
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">发布时间
+                                    </th>
+                                    <th class="tn-border-gray tn-border-bottom tn-text-note">操作
+                                    </th>
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="tn-table-grid-row" id="contentitem-@item.Id">
+                                        <td class="tn-border-gray tn-border-bottom tn-width-check">
+                                            @Html.SipmleCheckBox("VoteIds", item.Id, false, new { @class = "tnui-blog-id" })
+                                        </td>
+                                        <td class="tn-border-gray tn-border-bottom  tn-width-auto">
+                                            
+                                            @Html.Link(StringUtility.Trim(item.Title, 8),SiteUrls.Instance().VoteDail(item.Id),item.Title, null, HyperLinkTarget._blank)
+                                         @*   @Html.Link(StringUtility.Trim(item.Title, 8),SiteUrls.Instance().EventDetail(item.Id), item.Title, null, HyperLinkTarget._blank)*@
+                                        </td>
+                                        @*<td class="tn-border-gray tn-border-bottom tn-width-datetime tn-nowrap">
+                                            @item.DateCreated.ToShortDateString()
+                                        </td>
+                                        <td class="tn-border-gray tn-border-bottom tn-width-datetime tn-nowrap">
+                                            @item.EndDate.ToShortDateString()
+                                        </td>*@
+                                        <td class="tn-border-gray tn-border-bottom tn-width-user-name tn-nowrap">
+                                            @UserIdToNickNameDictionary.GetNickName(item.UserId)
+                                            @*@Html.Link(item.User == null ? " " : item.User.DisplayName, SiteUrls.Instance().EventUser(item.LeadUserId), item.User == null ? " " : item.User.DisplayName, htmlAttributes: new { @class = "tn-user-name" }, navigateTarget: HyperLinkTarget._blank)*@
+                                        </td>
+                                        <td class="tn-border-gray tn-border-bottom tn-nowrap">
+                                            @item.MemberCount
+                                        </td>
+                                        <td class="tn-border-gray tn-border-bottom tn-width-icon1 tn-nowrap">
+                                            @Html.AuditStatusIcon(item.AuditStatus)
+                                        </td>                                     
+                                        <td class="tn-border-gray tn-border-bottom tn-width-datetime tn-nowrap">
+                                            @item.DateCreated.ToFriendlyDate()
+                                        </td>
+                                        <td class="tn-border-gray tn-border-bottom tn-width-action2 tn-nowrap">                      
+                                            @Html.Link("删除",SiteUrls.Instance()._DeleteVoteThreads(spaceKey, item.Id), "删除", new { @class = "tn-item-link tnui-delete-contentitemid" })                                      
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                    @if (Model == null || Model.Count == 0)
+                    {
+                        <div class="tn-no-data">
+                            此栏目下还没有投票。
+                            @*@Html.Link("发布新活动", SiteUrls.Instance().EditEvent(), "发布新活动", null, HyperLinkTarget._blank)*@
+                        </div>
+                    }
+                    <div class="tn-pagination">
+                        @Html.PageSizeDropdownList("PageSize")
+                        @Html.PagingButton(Model, PaginationMode.NumericNextPrevious)
+                        @Html.PagingResults(Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        //不可逆操作的脚本
+        $("#contentitem-delete").click(function (e) {
+            e.preventDefault();
+            if (!$("input[name='VoteIds']:checked").length) {
+                alert("至少选择一条数据");
+                return;
+            }
+            var _this = $(this);
+            art.dialog.confirm('您确认要删除吗？', function () {
+                $("#form-contentitem").ajaxSubmit({
+                    success: function (data) {
+                        art.dialog.tips(data.MessageContent, 1.5, data.MessageType, function () {
+                            window.location.reload();
+                        });
+                    },
+                    url: _this.attr("href")
+                });
+            });
+        });
+        //单个删除
+        $('.tnui-delete-contentitemid').click(function (e) {
+            e.preventDefault();
+            var url = $(this).attr("href");
+            art.dialog.confirm('您确认要删除吗？', function () {
+                $.post(url, function (data) {
+                    art.dialog.tips("删除成功！", 1.5, 1, function () {
+                        window.location.reload(true);
+                    });
+                });
+            });
+        });
+        //点通过审核
+        $("a[id^='audit-']").click(function (e) {
+            e.preventDefault();
+
+            if (!$("input[name='VoteIds']:checked").length) {
+                alert("请至少选择一条！");
+                return false;
+            }
+            var url = $(this).attr("href");
+            $.post(url, $("form#form-contentitem").serialize(), function (data) {
+                art.dialog.tips(data.MessageContent, 1.5, data.MessageType, function () {
+                    window.location.reload(true);
+                });
+            })
+        });
+        //全选按钮
+        $("#select-all").click(function (e) {
+            $("input[name='VoteIds']").attr("checked", this.checked);
+        });
+    });
+</script>

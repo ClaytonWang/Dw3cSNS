@@ -1,0 +1,311 @@
+﻿@model VoteEditModel
+@{
+    //Layout = "app-1col";
+    string url = Url.Action("Create", "MicroBlog", new { area = "MicroBlog", spacekey = UserContext.CurrentUser.UserName, microblogBody = "" });
+    string spacekey = UserContext.CurrentUser.UserName;
+    int attachmentLength = ViewData.Get<int>("attachmentLength", 0);
+    string allowedFileExtensions = ViewData.Get<string>("allowedFileExtensions", null);
+  
+}
+
+<div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-edit">
+    <div class="tn-box-content tn-widget-content tn-corner-all">
+        <div class="tn-main-heading tn-border-gray tn-border-bottom">
+            <div class="tn-option">
+                <a class="tn-action" href="#"><span class="tn-action-text">@*返回*@</span></a>
+            </div>
+            <h2>发起投票</h2>
+        </div>
+        @using (Html.BeginAjaxForm("_AddNewVote", "Channel", FormMethod.Post, new AjaxFormOptions { OnSuccessCallBack = "OnSuccessCallBack" }))
+        {  
+            <div class="tn-form-box">
+                <table>
+                    <tr>
+                        <th>投票标题：
+                        </th>
+                        <td>
+                            @*<input type="text" class="tn-textbox tn-input-longest tn-border-gray">*@
+                            @Html.TextBoxFor(n => n.Title, InputWidthTypes.Longest, new RouteValueDictionary { { "class", "tn-textbox tn-input-longest tn-border-gray" } })
+                            @Html.ValidationMessageFor(n => n.Title)
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>添加投票说明：
+                        </th>
+                        <td>
+                            @*<textarea name="" cols="" rows="" class="tn-textarea tn-input-longest tn-border-gray"></textarea>*@
+                            @Html.TextAreaFor(n => n.Body, new RouteValueDictionary { { "class", "tn-textarea tn-input-longest tn-border-gray" } })
+                            @Html.ValidationMessageFor(n => n.Body)
+
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>添加投票选项：
+                        </th>
+                        <td name="voteOptions">
+                            <!--点击展开的控件-->
+                            <div class="spb-vote-option tn-helper-clearfix" name="voteOption" id="voteOption_1">
+                                <div class="tn-img tn-bg-gray tn-border-gray">
+                                    <a href="#" title="添加图片" name="addImage"><span class="tn-icon tn-icon-add-picture" ></span></a>
+                                    <div class="tn-widget tn-bubble tn-bubble-arrow-top" name="voteOption_Image" id="voteOption_Image_1">
+                                        @* <div class="tn-bubble-arrow"><b class="tn-arrow-b1 tn-border-gray"></b><b class="tn-arrow-b2 tn-widget-bubble"></b></div>
+                                       <div class="tn-bubble-content tn-widget-content tn-border-gray tn-corner-all">
+                                            <input type="file">
+                                        </div>*@
+                                    </div>
+                                </div>
+                                <div class="tn-input-area tn-border-gray">
+                                    <input class="tn-no-style" type="text" name="voteOptionText">
+                                    <input name="voteOptionImage" type="hidden" value="none" />
+                                    <input name="voteOptionLink" type="hidden" value="none" />
+                                    <a href="#" class="tn-link" title="添加网址" name="addLink"><span class="tn-icon tn-icon-chain"></span></a>
+                                    <div class="tn-widget tn-bubble tn-bubble-arrow-top" name="voteOption_Link" id="voteOption_Link_1">
+                                       @* <div class="tn-bubble-arrow"><b class="tn-arrow-b1 tn-border-gray"></b><b class="tn-arrow-b2 tn-widget-bubble"></b></div>
+                                        <div class="tn-bubble-content tn-widget-content tn-border-gray tn-corner-all">
+                                            <div class="tn-form tn-form-single">
+                                                <input type="text" class="tn-textbox tn-input-long tn-border-gray" name="">
+                                                <button class="tn-button tn-corner-all tn-button-text-only tn-button-default"><span class="tn-button-text">提交</span></button>
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                </div>
+                                <a href="#" class="tn-del" title="删除选项"><span class="tn-icon tn-smallicon-cross" name="removeOption"></span></a>
+                            </div>
+
+                            <div class="spb-vote-option tn-helper-clearfix" name="voteOption" id="voteOption_2">
+                                <div class="tn-img tn-bg-gray tn-border-gray">
+                                    <a href="#" title="添加图片" name="addImage"><span class="tn-icon tn-icon-add-picture"></span></a>
+                                <div class="tn-widget tn-bubble tn-bubble-arrow-top" name="voteOption_Image" id="voteOption_Image_2">
+
+                                </div>
+                                </div>
+                                <div class="tn-input-area tn-border-gray">
+                                   <input class="tn-no-style" type="text" name="voteOptionText">
+                                    <input name="voteOptionImage" type="hidden" value="none" />
+                                    <input name="voteOptionLink" type="hidden" value="none" />
+                                    <a href="#" class="tn-link" title="添加网址" name="addLink"><span class="tn-icon tn-icon-chain"></span></a>
+                                     <div class="tn-widget tn-bubble tn-bubble-arrow-top" name="voteOption_Link" id="voteOption_Link_2">
+                                    </div>
+                                </div>
+                                <a href="#" class="tn-del" title="删除选项"><span class="tn-icon tn-smallicon-cross" name="removeOption"></span></a>
+                            </div>
+                           @* <div class="spb-vote-option tn-helper-clearfix">
+                                <div class="tn-img tn-bg-gray tn-border-gray"><a href="#" title="添加图片"><span class="tn-icon tn-icon-add-picture"></span></a></div>
+                                <div class="tn-input-area tn-border-gray">
+                                    <input class="tn-no-style" type="text">
+                                    <a href="#" class="tn-link" title="添加网址"><span class="tn-icon tn-icon-chain"></span></a>
+                                </div>
+                                <a href="#" class="tn-del" title="删除选项"><span class="tn-icon tn-smallicon-cross"></span></a>
+                            </div>
+                            <!--已经添加图片的样式-->
+                            <div class="spb-vote-option tn-helper-clearfix">
+                                <div class="tn-img tn-bg-gray tn-border-gray">
+                                    <a href="#" title="添加图片">
+                                        <img src="http://ww1.sinaimg.cn/square/683f54d6jw1eue8wtd7daj20hs0dc76i.jpg" /></a>
+                                </div>
+                                <div class="tn-input-area tn-border-gray">
+                                    <input class="tn-no-style" type="text">
+                                    <a href="#" class="tn-link" title="添加网址"><span class="tn-icon tn-icon-chain"></span></a>
+                                </div>
+                                <a href="#" class="tn-del" title="删除选项"><span class="tn-icon tn-smallicon-cross"></span></a>
+                            </div>
+
+                            <!--/-->
+                            <div class="spb-vote-option tn-helper-clearfix">
+                                <div class="tn-img tn-bg-gray tn-border-gray"><a href="#" title="添加图片"><span class="tn-icon tn-icon-add-picture"></span></a></div>
+                                <div class="tn-input-area tn-border-gray">
+                                    <input class="tn-no-style" type="text">
+                                    <a href="#" class="tn-link" title="添加网址"><span class="tn-icon tn-icon-chain"></span></a>
+                                </div>
+                                <a href="#" class="tn-del" title="删除选项"><span class="tn-icon tn-smallicon-cross"></span></a>
+                            </div>
+                            <div class="spb-vote-option tn-helper-clearfix">
+                                <div class="tn-img tn-bg-gray tn-border-gray"><a href="#" title="添加图片"><span class="tn-icon tn-icon-add-picture"></span></a></div>
+                                <div class="tn-input-area tn-border-gray">
+                                    <input class="tn-no-style" type="text">
+                                    <a href="#" class="tn-link" title="添加网址"><span class="tn-icon tn-icon-chain"></span></a>
+                                </div>
+                                <a href="#" class="tn-del" title="删除选项"><span class="tn-icon tn-smallicon-cross"></span></a>
+                            </div>*@
+                       
+                           
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr><td></td>
+                        <td> <div class="tn-load-more tn-border-gray tn-corner-all">
+                                <a href="#" name="addOption">增加选项</a>
+                            </div></td>
+                        
+                    </tr>
+                    <tr>
+                        <th>单选 / 多选：
+                        </th>
+                        <td>
+                            <select class="tn-dropdownlist" name="OptionType">
+                                <option value="1" selected="selected">单选</option>
+                                <option value="2">最多选2项</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>结束时间：
+                        </th>
+                        <td>
+                            <select class="tn-dropdownlist" name="selectTime" onchange="show()">
+                                <option value="OneDay">一天</option>
+                                <option value="ThreeDay">三天</option>
+                                <option value="OneWeek" selected="selected">一周</option>
+                                <option value="OneMonth">一个月</option>
+                                <option value="Others">其他</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr name="endDate" style="display: none">
+                        <th>自定义时间：</th>
+                        <td>@Html.DateTimePicker("EndDate", new DateTimePicker().SetDateFormat("yyyy-MM-dd").SetMaxDate("10Y").SetMinDate("0").SetShowTime(true))
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>投票结果：
+                        </th>
+                        <td>
+                            <ul class="tn-radiobutton-list">
+                                <li class="tn-inline-list">
+                                    <input type="radio" class="tn-radiobutton" name="VoteResult" checked="checked" value="true">
+                                    <label for="label">投票后可见</label>
+                                </li>
+                                <li class="tn-inline-list">
+                                    <input type="radio" class="tn-radiobutton" name="VoteResult" value="false">
+                                    <label for="label">任何人可见</label>
+                                </li>
+                            </ul>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>隐藏文字：
+                        </th>
+                        <td>
+                            @Html.TextAreaFor(n => n.HiddenText, new RouteValueDictionary { { "class", "tn-textarea tn-input-longest tn-border-gray" } })
+                            @Html.ValidationMessageFor(n => n.HiddenText)
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-primary" type="submit"><span class="tn-button-text">发起投票</span></button>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/dialog">
+    this.title("投票");
+</script>
+
+
+@Html.ScriptBlock(@<script type="text/javascript">
+                       var num = 0;
+                       if (num < 2) { $("span[name='removeOption']").hide(); }
+                       function show() {
+                           var isOther = $("select[name='selectTime']").attr("value");
+                           if (isOther == 'Others') {
+                               $("tr[name='endDate']").show();
+                           } else {
+                               $("tr[name='endDate']").hide();
+                           }
+                       }
+                       function OnSuccessCallBack(data) {                        
+                           var url = '@url';
+                           $.post(url, { spacekey: '@spacekey', microblogBody: data.MessageContent }, function (data_1) {
+                               art.dialog.tips(data_1.MessageContent, 1.5, data_1.MessageType);
+                           });
+                       }
+                       $(document).ready(function () {
+
+                           ImageOptin();
+                           linkOptin();
+
+                           $("a[name='addOption']").on("click", function () {
+                               //var name = $(this).attr("id").substring(4);
+                               //添加
+                               var optionHtml = $("div[name='voteOption']:first");
+                               var addHtml = $("td[name='voteOptions']");
+                               addHtml.append(optionHtml.prop('outerHTML'));
+
+                               var num = $("div[name='voteOption']");
+                               $.each(num, function (n, value) {
+                                   num = n + 1;
+                                   var changeId = "voteOption_" + num;
+                                   $(value).attr("id", changeId)
+                                   $(value).find("div[name='voteOption_Image']").attr("id", "voteOption_Image_" + num);
+                                   $(value).find("div[name='voteOption_Link']").attr("id", "voteOption_Link_" + num);
+                               })
+                               $("div[id='voteOption_" + num + "']").find("a:first").html("<span class='tn-icon tn-icon-add-picture'></span>");
+                               //选项添加
+                               $("select[name='OptionType']").append("<option value='" + num + "'>最多选" + num + "项</option>");
+
+                               //删除绑定
+                               $("span[name='removeOption']").off("click");
+                               $("span[name='removeOption']").on("click", function () {
+                                   if (num <= 2) {
+
+                                   }
+                                   else {
+                                       $(this).parents("div[name='voteOption']:first").remove();
+                                       $("select[name='OptionType'] option:last").remove();
+                                       num--;
+                                       if (num <= 2) {
+                                           $("span[name='removeOption']").hide();
+                                       }
+                                   }
+                               });
+
+                               if (num <= 2) {
+                                   $("span[name='removeOption']").hide();
+                               } else {
+                                   $("span[name='removeOption']").show();
+                               }
+                               ImageOptin();
+                               linkOptin();
+                           });
+                       });
+
+                       //图片添加
+                       function ImageOptin() {
+                           $("a[name='addImage']").off("click");
+                           $("a[name='addImage']").on("click", function () {
+                               var imageId = $(this).parents("div[name='voteOption']").attr("id").substring(11);
+                               $("div[name='voteOption_Image']").html("");
+                               $.get("@CachedUrlHelper.Action("_VoteOptinPhotoUpload", "Channel", "Common")" + "?imageId=" + imageId, function (data) {
+
+                                   $("div[id='voteOption_Image_" + imageId + "']").html(data);
+                               });
+                           });
+                       }
+                       //链接添加
+                       function linkOptin() {
+                           $("a[name='addLink']").off("click");
+                           $("a[name='addLink']").on("click", function () {
+
+                               $("div[name='voteOption_Link']").each(function () { $(this).html(""); });
+
+                               var imageId = $(this).parents("div[name='voteOption']").attr("id").substring(11);
+                               $.get("@CachedUrlHelper.Action("_VoteOptionLinkPath", "Channel", "Common")" + "?imageId=" + imageId, function (data) {
+                                   $("div[id='voteOption_Link_" + imageId + "']").html(data);
+                               });
+                           });
+                       }
+
+</script>)

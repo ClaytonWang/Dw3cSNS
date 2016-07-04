@@ -8,7 +8,7 @@ Offical Style for Spacebuilder
 body{ color: #555; }
 a{ color:#0065a2; }
 a:hover{ color:#0065a2;} 
-.tn-header-bg { background: url(images/spb-page-bg.png) repeat-x 0 -10px; }
+.tn-header-bg { background: url(images/spb-page-bg.png) repeat-y 0 -10px; }
 .spb-app-page .tn-content-bg,
 .spb-search-page .tn-content-bg { background: url(images/spb-page-bg.png) repeat-x 0 0; }
 .spb-app-page .tn-content-bg { background-position: 0px -170px; }

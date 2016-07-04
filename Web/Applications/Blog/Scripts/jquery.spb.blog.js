@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    //关注日志/取消关注
+    //关注文章/取消关注
     $("a[id^='blog-subscribe']").live('click', function (e) {
         var self = $(this);
         var threadId = self.attr("threadId");
         var isSubscribePage = self.attr("isSubscribePage").toLowerCase();
-        //如果是在 关注的日志 页面
+        //如果是在 关注的文章 页面
         if (isSubscribePage=="true") {
             art.dialog.confirm('您确认要取消关注吗？', function () {
                 $.post(self.attr("href"), function (data) {
@@ -29,7 +29,7 @@
         return false;
     });
 
-    //日志列表中的删除操作
+    //文章列表中的删除操作
     $("a[id^='blog-delete-from-list-']").live('click', function (e) {
         var self = $(this);
 

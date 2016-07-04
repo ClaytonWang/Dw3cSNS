@@ -95,7 +95,7 @@ namespace Spacebuilder.Common
         /// </summary>
         public string SiteHome()
         {
-            return CachedUrlHelper.Action("Home", "Channel", CommonAreaName);
+            return CachedUrlHelper.Action("Home", "ChannelBlog", "Blog");
         }
 
 
@@ -3833,7 +3833,7 @@ namespace Spacebuilder.Common
         }
         #endregion
 
-        #region 操作日志
+        #region 操作文章
 
         /// <summary>
         /// 学校选择器
@@ -3844,7 +3844,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 操作日志管理模态框
+        /// 操作文章管理模态框
         /// </summary>
         /// <returns></returns>
         public string _ManageOperationLogs()

@@ -1,0 +1,352 @@
+﻿@{
+    Layout = "_Square";
+
+    VoteThread voteThread = ViewData.Get<VoteThread>("VoteThread", null);
+    IEnumerable<VoteRecord> voteRecords = ViewData.Get<IEnumerable<VoteRecord>>("VoteRecords", null);
+    IEnumerable<VoteOption> voteOptions = ViewData.Get<IEnumerable<VoteOption>>("VoteOptions", null);
+    Spacebuilder.Common.User voteUser = ViewData.Get<Spacebuilder.Common.User>("VoteUser", null);
+
+    long userId = UserContext.CurrentUser.UserId;
+    bool isHasVoted = ViewData.Get<bool>("IsHasVoted", false);
+
+    string endDate = voteThread.EndDate.ToString("yyyy,MM-1,dd,hh,mm,ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+
+    bool isRadio = voteThread.OptionType == 1 ? true : false;
+}
+
+@if (voteThread != null)
+{
+        
+    <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-intro">
+        <div class="tn-box-content tn-widget-content tn-corner-bottom">
+            <div class="tn-hd">
+                <h1 class="tn-title">@voteThread.Title</h1>
+                <div class="tn-count">
+                    <div class="tn-cue-success tn-corner-all tn-message-box"><strong>@voteThread.MemberCount</strong><em>人参与</em></div>
+                </div>
+                <div class="tn-timing">结束倒计时：<strong class="tn-text-bright" id="endTime"></strong></div>
+            </div>
+            <div class="tn-bd">
+                @Html.Raw(voteThread.Body)
+            </div>
+        </div>
+    </div>
+
+    <div name="bigdiv">
+        @using (Html.BeginAjaxForm("Vote", "Channel", FormMethod.Post, new AjaxFormOptions { OnSuccessCallBack = "OnSuccessCallBack1" }))
+        {
+            <input type="hidden" value="@voteThread.Id" name="voteId">
+            if (voteThread.VoteType)
+            {
+            <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-cont spb-vote-detail">
+                <div class="tn-box-content tn-widget-content tn-corner-bottom">
+                    <div class="tn-main-heading tn-border-gray tn-border-bottom">
+                        <h2>投票选项<em>最多选 @voteThread.OptionType 项</em></h2>
+                    </div>
+                    <div class="spb-vote-text">
+                        @if (voteOptions != null && voteOptions.Count() > 0)
+                        {
+                            foreach (var item in voteOptions)
+                            {
+                            <div class="spb-vote-item tn-border-gray tn-bg-gray tn-helper-clearfix" name="voteOptin_text">
+                                <div class="tn-text">@item.OptionName</div>
+                                <div class="tn-check">
+                                    <label>
+                                        @if (isRadio)
+                                        {  <input type="radio"   class="tn-checkbox" name="voteOptionId" value="@item.Id">}
+                                        else
+                                        { <input type="checkbox"   class="tn-checkbox" name="voteOptionId" value="@item.Id">}
+                                    </label>
+                                </div>
+                            </div>
+                            }
+@*
+                    }
+                    <div class="spb-vote-item tn-border-gray tn-bg-gray tn-helper-clearfix">
+                        <div class="tn-text">文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本</div>
+                        <div class="tn-check">
+                            <label>
+                                <input type="checkbox" class="tn-checkbox" name="" value="">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="spb-vote-item tn-border-deep tn-bg-deep tn-helper-clearfix">
+                        <div class="tn-text">选中的样式</div>
+                        <div class="tn-check">
+                            <label>
+                                <input name="" type="checkbox" class="tn-checkbox" value="" checked>
+                            </label>
+                        </div>
+                    </div>*@
+                        }
+                    </div>
+                    <div class="spb-vote-hint">
+                        @if (voteThread.HiddenText != null)
+                        {
+                            <div class="tn-cue-highlight tn-corner-all tn-message-box">
+                                <p>此投票包含隐藏内容，投票可见</p>
+                            </div>}
+@*   <div class="tn-cue-tips tn-corner-all tn-message-box tn-border-gray tn-bg-gray">
+                    <p>可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容</p>
+                </div>*@
+                    </div>
+                    <div class="spb-vote-feedback tn-helper-clearfix">
+                        <ul class="tn-checkbox-list">
+                            <li class="tn-inline-list">
+                                <label for="label">
+                                    <a href="@SiteUrls.Instance()._ShareToMicroblog("#投票分享# " + "@" + UserIdToUserNameDictionary.GetUserName(voteThread.UserId) + "的投票\"" + voteThread.Title + "\"不错，推荐给大家看看" + "-" + SiteUrls.FullUrl(SiteUrls.Instance().VoteDail(voteThread.Id)) + "&", null)"  plugin="dialog" class="tnc-mlrf">分享</a>
+                                </label>
+                            </li>
+                            <li class="tn-inline-list">
+                                <input type="checkbox" class="tn-checkbox" name="isAnoymity" value="true">
+                                <label for="label">匿名</label>
+                            </li>
+                            @if (!voteThread.VoteResult)
+                            {
+                                <li class="tn-inline-list">
+                                    <label for="label"><a href="#" name="result">查看结果</a></label>
+                                </li>   
+                            }
+                        </ul>
+                        <button class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-primary" type="submit"><span class="tn-button-text">投票</span></button>
+                    </div>
+                </div>
+            </div>
+            }
+            else
+            {
+            <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-cont spb-vote-detail">
+                <div class="tn-box-content tn-widget-content tn-corner-bottom">
+                    <div class="tn-main-heading tn-border-gray tn-border-bottom">
+                        <h2>投票选项<em>最多选 @voteThread.OptionType 项</em></h2>
+                    </div>
+                    <div class="spb-vote-photo tn-helper-clearfix">
+                        @if (voteOptions != null && voteOptions.Count() > 0)
+                        {
+                            foreach (var item in voteOptions)
+                            {
+                            <div class="tn-flow-wrap">
+                                <div class="tn-flow-inner">
+                                    <div class="tn-border-gray tn-bg-gray tn-img-wrap" name="voteOptin_image">
+                                        <div class="tn-img">
+                                            <img src="@item.FeaturedImage" />
+                                        </div>
+                                        <div class="tn-check">
+                                            <label>
+                                                @if (isRadio)
+                                                {  <input type="radio"   class="tn-checkbox" name="voteOptionId" value="@item.Id">}
+                                                else
+                                                { <input type="checkbox"   class="tn-checkbox" name="voteOptionId" value="@item.Id">}
+                                            </label>
+                                            <div class="tn-text">@item.OptionName</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                            }
+                        }
+
+@*
+                <div class="tn-flow-wrap">
+                    <div class="tn-flow-inner">
+                        <div class="tn-border-gray tn-bg-gray tn-img-wrap">
+                            <div class="tn-img">
+                                <img src="http://ww1.sinaimg.cn/bmiddle/badba7ffjw1eue3s8okjhj21w01f01l0.jpg" />
+                            </div>
+                            <div class="tn-check">
+                                <label>
+                                    <input name="" type="checkbox" class="tn-checkbox" value=""></label>
+                                <div class="tn-text">投票选项投票选项投票选项最多只显示两行</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tn-flow-wrap">
+                    <div class="tn-flow-inner">
+                        <div class="tn-border-deep tn-bg-deep tn-img-wrap">
+                            <div class="tn-img">
+                                <img src="http://ww1.sinaimg.cn/bmiddle/badba7ffjw1eue3s8okjhj21w01f01l0.jpg" />
+                            </div>
+                            <div class="tn-check">
+                                <label>
+                                    <input name="" type="checkbox" class="tn-checkbox" value="" checked></label>
+                                <div class="tn-text">选中的样式</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tn-flow-wrap">
+                    <div class="tn-flow-inner">
+                        <div class="tn-border-gray tn-bg-gray tn-img-wrap">
+                            <div class="tn-img">
+                                <img src="http://ww1.sinaimg.cn/bmiddle/badba7ffjw1eue3s8okjhj21w01f01l0.jpg" />
+                            </div>
+                            <div class="tn-check">
+                                <label>
+                                    <input name="" type="checkbox" class="tn-checkbox" value=""></label>
+                                <div class="tn-text">投票选项投票选项投票选项最多只显示两行</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                    </div>
+                    <div class="spb-vote-hint">
+                        @if (voteThread.HiddenText != "")
+                        {
+                            <div class="tn-cue-highlight tn-corner-all tn-message-box">
+                                <p>此投票包含隐藏内容，投票可见</p>
+                            </div>
+@*<div class="tn-cue-tips tn-corner-all tn-message-box tn-border-gray tn-bg-gray">
+                    <p>可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容可见的隐藏内容</p>
+                </div>*@
+                        }
+                    </div>
+                    <div class="spb-vote-feedback tn-helper-clearfix">
+                        <ul class="tn-checkbox-list">
+                            <li class="tn-inline-list">
+                                <label for="label">
+                                    <a href="@SiteUrls.Instance()._ShareToMicroblog("#投票分享# " + "@" + UserIdToUserNameDictionary.GetUserName(voteThread.UserId) + " 的投票\"" + voteThread.Title + "-" + SiteUrls.FullUrl(SiteUrls.Instance().VoteDail(voteThread.Id)) + "\" &不错，推荐给大家看看", null)" plugin="dialog" class="tnc-mlrf">分享</a>
+                                </label>
+                            </li>
+
+
+                            <li class="tn-inline-list">
+                                <input type="checkbox" class="tn-checkbox" name="isAnoymity" value="true">
+                                <label for="label">匿名</label>
+                            </li>
+                            @if (!voteThread.VoteResult)
+                            {
+                                <li class="tn-inline-list">
+                                    <label for="label"><a href="#" name="result">查看结果</a></label>
+                                </li>   
+                            }
+                        </ul>
+                        <button class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-primary" type="submit"><span class="tn-button-text">投票</span></button>
+                    </div>
+                </div>
+            </div>
+            }
+        }
+    </div>
+}
+
+@section Aside{
+    <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-promoter">
+        <div class="tn-box-content tn-widget-content tn-corner-bottom">
+            <div class="spb-vote-card">
+                <div class="tn-avatar">
+                    <a href="#">
+                    @*  <img src="http://tp2.sinaimg.cn/1770828465/50/5689380775/0" /></a>*@
+                    @Html.ShowUserAvatar(voteThread.UserId, AvatarSizeType.Small, true, HyperLinkTarget._self, enableCachingInClient: false, isShowUserCard: false)
+                </div>
+                <div class="tn-info">
+                    <a href="@SiteUrls.Instance().MyHome(voteUser.UserId)" class="tn-user-name">@voteUser.NickName</a>
+                    <div class="tn-text">@voteUser.Profile.Introduction</div>
+                    <div class="tn-btn">
+                        @*  <a href="@SiteUrls.Instance().ManageFollowedUsers(Url.SpaceKey())" class="tn-button tn-corner-all tn-button-default tn-button-hollow tn-button-text-icon-primary"><span class="tn-icon tn-smallicon-add"></span><span class="tn-button-text">关注</span></a>*@
+                        @if(! (UserContext.CurrentUser.UserId == voteUser.UserId)){
+                        if (new FollowService().IsFollowed(UserContext.CurrentUser.UserId, voteUser.UserId))
+                            {
+                        <a class="tn-action tn-action-text-icon" href="@SiteUrls.Instance()._AddFollowedUser(UserContext.CurrentUser.DisplayName, voteUser.UserId)" plugin = "dialog" >
+                            <span class="tn-icon tn-smallicon-add"></span><span class="tn-action-text">加关注</span>
+                        </a>}else{
+                        <p class="tn-action tn-action-text-icon">
+                            <span class="tn-icon  tn-smallicon-accept"></span><span class="tn-action-text">已关注</span>
+                        </p>
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="tn-box tn-widget tn-widget-content tn-corner-all spb-vote-bigbtn">
+        <div class="tn-box-content tn-widget-content tn-corner-bottom"><a href="@SiteUrls.Instance()._AddNewVote()" class="tn-button tn-corner-all tn-button-text-only tn-button-large tn-button-primary" plugin = "dialog" ><span class="tn-button-text" onclick="isNumber()">发起投票</span></a></div>
+    </div>
+}
+<script type="text/javascript">
+    function OnSuccessCallBack1(data) {
+        art.dialog.tips("投票成功！", 1.5,1);
+        window.location.reload(true);
+    }
+    $(function () {
+        datetime1();
+
+        $("form").on("submit", function () {
+            var i = 0;
+            $("input[name='voteOptionId']:checkbox:checked").each(function () { i++; });
+            $("input[name='voteOptionId']:radio:checked").each(function () { i++; });
+            if (i > '@voteThread.OptionType') {
+                alert("最多选择 @voteThread.OptionType 个");
+                return false;
+            }
+            if (i == 0) {
+                alert("至少选择 1 个");
+                return false;
+            }
+        });
+
+        if ('@isHasVoted' == 'True') {
+            var url = "@SiteUrls.Instance().VoteResult(voteThread.Id)";
+            var bigdiv = $("div[name='bigdiv']");
+            $.get(url, { voteId: '@voteThread.Id' }, function (data) {
+                bigdiv.html(data);
+            });
+        }
+
+        $("a[name='result']").click(function () {
+            var url = "@SiteUrls.Instance().VoteResult(voteThread.Id)";
+            var bigdiv = $("div[name='bigdiv']");
+            $.get(url, { voteId: '@voteThread.Id' }, function (data) {
+                bigdiv.html(data);
+            });
+        });
+
+        $('input:checkbox:checked,input:radio:checked').each(function () {
+            $(this).parents("div[name='voteOptin_text']").attr("class", "spb-vote-item tn-border-deep tn-bg-deep tn-helper-clearfix");
+            $(this).parents("div[name='voteOptin_image']").attr("class", "tn-border-deep tn-bg-deep tn-img-wrap");
+        });
+
+        $(function () {
+            $("input:checkbox,input:radio").on('change', function () {
+
+                $('input:checkbox,input:radio').each(function () {
+                    $(this).parents("div[name='voteOptin_text']").attr("class", "spb-vote-item tn-border-gray tn-bg-gray tn-helper-clearfix");
+                    $(this).parents("div[name='voteOptin_image']").attr("class", "tn-border-gray tn-bg-gray tn-img-wrap");
+
+                });
+                $('input:checkbox:checked,input:radio:checked').each(function () {
+                    $(this).parents("div[name='voteOptin_text']").attr("class", "spb-vote-item tn-border-deep tn-bg-deep tn-helper-clearfix");
+                    $(this).parents("div[name='voteOptin_image']").attr("class", "tn-border-deep tn-bg-deep tn-img-wrap");
+                });
+            })
+        });
+    });
+    var endDate_str='@endDate';
+    var endDate = new Date(@endDate);
+    function datetime1() {
+        var now = new Date();
+
+        var leftTime = endDate.getTime() - now.getTime();
+        if (leftTime < 0) {
+            document.getElementById("endTime").innerHTML = "投票结束";
+
+            var url = "@SiteUrls.Instance().VoteResult(voteThread.Id)";
+            var bigdiv = $("div[name='bigdiv']");
+            $.get(url, function (data) {
+                bigdiv.html(data);
+            });
+        } else {
+            var leftsecond = parseInt(leftTime / 1000);
+            var day1 = Math.floor(leftsecond / (60 * 60 * 24));
+            var hour = Math.floor((leftsecond - day1 * 24 * 60 * 60) / 3600);
+            var minute = Math.floor((leftsecond - day1 * 24 * 60 * 60 - hour * 3600) / 60);
+            var second = Math.floor(leftsecond - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
+            str = day1 + "天" + hour + "小时" + minute + "分" + second + "秒";
+            //$("strong[class='tn-text-bright']").html(str);
+            document.getElementById("endTime").innerHTML = str;
+            setTimeout("datetime1()", 1000);
+        }
+    }
+</script>

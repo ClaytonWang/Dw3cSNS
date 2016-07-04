@@ -13,7 +13,7 @@ using Spacebuilder.Common;
 namespace Spacebuilder.CMS.EventModules
 {
     /// <summary>
-    /// 处理资讯操作日志
+    /// 处理资讯操作文章
     /// </summary>
     public class CMSOperationLogEventModule : IEventMoudle
     {
@@ -29,7 +29,7 @@ namespace Spacebuilder.CMS.EventModules
         }
 
         /// <summary>
-        /// 资讯操作日志事件处理
+        /// 资讯操作文章事件处理
         /// </summary>
         private void CmsOperationLogEventModule_After(ContentItem sender, CommonEventArgs eventArgs)
         {
@@ -54,7 +54,7 @@ namespace Spacebuilder.CMS.EventModules
             }
         }
         /// <summary>
-        /// 资讯操作日志事件处理
+        /// 资讯操作文章事件处理
         /// </summary>
         private void ContentFolderOperationLogEventModule_After(ContentFolder sender, CommonEventArgs eventArgs)
         {

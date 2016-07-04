@@ -18,7 +18,7 @@ using Spacebuilder.Common;
 namespace Spacebuilder.Blog.EventModules
 {
     /// <summary>
-    /// 处理日志操作日志
+    /// 处理文章操作文章
     /// </summary>
     public class BlogOperationLogEventModule : IEventMoudle
     {
@@ -34,7 +34,7 @@ namespace Spacebuilder.Blog.EventModules
 
 
         /// <summary>
-        /// 日志操作日志事件处理
+        /// 文章操作文章事件处理
         /// </summary>
         private void BlogOperationLogEventModule_After(BlogThread senders, CommonEventArgs eventArgs)
         {
@@ -50,7 +50,7 @@ namespace Spacebuilder.Blog.EventModules
                 entry.OperationType = eventArgs.EventOperationType;
                 entry.OperationObjectName = senders.Subject;
                 entry.OperationObjectId = senders.ThreadId;
-                entry.Description = string.Format(ResourceAccessor.GetString("OperationLog_Pattern_" + eventArgs.EventOperationType, entry.ApplicationId), "日志", entry.OperationObjectName);
+                entry.Description = string.Format(ResourceAccessor.GetString("OperationLog_Pattern_" + eventArgs.EventOperationType, entry.ApplicationId), "文章", entry.OperationObjectName);
 
                 OperationLogService logService = Tunynet.DIContainer.Resolve<OperationLogService>();
                 logService.Create(entry);

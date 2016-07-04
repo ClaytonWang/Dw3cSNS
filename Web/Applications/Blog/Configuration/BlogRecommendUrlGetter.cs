@@ -14,7 +14,7 @@ using Spacebuilder.Common;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志推荐Url获取器
+    /// 文章推荐Url获取器
     /// </summary>
     public class BlogRecommendUrlGetter : IRecommendUrlGetter
     {

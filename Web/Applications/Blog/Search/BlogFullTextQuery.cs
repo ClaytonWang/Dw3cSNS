@@ -15,7 +15,7 @@ using System.Web;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志全文检索条件
+    /// 文章全文检索条件
     /// </summary>
     public class BlogFullTextQuery
     {
@@ -36,7 +36,7 @@ namespace Spacebuilder.Blog
 
         private long currentThreadId = 0;
         /// <summary>
-        /// 当前日志ID
+        /// 当前文章ID
         /// </summary>
         public long CurrentThreadId
         {
@@ -56,7 +56,7 @@ namespace Spacebuilder.Blog
         public BlogSearchRange Range { get; set; }
 
         /// <summary>
-        /// 我的日志、某人的日志、站点分类
+        /// 我的文章、某人的文章、站点分类
         /// </summary>
         public BlogRange BlogRange { get; set; }
 
@@ -116,11 +116,11 @@ namespace Spacebuilder.Blog
     {
         DEFAULT=0,
          /// <summary>
-        /// 我的日志
+        /// 我的文章
         /// </summary>
         MYBlOG=1,
         /// <summary>
-        /// 某人的日志
+        /// 某人的文章
         /// </summary>
         SOMEONEBLOG=2,
         /// <summary>

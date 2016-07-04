@@ -21,16 +21,16 @@ using Tunynet.FileStore;
 namespace Spacebuilder.Common
 {
     /// <summary>
-    /// 日志链接管理
+    /// 文章链接管理
     /// </summary>
     public static class SiteUrlsExtension
     {
         private static readonly string BlogAreaName = BlogConfig.Instance().ApplicationKey;
 
-        #region 用户空间日志操作
+        #region 用户空间文章操作
 
         /// <summary>
-        /// 用户空间日志首页
+        /// 用户空间文章首页
         /// </summary>
         public static string BlogHome(this SiteUrls siteUrls, string spaceKey)
         {
@@ -38,7 +38,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 我的日志/他的日志
+        /// 我的文章/他的文章
         /// </summary>
         public static string Blog(this SiteUrls siteUrls, string spaceKey)
         {
@@ -46,7 +46,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 关注的日志
+        /// 关注的文章
         /// </summary>
         public static string BlogSubscribed(this SiteUrls siteUrls, string spaceKey)
         {
@@ -54,7 +54,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志列表：存档、标签、分类
+        /// 文章列表：存档、标签、分类
         /// </summary>
         public static string BlogList(this SiteUrls siteUrls, string spaceKey, ListType listType, string tag = null, int year = 0, int month = 0, long categoryId = 0)
         {
@@ -86,7 +86,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 发布/编辑日志
+        /// 发布/编辑文章
         /// </summary>
         public static string BlogEdit(this SiteUrls siteUrls, string spaceKey, long? threadId, long? ownerId)
         {
@@ -105,7 +105,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 转载日志
+        /// 转载文章
         /// </summary>
         public static string _BlogReproduce(this SiteUrls siteUrls, string spaceKey, long threadId)
         {
@@ -114,10 +114,10 @@ namespace Spacebuilder.Common
 
 
         /// <summary>
-        /// 批量/单个删除日志
+        /// 批量/单个删除文章
         /// </summary>
         /// <param name="siteUrls"></param>
-        /// <param name="threadIds">日志ID</param>
+        /// <param name="threadIds">文章ID</param>
         /// <param name="spaceKey"></param>
         /// <returns></returns>
         public static string _BlogDelete(this SiteUrls siteUrls, string spaceKey, long? threadIds = null)
@@ -149,7 +149,7 @@ namespace Spacebuilder.Common
         /// 设置分类
         /// </summary>
         /// <param name="siteUrls"></param>
-        /// <param name="threadIds">日志id</param>
+        /// <param name="threadIds">文章id</param>
         /// <param name="spaceKey"></param>
         /// <returns></returns>
         public static string _BlogSetCategories(this SiteUrls siteUrls, string spaceKey, long? threadIds = null)
@@ -169,7 +169,7 @@ namespace Spacebuilder.Common
         /// 设置标签
         /// </summary>
         /// <param name="siteUrls"></param>
-        /// <param name="threadIds">日志id</param>
+        /// <param name="threadIds">文章id</param>
         /// <param name="spaceKey"></param>
         /// <returns></returns>
         public static string _BlogSetTags(this SiteUrls siteUrls, string spaceKey, long? threadIds = null)
@@ -185,7 +185,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志详情页
+        /// 文章详情页
         /// </summary>
         public static string BlogDetail(this SiteUrls siteUrls, string spaceKey, long threadId, long? commentId = null)
         {
@@ -197,7 +197,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志管理（主人）
+        /// 文章管理（主人）
         /// </summary>
         public static string BlogManage(this SiteUrls siteUrls, string spaceKey)
         {
@@ -205,7 +205,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志草稿箱
+        /// 文章草稿箱
         /// </summary>
         public static string BlogDraft(this SiteUrls siteUrls, string spaceKey)
         {
@@ -221,7 +221,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 关注日志
+        /// 关注文章
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="threadId"></param>
@@ -232,7 +232,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 取消关注日志
+        /// 取消关注文章
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="spaceKey"></param>
@@ -244,7 +244,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志分类内容块
+        /// 文章分类内容块
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="spaceKey"></param>
@@ -255,7 +255,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志标签内容块
+        /// 文章标签内容块
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="spaceKey"></param>
@@ -268,10 +268,10 @@ namespace Spacebuilder.Common
 
         #endregion
 
-        #region 频道及日志搜索
+        #region 频道及文章搜索
 
         /// <summary>
-        /// 日志全局搜索
+        /// 文章全局搜索
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <returns></returns>
@@ -281,7 +281,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志快捷搜索
+        /// 文章快捷搜索
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <returns></returns>
@@ -291,7 +291,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志搜索
+        /// 文章搜索
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <returns></returns>
@@ -307,7 +307,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志搜索自动完成
+        /// 文章搜索自动完成
         /// </summary>
         public static string BlogSearchAutoComplete(this SiteUrls siteUrls)
         {
@@ -315,7 +315,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志频道首页
+        /// 文章频道首页
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <returns></returns>
@@ -325,7 +325,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志排行页
+        /// 文章排行页
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <returns></returns>
@@ -335,7 +335,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志标签下的日志
+        /// 文章标签下的文章
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="tagName">标签名</param>
@@ -346,7 +346,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 日志分类列表
+        /// 文章分类列表
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="categoryId">不同分类的id</param>
@@ -358,10 +358,10 @@ namespace Spacebuilder.Common
         }
         #endregion
 
-        #region 日志后台管理
+        #region 文章后台管理
 
         /// <summary>
-        /// 日志后台管理
+        /// 文章后台管理
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="auditStatus">审核状态</param>
@@ -378,7 +378,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 批量更新日志的审核状态
+        /// 批量更新文章的审核状态
         /// </summary>
         /// <param name="siteUrls"></param>
         /// <param name="isApprove">审核状态</param>
@@ -389,7 +389,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 单个更新日志的审核状态
+        /// 单个更新文章的审核状态
         /// </summary>
         /// <returns></returns>
         public static string _BlogControlPanelUpdateAuditStatu(this SiteUrls siteUrls, long threadId, bool isApprove)
@@ -401,10 +401,10 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 批量/单个删除日志
+        /// 批量/单个删除文章
         /// </summary>
         /// <param name="siteUrls"></param>
-        /// <param name="threadIds">日志ID</param>
+        /// <param name="threadIds">文章ID</param>
         public static string _BlogControlPanelDelete(this SiteUrls siteUrls, long? threadIds = null)
         {
             RouteValueDictionary dic = new RouteValueDictionary();
@@ -435,7 +435,7 @@ namespace Spacebuilder.Common
         /// 批量/单个设置分类
         /// </summary>
         /// <param name="siteUrls"></param>
-        /// <param name="threadIds">日志id</param>
+        /// <param name="threadIds">文章id</param>
         public static string _BlogControlPanelSetCategory(this SiteUrls siteUrls, string threadIds = null)
         {
             if (string.IsNullOrEmpty(threadIds))

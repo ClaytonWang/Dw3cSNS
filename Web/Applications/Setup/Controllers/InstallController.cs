@@ -270,7 +270,7 @@ namespace Spacebuilder.Setup.Controllers
                 if (messages.Count > 0)
                 {
                     WriteLogFile(messages);
-                    return Json(new StatusMessageData(StatusMessageType.Error, "安装数据库表结构时出现错误，请查看安装日志！"));
+                    return Json(new StatusMessageData(StatusMessageType.Error, "安装数据库表结构时出现错误，请查看安装文章！"));
                 }
             }
 
@@ -309,14 +309,14 @@ namespace Spacebuilder.Setup.Controllers
                 if (messages.Count > 0)
                 {
                     WriteLogFile(messages);
-                    return Json(new StatusMessageData(StatusMessageType.Error, "执行数据库初始化脚本时出现错误，请查看安装日志！"));
+                    return Json(new StatusMessageData(StatusMessageType.Error, "执行数据库初始化脚本时出现错误，请查看安装文章！"));
                 }
             }
             return Json(new StatusMessageData(StatusMessageType.Success, "安装数据库表结构成功！"));
         }
 
         /// <summary>
-        /// 安装日志
+        /// 安装文章
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -326,7 +326,7 @@ namespace Spacebuilder.Setup.Controllers
         }
 
         /// <summary>
-        /// 获取安装日志文件名
+        /// 获取安装文章文件名
         /// </summary>
         /// <returns></returns>
         private string GetLogFileName()
@@ -362,7 +362,7 @@ namespace Spacebuilder.Setup.Controllers
         }
 
         /// <summary>
-        /// 将升级信息写入升级日志中
+        /// 将升级信息写入升级文章中
         /// </summary>
         /// <param name="messages"></param>
         /// <returns></returns>

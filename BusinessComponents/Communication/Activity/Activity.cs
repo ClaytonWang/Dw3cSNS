@@ -82,7 +82,7 @@ namespace Tunynet.Common
         public long UserId { get; set; }
 
         /// <summary>
-        ///动态源内容id（例如：日志动态的日志Id）
+        ///动态源内容id（例如：文章动态的文章Id）
         /// </summary>
         public long SourceId { get; set; }
 

@@ -31,7 +31,7 @@
 //    {
 //        public IStoreProvider storeProvider { get; set; }
 //        string currentDirectory = WebUtility.GetPhysicalFilePath("~/Uploads");
-//        Dictionary<string, string> applicationDictionary = new Dictionary<string, string> { { "Microblog", "微博" }, { "Blog", "日志" }, { "CMS", "资讯" }, { "Photo", "相册" }, { "PointMall", "积分商城" }, { "Group", "群组" }, { "Bar", "帖吧" }, { "Ask", "问答" } };
+//        Dictionary<string, string> applicationDictionary = new Dictionary<string, string> { { "Microblog", "微博" }, { "Blog", "文章" }, { "CMS", "资讯" }, { "Photo", "相册" }, { "PointMall", "积分商城" }, { "Group", "群组" }, { "Bar", "帖吧" }, { "Ask", "问答" } };
 
 //        /// <summary>
 //        /// 准备
@@ -125,7 +125,7 @@
 //                WriteLogFile(string.Format("{0}:{1}", message.Key, message.Value));
 //            }
 //            if (messages.Count > 0)
-//                return Json(new StatusMessageData(StatusMessageType.Error, "升级数据库准备失败，请查看升级日志"));
+//                return Json(new StatusMessageData(StatusMessageType.Error, "升级数据库准备失败，请查看升级文章"));
 //            else
 //                return Json(new StatusMessageData(StatusMessageType.Success, "升级数据库准备就绪。"));
 //        }
@@ -161,7 +161,7 @@
 //            }
 
 //            if (messages.Count > 0)
-//                return Json(new StatusMessageData(StatusMessageType.Error, "4.1版本数据库安装失败，请查看升级日志"));
+//                return Json(new StatusMessageData(StatusMessageType.Error, "4.1版本数据库安装失败，请查看升级文章"));
 //            else
 //                return Json(new StatusMessageData(StatusMessageType.Success, "4.1版本数据库安装成功！"));
 //        }
@@ -196,13 +196,13 @@
 //            }
 //            ResetPassword();
 //            if (messages.Count > 0)
-//                return Json(new StatusMessageData(StatusMessageType.Error, "3.2=>4.1平台升级脚本执行失败，请查看升级日志"));
+//                return Json(new StatusMessageData(StatusMessageType.Error, "3.2=>4.1平台升级脚本执行失败，请查看升级文章"));
 //            else
 //                return Json(new StatusMessageData(StatusMessageType.Success, "3.2=>4.1平台升级脚本执行成功！"));
 //        }
 
 //        /// <summary>
-//        /// 执行3.2=>4.0日志升级脚本
+//        /// 执行3.2=>4.0文章升级脚本
 //        /// </summary>
 //        /// <returns></returns>
 //        [HttpPost]
@@ -238,7 +238,7 @@
 //            }
 
 //            if (messages.Count > 0)
-//                return Json(new StatusMessageData(StatusMessageType.Error, "3.2=>4.1" + applicationName + "升级脚本执行失败，请查看升级日志"));
+//                return Json(new StatusMessageData(StatusMessageType.Error, "3.2=>4.1" + applicationName + "升级脚本执行失败，请查看升级文章"));
 //            else
 //                return Json(new StatusMessageData(StatusMessageType.Success, "3.2=>4.1" + applicationName + "升级脚本执行成功！"));
 //        }
@@ -356,14 +356,14 @@
 //        }
 
 //        /// <summary>
-//        /// 升级日志附件
+//        /// 升级文章附件
 //        /// </summary>
 //        /// <returns></returns>
 //        [HttpPost]
 //        public ActionResult Upgrading_Attachment_Blog()
 //        {
 //            string blogMessage = string.Empty;
-//            bool result = UpdateAttachmentBySQL("Blogs", "100201", out blogMessage);//日志           
+//            bool result = UpdateAttachmentBySQL("Blogs", "100201", out blogMessage);//文章           
 //            WriteLogFile(blogMessage);
 //            return Json(new StatusMessageData(result ? StatusMessageType.Success : StatusMessageType.Error, blogMessage));
 //        }
@@ -487,13 +487,13 @@
 
 
 //        /// <summary>
-//        /// 重设密码，并写入日志文件
+//        /// 重设密码，并写入文章文件
 //        /// </summary>
 //        public void ResetPassword()
 //        {
 //            Database db = CreateDatabase();
 
-//            //创建重设密码日志
+//            //创建重设密码文章
 //            string fileName = Path.Combine(currentDirectory, "resetPassword.log");
 //            if (System.IO.File.Exists(fileName))
 //                System.IO.File.Delete(fileName);
@@ -561,7 +561,7 @@
 //        }
 
 //        /// <summary>
-//        /// 重设密码日志
+//        /// 重设密码文章
 //        /// </summary>
 //        /// <returns></returns>
 //        [HttpGet]
@@ -571,7 +571,7 @@
 //        }
 
 //        /// <summary>
-//        /// 升级日志
+//        /// 升级文章
 //        /// </summary>
 //        /// <returns></returns>
 //        [HttpGet]
@@ -1075,9 +1075,9 @@
 //            return storeProvider.JoinDirectory(directoryName, idString.Substring(0, 5), idString.Substring(5, 5), idString.Substring(10, 5));
 //        }
 
-//        #region 升级日志文件
+//        #region 升级文章文件
 //        /// <summary>
-//        /// 获取升级日志文件名
+//        /// 获取升级文章文件名
 //        /// </summary>
 //        /// <returns></returns>
 //        private string GetLogFileName()
@@ -1112,7 +1112,7 @@
 //        }
 
 //        /// <summary>
-//        /// 将升级信息写入升级日志中
+//        /// 将升级信息写入升级文章中
 //        /// </summary>
 //        /// <param name="message"></param>
 //        /// <returns></returns>
@@ -1129,9 +1129,9 @@
 //        }
 
 //        /// <summary>
-//        /// 读取日志文件
+//        /// 读取文章文件
 //        /// </summary>
-//        /// <param name="logFilePath">日志文件路径</param>
+//        /// <param name="logFilePath">文章文件路径</param>
 //        /// <returns></returns>
 //        private string ReadLogFile(string logFilePath)
 //        {

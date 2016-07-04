@@ -11,9 +11,9 @@
                 <div class="tn-option">
                     <a href="@SiteUrls.Instance().BlogDraft(Url.SpaceKey())" class="tn-action"><span class="tn-action-text">草稿箱</span></a>
                     <span class="tn-spacer tn-text-note">|</span>
-                    <a href="@SiteUrls.Instance().BlogHome(Url.SpaceKey())" class="tn-action"><span class="tn-action-text">日志首页</span></a>
+                    <a href="@SiteUrls.Instance().BlogHome(Url.SpaceKey())" class="tn-action"><span class="tn-action-text">文章首页</span></a>
                 </div>
-                <h2>日志管理</h2>
+                <h2>文章管理</h2>
             </div>
             <div class="tn-list-header">
                 <div class="tn-toolbar-area">
@@ -183,7 +183,7 @@
             e.preventDefault();
 
             if (!$("input[name='threadIds']:checked").length) {
-                alert("请至少选择一条日志进行操作！");
+                alert("请至少选择一条文章进行操作！");
                 return false;
             }
 
@@ -217,7 +217,7 @@
             e.preventDefault();
 
             if (!$("input[name='threadIds']:checked").length) {
-                alert("请至少选择一条日志进行操作！");
+                alert("请至少选择一条文章进行操作！");
                 return false;
             }
             else {
@@ -232,7 +232,7 @@
             e.preventDefault();
 
             if (!$("input[name='threadIds']:checked").length) {
-                alert("请至少选择一条日志进行操作！");
+                alert("请至少选择一条文章进行操作！");
                 return false;
             }
             else {

@@ -20,7 +20,7 @@ using Tunynet.Utilities;
 namespace Spacebuilder.Blog.EventModules
 {
     /// <summary>
-    /// 处理日志动态、积分的EventMoudle
+    /// 处理文章动态、积分的EventMoudle
     /// </summary>
     public class BlogThreadEventModule : IEventMoudle
     {
@@ -96,7 +96,7 @@ namespace Spacebuilder.Blog.EventModules
         }
 
         /// <summary>
-        /// 评论日志动态处理程序
+        /// 评论文章动态处理程序
         /// </summary>
         /// <param name="comment"></param>
         /// <param name="eventArgs"></param>
@@ -139,7 +139,7 @@ namespace Spacebuilder.Blog.EventModules
                     bool isPublic = blogThread.PrivacyStatus == PrivacyStatus.Public ? true : false;
                     activityService.Generate(activity, false, isPublic);
 
-                    //创建评论的动态[关注该日志的用户可以看到该评论]
+                    //创建评论的动态[关注该文章的用户可以看到该评论]
                     Activity activityOfBlogComment = Activity.New();
                     activityOfBlogComment.ActivityItemKey = activity.ActivityItemKey;
                     activityOfBlogComment.ApplicationId = activity.ApplicationId;
@@ -167,7 +167,7 @@ namespace Spacebuilder.Blog.EventModules
         /// <summary>
         /// 审核状态发生变化时处理积分
         /// </summary>
-        /// <param name="blogThread">日志</param>
+        /// <param name="blogThread">文章</param>
         /// <param name="eventArgs">事件</param>
         private void BlogThreadPointModule_After(BlogThread blogThread, AuditEventArgs eventArgs)
         {
@@ -199,7 +199,7 @@ namespace Spacebuilder.Blog.EventModules
             {
                 PointService pointService = new PointService();
 
-                string description = string.Format(ResourceAccessor.GetString("PointRecord_Pattern_" + eventOperationType), "日志", blogThread.Subject);
+                string description = string.Format(ResourceAccessor.GetString("PointRecord_Pattern_" + eventOperationType), "文章", blogThread.Subject);
                 pointService.GenerateByRole(blogThread.UserId, pointItemKey, description, eventOperationType == EventOperationType.Instance().Create() || eventOperationType == EventOperationType.Instance().Delete() && eventArgs.OperatorInfo.OperatorUserId == blogThread.UserId);
             }
         }
@@ -207,7 +207,7 @@ namespace Spacebuilder.Blog.EventModules
         /// <summary>
         /// 处理加精操作加积分
         /// </summary>
-        /// <param name="blogThread">日志</param>
+        /// <param name="blogThread">文章</param>
         /// <param name="eventArgs">事件</param>
         private void BlogThreadPointModuleForManagerOperation_After(BlogThread blogThread, CommonEventArgs eventArgs)
         {
@@ -218,7 +218,7 @@ namespace Spacebuilder.Blog.EventModules
                 pointItemKey = PointItemKeys.Instance().EssentialContent();
 
                 PointService pointService = new PointService();
-                string description = string.Format(ResourceAccessor.GetString("PointRecord_Pattern_" + eventArgs.EventOperationType), "日志", blogThread.ResolvedSubject);
+                string description = string.Format(ResourceAccessor.GetString("PointRecord_Pattern_" + eventArgs.EventOperationType), "文章", blogThread.ResolvedSubject);
                 pointService.GenerateByRole(blogThread.UserId, pointItemKey, description);
                 if (blogThread.UserId > 0)
                 {
@@ -239,7 +239,7 @@ namespace Spacebuilder.Blog.EventModules
         /// <summary>
         /// 隐私状态发生变化时，同时更新动态的私有状态
         /// </summary>
-        /// <param name="blogThread">日志</param>
+        /// <param name="blogThread">文章</param>
         /// <param name="eventArgs">事件</param>
         private void BlogThreadAcitivityPrivicyChangeEventModule_After(BlogThread blogThread, CommonEventArgs eventArgs)
         {

@@ -34,7 +34,7 @@ namespace Spacebuilder.Blog.Controllers
 
 
         /// <summary>
-        /// 创建日志的动态内容块
+        /// 创建文章的动态内容块
         /// </summary>
         /// <param name="ActivityId">动态id</param>
         /// <returns></returns>
@@ -66,7 +66,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 创建日志的评论的动态块
+        /// 创建文章的评论的动态块
         /// </summary>
         /// <param name="ActivityId"></param>
         /// <returns></returns>

@@ -19,7 +19,7 @@ using Tunynet.Common;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志动态接收人获取器
+    /// 文章动态接收人获取器
     /// </summary>
     public class BlogActivityReceiverGetter : IActivityReceiverGetter
     {

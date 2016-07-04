@@ -61,7 +61,7 @@ namespace Spacebuilder.Blog.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 日志.
+        ///   Looks up a localized string similar to 文章.
         /// </summary>
         internal static string ApplicationName_Blog {
             get {
@@ -70,7 +70,7 @@ namespace Spacebuilder.Blog.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 日志.
+        ///   Looks up a localized string similar to 文章.
         /// </summary>
         internal static string CountObject_Blog {
             get {
@@ -79,7 +79,7 @@ namespace Spacebuilder.Blog.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 您现在处于管制状态，不能发日志.
+        ///   Looks up a localized string similar to 您现在处于管制状态，不能发文章.
         /// </summary>
         internal static string Description_ModeratedUser_CreateBlogThreadDenied {
             get {

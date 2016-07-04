@@ -74,7 +74,7 @@ namespace Spacebuilder.Group
         /// <summary>
         /// group批量转换成<see cref="Lucene.Net.Documents.Document"/>
         /// </summary>
-        /// <param name="groups">日志实体</param>
+        /// <param name="groups">文章实体</param>
         /// <returns>Lucene.Net.Documents.Document</returns>
         public static IEnumerable<Document> Convert(IEnumerable<GroupEntity> groups)
         {

@@ -30,9 +30,9 @@ using DevTrends.MvcDonutCaching;
 namespace Spacebuilder.Blog.Controllers
 {
     /// <summary>
-    /// 日志控制器
+    /// 文章控制器
     /// </summary>
-    [TitleFilter(TitlePart = "日志", IsAppendSiteName = true)]
+    [TitleFilter(TitlePart = "文集", IsAppendSiteName = true)]
     [Themed(PresentAreaKeysOfBuiltIn.UserSpace, IsApplication = true)]
     [AnonymousBrowseCheck]
     [UserSpaceAuthorize]
@@ -52,23 +52,23 @@ namespace Spacebuilder.Blog.Controllers
         private TagService tagService = new TagService(TenantTypeIds.Instance().BlogThread());
 
 
-        #region 日志增删改
+        #region 文章增删改
 
         /// <summary>
-        /// 写日志/编辑日志（页面）  
+        /// 写文章/编辑文章（页面）  
         /// </summary>
-        /// <param name="threadId">日志id，非空时为编辑操作</param>
-        /// <param name="ownerId">所属id，非空时代表群组的日志</param>
+        /// <param name="threadId">文章id，非空时为编辑操作</param>
+        /// <param name="ownerId">所属id，非空时代表群组的文章</param>
         [HttpGet]
         public ActionResult Edit(string spaceKey, long? threadId, long? ownerId)
         {
             BlogThreadEditModel model = null;
             BlogThread blogThread = null;
 
-            //日志用户分类下拉列表
+            //文章用户分类下拉列表
             IEnumerable<Category> ownerCategories = null;
 
-            //写日志
+            //写文章
             if (!threadId.HasValue)
             {
                 string errorMessage = string.Empty;
@@ -98,10 +98,10 @@ namespace Spacebuilder.Blog.Controllers
                     ownerCategories = categoryService.GetOwnerCategories(UserContext.CurrentUser.UserId, TenantTypeIds.Instance().BlogThread());
                 }
 
-                pageResourceManager.InsertTitlePart("写日志");
+                pageResourceManager.InsertTitlePart("写文章");
             }
 
-            //编辑日志
+            //编辑文章
             else
             {
                 blogThread = blogService.Get(threadId.Value);
@@ -145,12 +145,12 @@ namespace Spacebuilder.Blog.Controllers
                 }
                 ViewData["ownerCategoryDic"] = ownerCategoryDic;
 
-                pageResourceManager.InsertTitlePart("编辑日志");
+                pageResourceManager.InsertTitlePart("编辑文章");
             }
 
             ViewData["ownerCategories"] = ownerCategories;
 
-            //日志站点分类下拉列表（投稿到）
+            //文章站点分类下拉列表（投稿到）
             if (blogSettings.AllowSetSiteCategory)
             {
                 IEnumerable<Category> siteCategories = categoryService.GetOwnerCategories(0, TenantTypeIds.Instance().BlogThread());
@@ -161,7 +161,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 写日志/编辑日志（保存表单）
+        /// 写文章/编辑文章（保存表单）
         /// </summary>
         [HttpPost]
         public ActionResult Edit(string spaceKey, BlogThreadEditModel model)
@@ -179,14 +179,14 @@ namespace Spacebuilder.Blog.Controllers
 
             BlogThread blogThread = model.AsBlogThread();
 
-            //写日志
+            //写文章
             if (model.ThreadId == 0)
             {
                 if (!authorizer.BlogThread_Create(spaceKey, out errorMessage))
                 {
                     if (model.IsDraft)
                     {
-                        return Json(new StatusMessageData(StatusMessageType.Error, "没有权限创建新的日志！"));
+                        return Json(new StatusMessageData(StatusMessageType.Error, "没有权限创建新的文章！"));
                     }
                     else
                     {
@@ -220,7 +220,7 @@ namespace Spacebuilder.Blog.Controllers
                     }
                 }
             }
-            //编辑日志
+            //编辑文章
             else
             {
              //   blogThread = model.AsBlogThread();
@@ -242,7 +242,7 @@ namespace Spacebuilder.Blog.Controllers
                     }
                 }
 
-                //如果之前是草稿，现在正式发布，那么需要先删除草稿，然后创建新的日志
+                //如果之前是草稿，现在正式发布，那么需要先删除草稿，然后创建新的文章
                 if (blogThread.IsDraft && !model.IsDraft)
                 {
                     blogThread.IsDraft = false;
@@ -306,7 +306,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 转载日志（页面）
+        /// 转载文章（页面）
         /// </summary>
         [HttpGet]
         public ActionResult _Reproduce(string spaceKey, long threadId)
@@ -322,7 +322,7 @@ namespace Spacebuilder.Blog.Controllers
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
                     Title = "无效操作",
-                    Body = "不能转载自己的日志",
+                    Body = "不能转载自己的文章",
                     StatusMessageType = StatusMessageType.Hint
                 }));
             }
@@ -330,7 +330,7 @@ namespace Spacebuilder.Blog.Controllers
             BlogThreadEditModel model = new BlogThreadEditModel() { PrivacyStatus = PrivacyStatus.Public };
             model.ThreadId = threadId;
 
-            //日志用户分类下拉列表
+            //文章用户分类下拉列表
             IEnumerable<Category> ownerCategories = categoryService.GetOwnerCategories(UserContext.CurrentUser.UserId, TenantTypeIds.Instance().BlogThread());
             ViewData["ownerCategories"] = new SelectList(ownerCategories, "CategoryId", "CategoryName", null);
 
@@ -338,7 +338,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 转载日志（保存表单）
+        /// 转载文章（保存表单）
         /// </summary>
         [HttpPost]
         public ActionResult _Reproduce(string spaceKey, BlogThreadEditModel model)
@@ -430,9 +430,9 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 删除日志
+        /// 删除文章
         /// </summary>
-        /// <param name="threadIds">日志id列表</param>
+        /// <param name="threadIds">文章id列表</param>
         [HttpPost]
         public JsonResult _Delete(string spaceKey, IEnumerable<long> threadIds)
         {
@@ -449,7 +449,7 @@ namespace Spacebuilder.Blog.Controllers
                 }
             }
 
-            return Json(new StatusMessageData(StatusMessageType.Success, "删除日志成功！"));
+            return Json(new StatusMessageData(StatusMessageType.Success, "删除文章成功！"));
         }
 
         /// <summary>
@@ -478,10 +478,10 @@ namespace Spacebuilder.Blog.Controllers
 
         #endregion
 
-        #region 日志列表及详情页
+        #region 文章列表及详情页
 
         /// <summary>
-        /// 用户空间日志首页
+        /// 用户空间文章首页
         /// </summary>
         public ActionResult Home(string spaceKey)
         {
@@ -491,12 +491,12 @@ namespace Spacebuilder.Blog.Controllers
                 return Redirect(SiteUrls.Instance().Blog(spaceKey));
             }
 
-            pageResourceManager.InsertTitlePart("日志首页");
+            pageResourceManager.InsertTitlePart("文集首页");
             return View();
         }
 
         /// <summary>
-        /// 我的日志/Ta的日志
+        /// 我的文章/Ta的文章
         /// </summary>
         public ActionResult Blog(string spaceKey, int pageIndex = 1)
         {
@@ -507,7 +507,7 @@ namespace Spacebuilder.Blog.Controllers
             {
                 blogs = blogService.GetOwnerThreads(TenantTypeIds.Instance().User(), currentUser.UserId, true, false, null, null, true, 20, pageIndex);
 
-                pageResourceManager.InsertTitlePart("我的日志");
+                pageResourceManager.InsertTitlePart("我的文章");
                 return View("My", blogs);
             }
             else
@@ -520,13 +520,13 @@ namespace Spacebuilder.Blog.Controllers
 
                 blogs = blogService.GetOwnerThreads(TenantTypeIds.Instance().User(), user.UserId, false, true, null, null, true, 20, pageIndex);
 
-                pageResourceManager.InsertTitlePart(user.DisplayName + "的日志");
+                pageResourceManager.InsertTitlePart(user.DisplayName + "的文章");
                 return View("Ta", blogs);
             }
         }
 
         /// <summary>
-        /// 日志详细页
+        /// 文章详细页
         /// </summary>
         public ActionResult Detail(string spaceKey, long threadId)
         {
@@ -553,7 +553,7 @@ namespace Spacebuilder.Blog.Controllers
                 return Redirect(SiteUrls.Instance().SystemMessage(TempData, new SystemMessageViewModel
                 {
                     Title = "尚未通过审核",
-                    Body = "由于当前日志尚未通过审核，您无法浏览当前内容。",
+                    Body = "由于当前文章尚未通过审核，您无法浏览当前内容。",
                     StatusMessageType = StatusMessageType.Hint
                 }));
 
@@ -593,7 +593,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 相关日志
+        /// 相关文章
         /// </summary>
         [DonutOutputCache(CacheProfile = "Usual")]
         public ActionResult _Related(string spaceKey, long threadId)
@@ -610,7 +610,7 @@ namespace Spacebuilder.Blog.Controllers
             keywords.AddRange(blogThread.TagNames);
             keywords.AddRange(blogThread.OwnerCategoryNames);
 
-            //调用搜索器进行搜索10条相关日志
+            //调用搜索器进行搜索10条相关文章
             BlogFullTextQuery query = new BlogFullTextQuery();
             query.PageSize = 10;
             query.IsRelationBlog = true;
@@ -623,7 +623,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 关注的日志
+        /// 关注的文章
         /// </summary>
         public ActionResult Subscribed(string spaceKey, int pageIndex = 1)
         {
@@ -646,7 +646,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 日志列表
+        /// 文章列表
         /// </summary>
         public ActionResult List(string spaceKey, ListType listType, string tag = null, int year = 0, int month = 0, long categoryId = 0, int pageIndex = 1)
         {
@@ -728,7 +728,7 @@ namespace Spacebuilder.Blog.Controllers
         #region 侧边栏及局部页
 
         /// <summary>
-        /// 用户空间日志左侧控制面板
+        /// 用户空间文章左侧控制面板
         /// </summary>
         /// <param name="menu">菜单项标识</param>
         public ActionResult _Panel(string spaceKey, string menu = null)
@@ -736,7 +736,7 @@ namespace Spacebuilder.Blog.Controllers
             User user = userService.GetFullUser(spaceKey);
             ViewData["user"] = user;
 
-            //用户日志数
+            //用户文章数
             long threadCount = ownerDataService.GetLong(user.UserId, OwnerDataKeys.Instance().ThreadCount());
             ViewData["threadCount"] = threadCount;
 
@@ -751,7 +751,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 用户空间日志左侧日志分类
+        /// 用户空间文章左侧文章分类
         /// </summary>
         public ActionResult _Categories(string spaceKey)
         {
@@ -770,7 +770,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 用户空间日志左侧标签云
+        /// 用户空间文章左侧标签云
         /// </summary>
         public ActionResult _Tags(string spaceKey, int num = 30)
         {
@@ -790,7 +790,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 用户空间日志左侧存档列表
+        /// 用户空间文章左侧存档列表
         /// </summary>
         [DonutOutputCache(CacheProfile = "Usual")]
         public ActionResult _Archives(string spaceKey)
@@ -810,7 +810,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 侧边栏最新日志
+        /// 侧边栏最新文章
         /// </summary>
         public ActionResult _Newest(string spaceKey, int topNum = 10)
         {
@@ -842,7 +842,7 @@ namespace Spacebuilder.Blog.Controllers
             }
             ISettingsManager<SiteSettings> siteSettingsManager = DIContainer.Resolve<ISettingsManager<SiteSettings>>();
 
-            SyndicationFeed feed = new SyndicationFeed(user.DisplayName + "的日志 - " + siteSettingsManager.Get().SiteName, string.Empty, new Uri(SiteUrls.FullUrl(SiteUrls.Instance().Blog(spaceKey))));
+            SyndicationFeed feed = new SyndicationFeed(user.DisplayName + "的文章 - " + siteSettingsManager.Get().SiteName, string.Empty, new Uri(SiteUrls.FullUrl(SiteUrls.Instance().Blog(spaceKey))));
             feed.Authors.Add(new SyndicationPerson(user.DisplayName));
             feed.LastUpdatedTime = DateTime.Now.ConvertToUserDate();
 
@@ -857,7 +857,7 @@ namespace Spacebuilder.Blog.Controllers
                 {
                     if (!string.IsNullOrEmpty(blog.Summary))
                     {
-                        content = blog.Summary + "......<a href='" + url + "'>>>点击查看日志原文</a>";
+                        content = blog.Summary + "......<a href='" + url + "'>>>点击查看文章原文</a>";
                     }
                 }
                 else
@@ -898,14 +898,14 @@ namespace Spacebuilder.Blog.Controllers
 
         #endregion
 
-        #region 日志管理及草稿箱
+        #region 文章管理及草稿箱
 
         /// <summary>
-        /// 管理日志（主人）
+        /// 管理文章（主人）
         /// </summary>
         public ActionResult Manage(string spaceKey, int pageIndex = 1)
         {
-            pageResourceManager.InsertTitlePart("日志管理");
+            pageResourceManager.InsertTitlePart("文章管理");
             IUser currentUser = UserContext.CurrentUser;
             PagingDataSet<BlogThread> blogThread = blogService.GetOwnerThreads(TenantTypeIds.Instance().User(), currentUser.UserId, true, false, null, null, false, 15, pageIndex);
 
@@ -1015,10 +1015,10 @@ namespace Spacebuilder.Blog.Controllers
         }
         #endregion
 
-        #region 关注日志
+        #region 关注文章
 
         /// <summary>
-        /// 关注日志按钮
+        /// 关注文章按钮
         /// </summary>
         public ActionResult _SubscribeButton(string spaceKey, long threadId, bool isSubscribePage = false)
         {
@@ -1034,7 +1034,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 关注日志操作
+        /// 关注文章操作
         /// </summary>
         public JsonResult _Subscribe(string spaceKey, long threadId)
         {
@@ -1049,12 +1049,12 @@ namespace Spacebuilder.Blog.Controllers
 
             if (blogThread == null)
             {
-                return Json(new StatusMessageData(StatusMessageType.Error, "找不到要被关注的日志"));
+                return Json(new StatusMessageData(StatusMessageType.Error, "找不到要被关注的文章"));
             }
 
             if (subscribeService.IsSubscribed(threadId, currentUser.UserId))
             {
-                return Json(new StatusMessageData(StatusMessageType.Error, "您已经关注过该日志"));
+                return Json(new StatusMessageData(StatusMessageType.Error, "您已经关注过该文章"));
             }
 
             subscribeService.Subscribe(threadId, currentUser.UserId);
@@ -1063,7 +1063,7 @@ namespace Spacebuilder.Blog.Controllers
         }
 
         /// <summary>
-        /// 取消关注日志操作
+        /// 取消关注文章操作
         /// </summary>
         public JsonResult _SubscribeCancel(string spaceKey, long threadId)
         {
@@ -1076,14 +1076,14 @@ namespace Spacebuilder.Blog.Controllers
 
             if (!subscribeService.IsSubscribed(threadId, userId))
             {
-                return Json(new StatusMessageData(StatusMessageType.Error, "您没有关注过该日志"));
+                return Json(new StatusMessageData(StatusMessageType.Error, "您没有关注过该文章"));
             }
 
             BlogThread blogThread = blogService.Get(threadId);
 
             if (blogThread == null)
             {
-                return Json(new StatusMessageData(StatusMessageType.Error, "找不到要被关注的日志"));
+                return Json(new StatusMessageData(StatusMessageType.Error, "找不到要被关注的文章"));
             }
 
             subscribeService.CancelSubscribe(threadId, userId);
@@ -1097,7 +1097,7 @@ namespace Spacebuilder.Blog.Controllers
     }
 
     /// <summary>
-    /// 日志列表类型
+    /// 文章列表类型
     /// </summary>
     public enum ListType
     {

@@ -4,7 +4,7 @@
     Html.Style("~/Applications/Blog/Styles/app.css");
     Html.Script("~/Scripts/tunynet/plugins/jquery.spb.collapsibleBox.js");
 
-    string title = Model.ThreadId > 0 ? "编辑日志" : "写日志";
+    string title = Model.ThreadId > 0 ? "编辑文章" : "写文章";
     string buttonText = Model.ThreadId > 0 && !Model.IsDraft ? "保存" : "发布";
 
     int subjectCount = Model.Subject == null ? 0 : Model.Subject.Length;
@@ -21,7 +21,7 @@
                 <div class="tn-option">
                     <a class="tn-action" href="@SiteUrls.Instance().BlogDraft(Url.SpaceKey())"><span
                         class="tn-action-text">草稿箱</span></a><span class="tn-spacer tn-text-note">|</span><a class="tn-action" href="@SiteUrls.Instance().BlogHome(Url.SpaceKey())"><span
-                            class="tn-action-text">日志首页</span></a>
+                            class="tn-action-text">文章首页</span></a>
                 </div>
                 <h2>@title</h2>
             </div>
@@ -240,7 +240,7 @@
             getOwnerCategories();
         });        
 
-        //点击"发布/保存日志"按钮
+        //点击"发布/保存文章"按钮
         $("#submit-publish",form).click(function(e){
             e.preventDefault();
             $("#IsDraft", form).val(false);

@@ -117,7 +117,7 @@ namespace Spacebuilder.Environments
             //注册运行环境
             containerBuilder.Register(c => new DefaultRunningEnvironment()).As<IRunningEnvironment>().SingleInstance();
 
-            //注册系统日志
+            //注册系统文章
             containerBuilder.Register(c => new Log4NetLoggerFactoryAdapter()).As<ILoggerFactoryAdapter>().SingleInstance();
 
 
@@ -204,7 +204,7 @@ namespace Spacebuilder.Environments
                 containerBuilder.Register(c => new DefaultCacheService(new RuntimeMemoryCache(), 1.0F)).As<ICacheService>().SingleInstance();
             }
 
-            //操作日志
+            //操作文章
             containerBuilder.Register(c => new OperatorInfoGetter()).As<IOperatorInfoGetter>().SingleInstance();
             containerBuilder.Register(c => new OperationLogService()).As<OperationLogService>().SingleInstance();
 

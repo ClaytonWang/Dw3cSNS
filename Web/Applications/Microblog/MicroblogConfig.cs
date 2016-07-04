@@ -101,7 +101,7 @@ namespace Spacebuilder.Microblog
         {
             base.Load();
 
-            //注册日志Rss浏览计数服务
+            //注册文章Rss浏览计数服务
             CountService countService = new CountService(TenantTypeIds.Instance().Microblog());
             countService.RegisterCounts();//注册计数服务
             countService.RegisterCountPerDay();//需要统计阶段计数时，需注册每日计数服务

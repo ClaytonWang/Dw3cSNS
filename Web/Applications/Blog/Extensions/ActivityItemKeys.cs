@@ -15,12 +15,12 @@ namespace Spacebuilder.Blog
 {
 
     /// <summary>
-    /// 日志动态项
+    /// 文章动态项
     /// </summary>
     public static class ActivityItemKeysExtension
     {
         /// <summary>
-        /// 发布日志
+        /// 发布文章
         /// </summary>
         public static string CreateBlogThread(this ActivityItemKeys activityItemKeys)
         {
@@ -28,7 +28,7 @@ namespace Spacebuilder.Blog
         }
 
         /// <summary>
-        /// 日志评论
+        /// 文章评论
         /// </summary>
         public static string CreateBlogComment(this ActivityItemKeys activityItemKeys)
         {

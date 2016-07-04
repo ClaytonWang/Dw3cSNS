@@ -1,6 +1,6 @@
 ﻿@model BlogThread
 @{
-    Layout = "app-list-2cols";
+    Layout = "_article_layout";
     Html.Style("~/Applications/Blog/Styles/app.css");
     Html.Script("~/Applications/Blog/Scripts/jquery.spb.blog.js");
     Html.ViewContext.RouteData.Values["CurrentNavigationId"] = 11100203;
@@ -11,12 +11,12 @@
     IEnumerable<Attachment> attachments = ViewData.Get<IEnumerable<Attachment>>("attachments", null);
 
 }
-@section Aside{
+@*@section Aside{
     @Html.Action("_Panel", "Blog", new RouteValueDictionary { { "spaceKey", Url.SpaceKey() } })
     @Html.Action("_Categories", "Blog", new { spaceKey = Url.SpaceKey() })
     @Html.Action("_Tags", "Blog", new { spaceKey = Url.SpaceKey() })
     @Html.Action("_Newest", "Blog", new { spaceKey = Url.SpaceKey(), topNum = 10 })
-}
+}*@
 @Html.PointMessage()
 @if (authorizer.IsAdministrator(BlogConfig.Instance().ApplicationId) && (int)Model.AuditStatus < (int)(new AuditService().GetPubliclyAuditStatus(BlogConfig.Instance().ApplicationId)))
 {
@@ -24,7 +24,7 @@
         <a href="#" class="tn-icon tn-smallicon-cross tn-helper-right" id="hidespan"></a>
         <span class="tn-helper-left"><span class="tn-icon tn-icon-exclamation"></span></span>
         <div class="tn-helper-flowfix">
-            <strong>提示：</strong>当前日志尚未通过审核，你可以<a href="@SiteUrls.Instance()._BlogControlPanelUpdateAuditStatu(Model.ThreadId, true)" id = "audit-success">通过审核</a>
+            <strong>提示：</strong>当前文章尚未通过审核，你可以<a href="@SiteUrls.Instance()._BlogControlPanelUpdateAuditStatu(Model.ThreadId, true)" id = "audit-success">通过审核</a>
             @if (Model.AuditStatus == AuditStatus.Pending)
             {
                 @:或者
@@ -203,7 +203,7 @@
                 }
                 <div class="tn-actions">
                     @{
-                        string content = string.Format("@{0} 的日志 \"{1}\" {2} 很不错 推荐给大家看看", Model.User.NickName, Model.Subject, SiteUrls.FullUrl(SiteUrls.Instance().BlogDetail(Model.User.UserName, Model.ThreadId)));
+                        string content = string.Format("@{0} 的文章 \"{1}\" {2} 很不错 推荐给大家看看", Model.User.NickName, Model.Subject, SiteUrls.FullUrl(SiteUrls.Instance().BlogDetail(Model.User.UserName, Model.ThreadId)));
                         string imageUrl = null;
                         if (Model.FeaturedImageAttachmentId != 0)
                         { 
@@ -233,7 +233,7 @@
 </div>
 @Html.ScriptBlock(@<script type="text/javascript">
     $(function () {
-        //删除日志
+        //删除文章
         $("a[id='blog-delete']").click(function (e) {
             var self = $(this);
 

@@ -1,0 +1,39 @@
+﻿@{ 
+    int imageId = ViewData.Get<int>("imageId", 0);
+}
+<div class="tn-bubble-arrow"><b class="tn-arrow-b1 tn-border-gray"></b><b class="tn-arrow-b2 tn-widget-bubble"></b></div>
+<div class="tn-bubble-content tn-widget-content tn-border-gray tn-corner-all">
+    <input type="text" class="tn-textbox tn-input-long tn-border-gray" name="optionLinkContent">
+    <div class="tn-edit-btn">
+        <button class="tn-button tn-corner-all tn-button-text-only tn-button-default" type="button" name="submitlink"><span class="tn-button-text">提交</span></button>
+        <button class="tn-button tn-corner-all tn-button-text-only tn-button-default" type="button" name="resetlink"><span class="tn-button-text">取消</span></button>
+        <button class="tn-button tn-corner-all tn-button-text-only tn-button-default" type="button" name="deletelink"><span class="tn-button-text">删除</span></button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        var link = $("div[id='voteOption_" + @imageId + "']").find("input[name='voteOptionLink']").attr("value");
+        if (link == 'none') { link = ""; }
+        $("input[name='optionLinkContent']").attr("value", link);
+
+        $("button[name='submitlink']").on("click", function () {
+            var data = $("div[id='voteOption_" + @imageId + "']").find("input[name='optionLinkContent']").attr("value");
+            if (data == "") { data = "none"; }
+            $("div[id='voteOption_" + @imageId + "']").find("input[name='voteOptionLink']").attr("value", data);
+            $("div[id='voteOption_Link_" + @imageId + "']").html("");
+        });
+        $("button[name='resetlink']").on("click", function () {
+            @*  $("div[id='voteOption_" + @imageId + "']").find("input[name='voteOptionLink']").attr("value", "");*@
+            $("div[id='voteOption_Link_" + @imageId + "']").html("");
+        });
+        $("button[name='deletelink']").on("click", function () {
+            @*  $("div[id='voteOption_" + @imageId + "']").find("input[name='voteOptionLink']").attr("value", "");*@
+            $("div[id='voteOption_" + @imageId + "']").find("input[name='voteOptionLink']").attr("value", "none");
+            $("div[id='voteOption_Link_" + @imageId + "']").html("");
+        });
+
+    });
+
+</script>

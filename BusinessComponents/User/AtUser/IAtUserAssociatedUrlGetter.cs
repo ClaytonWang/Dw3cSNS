@@ -30,7 +30,7 @@ namespace Tunynet.Common
         AssociatedInfo GetAssociatedInfo(long associateId, string tenantTypeId = "");
 
         /// <summary>
-        /// 获取所属对象名称（例如：日志）
+        /// 获取所属对象名称（例如：文章）
         /// </summary>
         /// <remarks>没有任何所属时返回空</remarks>
         /// <returns></returns>

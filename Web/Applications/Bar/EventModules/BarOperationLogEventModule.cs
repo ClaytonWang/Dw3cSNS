@@ -18,7 +18,7 @@ using Spacebuilder.Common;
 namespace Spacebuilder.Bar.EventModules
 {
     /// <summary>
-    /// 处理贴吧操作日志
+    /// 处理贴吧操作文章
     /// </summary>
     public class BarOperationLogEventModule : IEventMoudle
     {
@@ -39,7 +39,7 @@ namespace Spacebuilder.Bar.EventModules
 
 
         /// <summary>
-        /// 贴吧操作日志事件处理
+        /// 贴吧操作文章事件处理
         /// </summary>
         private void BarSectionOperationLogEventModule_After(BarSection senders, CommonEventArgs eventArgs)
         {
@@ -65,7 +65,7 @@ namespace Spacebuilder.Bar.EventModules
         }
 
         /// <summary>
-        /// 帖子操作日志事件处理
+        /// 帖子操作文章事件处理
         /// </summary>
         private void BarThreadOperationLogEventModule_After(BarThread senders, CommonEventArgs eventArgs)
         {

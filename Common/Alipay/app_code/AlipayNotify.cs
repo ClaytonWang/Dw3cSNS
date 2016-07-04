@@ -18,7 +18,7 @@ namespace Com.Alipay
     /// 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
     /// 
     /// //////////////////////注意/////////////////////////////
-    /// 调试通知返回时，可查看或改写log日志的写入TXT里的数据，来检查通知返回是否正常 
+    /// 调试通知返回时，可查看或改写log文章的写入TXT里的数据，来检查通知返回是否正常 
     /// </summary>
     public class Notify
     {
@@ -63,7 +63,7 @@ namespace Com.Alipay
             string responseTxt = "true";
             if (notify_id != null && notify_id != "") { responseTxt = GetResponseTxt(notify_id); }
 
-            //写日志记录（若要调试，请取消下面两行注释）
+            //写文章记录（若要调试，请取消下面两行注释）
             //string sWord = "responseTxt=" + responseTxt + "\n isSign=" + isSign.ToString() + "\n 返回回来的参数：" + GetPreSignStr(inputPara) + "\n ";
             //Core.LogResult(sWord);
 

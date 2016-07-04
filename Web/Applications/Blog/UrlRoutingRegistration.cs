@@ -17,7 +17,7 @@ using Tunynet.Common;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志路由设置
+    /// 文章路由设置
     /// </summary>
     public class UrlRoutingRegistration : AreaRegistration
     {
@@ -38,13 +38,20 @@ namespace Spacebuilder.Blog
                 extensionForOldIIS = string.Empty;
 
             #region Channel
-            //日志频道首页
+            //站点首页
+            context.MapRoute(
+              "Channel_Site_Home", // Route name
+              "", // URL with parameters
+              new { controller = "ChannelBlog", action = "Home" } // Parameter defaults
+            );
+
+            //文章频道首页
             context.MapRoute(
               "Channel_Blog_Home", // Route name
               "Blog" + extensionForOldIIS, // URL with parameters
               new { controller = "ChannelBlog", action = "Home", CurrentNavigationId = "10100202" } // Parameter defaults
             );
-
+            
             //站点分类
             context.MapRoute(
                 "Channel_Blog_SiteCategory", // Route name
@@ -78,7 +85,7 @@ namespace Spacebuilder.Blog
 
             #region UserSpace
 
-            //日志首页
+            //文章首页
             context.MapRoute(
                 "UserSpace_Blog_Home", // Route name
                 "u/{SpaceKey}/BlogHome" + extensionForOldIIS, // URL with parameters
@@ -86,28 +93,28 @@ namespace Spacebuilder.Blog
                 );
 
 
-            //日志首页
+            //文章首页
             context.MapRoute(
               "UserSpace_Blog_Subscribed", // Route name
               "u/{SpaceKey}/BlogSubscribed" + extensionForOldIIS, // URL with parameters
                new { controller = "Blog", action = "Subscribed", CurrentNavigationId = "11100204" } // Parameter defaults
             );
 
-            //我的日志/他的日志
+            //我的文章/他的文章
             context.MapRoute(
                 "UserSpace_Blog_Blog", // Route name
                 "u/{SpaceKey}/Blog" + extensionForOldIIS, // URL with parameters
                 new { controller = "Blog", action = "Blog", CurrentNavigationId = "11100203" } // Parameter defaults
             );
 
-            //我的日志/他的日志
+            //我的文章/他的文章
             context.MapRoute(
                 "ApplicationCount_Blog", // Route name
                 "u/{SpaceKey}/Blog" + extensionForOldIIS, // URL with parameters
                 new { controller = "Blog", action = "Blog", CurrentNavigationId = "11100203" } // Parameter defaults
             );
 
-            //日志详细页
+            //文章详细页
             context.MapRoute(
               "UserSpace_Blog_Detail", // Route name
               "u/{SpaceKey}/B-{threadId}" + extensionForOldIIS, // URL with parameters
@@ -115,14 +122,14 @@ namespace Spacebuilder.Blog
               new { threadId = @"(\d+)|(\{\d+\})" }
             );
 
-            //创建日志
+            //创建文章
             context.MapRoute(
               "UserSpace_Blog_Create", // Route name
               "u/{SpaceKey}/Blog/Create" + extensionForOldIIS, // URL with parameters
               new { controller = "Blog", action = "Edit" } // Parameter defaults
             );
 
-            //编辑日志
+            //编辑文章
             context.MapRoute(
               "UserSpace_Blog_Edit", // Route name
               "u/{SpaceKey}/Blog/Edit-{threadId}" + extensionForOldIIS, // URL with parameters
@@ -130,7 +137,7 @@ namespace Spacebuilder.Blog
               new { threadId = @"(\d+)|(\{\d+\})" }
             );
 
-            //日志列表页-存档
+            //文章列表页-存档
             context.MapRoute(
               "UserSpace_Blog_List_Archive", // Route name
               "u/{SpaceKey}/Blog-{listType}-{year}-{month}" + extensionForOldIIS, // URL with parameters
@@ -138,7 +145,7 @@ namespace Spacebuilder.Blog
               new { year = @"(\d+)|(\{\d+\})", month = @"(\d+)|(\{\d+\})" }
             );
 
-            //日志列表页-分类
+            //文章列表页-分类
             context.MapRoute(
               "UserSpace_Blog_List_Category", // Route name
               "u/{SpaceKey}/Blog-{listType}-{categoryId}" + extensionForOldIIS, // URL with parameters
@@ -146,7 +153,7 @@ namespace Spacebuilder.Blog
               new { categoryId = @"(\d+)|(\{\d+\})" }
             );
 
-            //日志列表页-标签
+            //文章列表页-标签
             context.MapRoute(
               "UserSpace_Blog_List_Tag", // Route name
               "u/{SpaceKey}/Blog-{listType}-{tag}" + extensionForOldIIS, // URL with parameters

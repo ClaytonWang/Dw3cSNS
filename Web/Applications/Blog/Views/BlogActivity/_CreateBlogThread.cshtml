@@ -24,8 +24,8 @@
         <div class="tnc-dynamic-title">
             @Html.Link(Model.Author, SiteUrls.Instance().SpaceHome(Model.UserId), null, new { @class = "tn-author" }, hyperLinkTarget)
             @Html.IdentificationType(Model.UserId)
-            @(comments.Count() == 0 ? "发布了日志" : "的日志")
-            @Html.Link(Model.ResolvedSubject, url, Model.Subject, new { @class = "tn-title" }, HyperLinkTarget._blank)
+            @(comments.Count() == 0 ? "发布了文章" : "的文章")
+            《@Html.Link(Model.ResolvedSubject, url, Model.Subject, new { @class = "tn-title" }, HyperLinkTarget._blank)》
             @if (comments.Count() != 0)
             {
                 @:被
@@ -52,16 +52,20 @@
         {
             <div class="tnc-dynamic-imgbox">
                 <a href="@url" class="tnc-imgbox-bigshow" target="_blank">
-                    <img alt="@attachments.ElementAt(0).FriendlyFileName" src="@SiteUrls.Instance().ImageUrl(attachments.ElementAt(0), attachments.ElementAt(0).TenantTypeId, ImageSizeTypeKeys.Instance().Original())" width="400" /></a>
+                    <img alt="@attachments.ElementAt(0).FriendlyFileName" src="@SiteUrls.Instance().ImageUrl(attachments.ElementAt(0), attachments.ElementAt(0).TenantTypeId, ImageSizeTypeKeys.Instance().Original())" width="400" />
+                </a>
                 <div class="tnc-imgbox_preview">
                     @for (int i = 1; i < attachments.Count(); i++)
                     {
                         <a href="@url" target="_blank">
-                            <img width="60" src="@SiteUrls.Instance().ImageUrl(attachments.ElementAt(i), attachments.ElementAt(i).TenantTypeId, ImageSizeTypeKeys.Instance().Small())"/></a>
+                            <img width="60" src="@SiteUrls.Instance().ImageUrl(attachments.ElementAt(i), attachments.ElementAt(i).TenantTypeId, ImageSizeTypeKeys.Instance().Small())" />
+                        </a>
                         if (i == attachments.Count() - 1)
                         {
-                        <a href="@url" class="tnc-imgbox-float tn-bg-light" target="_blank">共 @totalCount
-                            张</a>
+                            <a href="@url" class="tnc-imgbox-float tn-bg-light" target="_blank">
+                                共 @totalCount
+                                张
+                            </a>
                         }
                     }
                 </div>
@@ -87,22 +91,22 @@
                             {
                                 if (!comment.IsPrivate)
                                 {
-                                <li class="tn-comment-item">
-                                    <div class="tn-comment tn-helper-clearfix tn-hover">
-                                        <div class="tn-comment-avatar">
-                                            @Html.ShowUserAvatar(comment.UserId, AvatarSizeType.Small, true, hyperLinkTarget)
-                                        </div>
-                                        <div class="tn-comment-info">
-                                            <div class="tn-commentator">
-                                                @Html.Link(comment.Author, SiteUrls.Instance().SpaceHome(comment.UserId), null, new { @class = "tn-user-name" }, hyperLinkTarget)
-                                                <em class="tn-text-note tn-date">@comment.DateCreated.ToFriendlyDate()</em>
+                                    <li class="tn-comment-item">
+                                        <div class="tn-comment tn-helper-clearfix tn-hover">
+                                            <div class="tn-comment-avatar">
+                                                @Html.ShowUserAvatar(comment.UserId, AvatarSizeType.Small, true, hyperLinkTarget)
                                             </div>
-                                            <p>
-                                                @HtmlUtility.TrimHtml(comment.Body, 88)
-                                            </p>
+                                            <div class="tn-comment-info">
+                                                <div class="tn-commentator">
+                                                    @Html.Link(comment.Author, SiteUrls.Instance().SpaceHome(comment.UserId), null, new { @class = "tn-user-name" }, hyperLinkTarget)
+                                                    <em class="tn-text-note tn-date">@comment.DateCreated.ToFriendlyDate()</em>
+                                                </div>
+                                                <p>
+                                                    @HtmlUtility.TrimHtml(comment.Body, 88)
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 }
                             }
                         </ul>

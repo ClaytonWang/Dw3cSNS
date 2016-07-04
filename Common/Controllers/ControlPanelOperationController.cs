@@ -595,7 +595,7 @@ namespace Spacebuilder.Common
         #endregion
 
 
-        #region 操作日志
+        #region 操作文章
         /// <summary>
         /// 展示页面
         /// </summary>
@@ -624,7 +624,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 删除日志模态窗
+        /// 删除文章模态窗
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -634,7 +634,7 @@ namespace Spacebuilder.Common
         }
 
         /// <summary>
-        /// 异步按日期删除日志
+        /// 异步按日期删除文章
         /// </summary>
         /// <param name="startDate">开始时间</param>
         /// <param name="endDate">结束时间</param>
@@ -645,7 +645,7 @@ namespace Spacebuilder.Common
             //如果结束时间不为空则加一天
             if (endDate != null)
                 endDate = endDate.Value.AddDays(1);
-            //按日期删除日志
+            //按日期删除文章
             int result = logService.Clean(startDate, endDate);
             //返回删除结果
             return Json(new StatusMessageData(StatusMessageType.Success, "删除成功！"));
@@ -1955,7 +1955,7 @@ namespace Spacebuilder.Common
         ManageAnnouncements = 8,
 
         /// <summary>
-        /// 管理操作日志
+        /// 管理操作文章
         /// </summary>
         ManageOperationLogs,
 

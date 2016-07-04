@@ -47,7 +47,7 @@ namespace Spacebuilder.Common
         public string Name { get; set; }
 
         /// <summary>
-        /// 描述模式（例如：有{0}个日志待审核）
+        /// 描述模式（例如：有{0}个文章待审核）
         /// </summary>
         public string DescriptionPattern { get; set; }
 

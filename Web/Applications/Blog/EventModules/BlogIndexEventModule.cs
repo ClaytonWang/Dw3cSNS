@@ -16,7 +16,7 @@ using Tunynet.Events;
 namespace Spacebuilder.Blog.EventModules
 {
     /// <summary>
-    /// 处理日志索引的EventMoudle
+    /// 处理文章索引的EventMoudle
     /// </summary>
     public class BlogIndexEventModule : IEventMoudle
     {
@@ -43,7 +43,7 @@ namespace Spacebuilder.Blog.EventModules
         #region 分类增量索引
 
         /// <summary>
-        /// 为日志添加分类时触发
+        /// 为文章添加分类时触发
         /// </summary>
         private void AddCategoriesToBlog_BatchAfter(IEnumerable<string> senders, TagEventArgs eventArgs)
         {
@@ -81,7 +81,7 @@ namespace Spacebuilder.Blog.EventModules
         #region 标签增量索引
 
         /// <summary>
-        /// 为日志添加标签时触发
+        /// 为文章添加标签时触发
         /// </summary>
         private void AddTagsToBlog_BatchAfter(IEnumerable<string> senders, TagEventArgs eventArgs)
         {
@@ -104,7 +104,7 @@ namespace Spacebuilder.Blog.EventModules
             {
                 if (eventArgs.EventOperationType==EventOperationType.Instance().Delete()||eventArgs.EventOperationType==EventOperationType.Instance().Update())
                 {
-                    //根据标签获取所有使用该标签的(内容项)日志
+                    //根据标签获取所有使用该标签的(内容项)文章
                     IEnumerable<long> blogThreadIds = tagService.GetItemIds(sender.TagName, null);
                     if (blogSearcher == null)
                     {
@@ -128,9 +128,9 @@ namespace Spacebuilder.Blog.EventModules
         }
         #endregion    
 
-        #region 日志增量索引
+        #region 文章增量索引
         /// <summary>
-        /// 日志增量索引
+        /// 文章增量索引
         /// </summary>
         private void BlogThread_After(BlogThread blog, CommonEventArgs eventArgs)
         {

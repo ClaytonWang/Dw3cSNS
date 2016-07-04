@@ -97,7 +97,7 @@ namespace Spacebuilder.Common.EventModules
         }
 
         /// <summary>
-        /// 资讯操作日志事件处理
+        /// 资讯操作文章事件处理
         /// </summary>
         private void RecommendOperationLogEventModule_After(RecommendItem sender, CommonEventArgs eventArgs)
         {

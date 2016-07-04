@@ -1159,6 +1159,18 @@
     <Content Include="Themes\Channel\Default\Views\Account\ThirdRegister.cshtml" />
     <Content Include="Themes\Channel\Default\Views\Channel\_UserCard.cshtml" />
     <Content Include="Themes\Channel\Default\Views\Channel\_ImpeachReport.cshtml" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\appearance.css" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\box-content-header.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\content-bg-x.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\panel-x.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\top-tab.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\top-x.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\top.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\user-menu-bg.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\user-menu-hover.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Images\user-menu-item.png" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Preview.png" />
+    <Content Include="Themes\Channel\Dw3c\theme.css" />
     <Content Include="Themes\Channel\Portal\Appearances\Default\appearance.css" />
     <Content Include="Themes\Channel\Portal\Appearances\Default\Images\box-content-header.png" />
     <Content Include="Themes\Channel\Portal\Appearances\Default\Images\content-bg-x.png" />
@@ -1244,6 +1256,11 @@
     <Content Include="Scripts\UEditor\third-party\video-js\font\vjs.ttf" />
     <Content Include="Scripts\UEditor\third-party\video-js\font\vjs.woff" />
     <Content Include="Themes\Channel\Default\Views\Channel\_VoteOptionLinkPath.cshtml" />
+    <Content Include="Themes\Channel\Dw3c\Appearances\Default\Appearance.config" />
+    <Content Include="Themes\Channel\Dw3c\Theme.config" />
+    <Content Include="Themes\Channel\Dw3c\Views\Channel\_Header.cshtml" />
+    <Content Include="Themes\Channel\Default\Layouts\dw3c-layout.cshtml" />
+    <Content Include="Themes\Channel - Copy\Default\Layouts\_Search.cshtml" />
     <None Include="Themes\ControlPanel\Default\Views\ControlPanelOperation\ManageAccountTypes.cshtml" />
     <Content Include="PanGu.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1336,6 +1353,7 @@
     <Content Include="Themes\UserSpace\Custom\Images\diy001.png" />
     <Content Include="Themes\UserSpace\Custom\theme-deep.css" />
     <Content Include="Themes\UserSpace\Custom\theme.css" />
+    <Content Include="Themes\UserSpace\Default\Appearances\Default\appearance.css" />
     <Content Include="Themes\UserSpace\Default\Views\UserSpaceSettings\UserPrivacyItemsSettings.cshtml" />
     <Content Include="Themes\UserSpace\Default\Views\UserSpace\PrivacyHome.cshtml" />
     <Content Include="Themes\UserSpace\Default\Layouts\_Follow.cshtml" />
@@ -1577,6 +1595,7 @@
     <Content Include="Themes\Shared\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Themes\Shared\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Themes\Shared\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Themes\UserSpace\Default\Layouts\_article_layout.cshtml" />
     <None Include="Themes\UserSpace\Default\Views\Follow\ListFollowedUsers.cshtml" />
     <Content Include="Themes\UserSpace\Default\Views\Follow\_BatchFollow.cshtml" />
     <Content Include="Themes\UserSpace\Default\Views\Follow\_SetGroupForUser.cshtml" />
@@ -1627,6 +1646,7 @@
     <Content Include="Themes\UserSpace\Default\Views\UserSpace\_UserActivities.cshtml" />
     <Content Include="Themes\UserSpace\Default\Views\UserSpace\_ContentPop.cshtml" />
     <Content Include="Themes\UserSpace\Default\Views\UserSpaceSettings\UserModerated.cshtml" />
+    <Content Include="Themes\UserSpace\Default\Views\UserSpace\ViewPage1.cshtml" />
     <None Include="Themes\UserSpace\Default\Views\UserSpace\_FollowerList.cshtml" />
     <Content Include="Themes\UserSpace\Default\Views\UserSpace\_SelectMenu.cshtml" />
     <Content Include="Themes\UserSpace\Default\Views\UserSpace\_SpaceLastVisitList.cshtml" />
@@ -1873,7 +1893,6 @@
     <Content Include="Themes\UserSpace\Default\Appearances\Dark\Images\tn-content-bg.gif" />
     <Content Include="Themes\UserSpace\Default\Appearances\Dark\Images\tn-page-bg.png" />
     <Content Include="Themes\UserSpace\Default\Appearances\Dark\Preview.png" />
-    <Content Include="Themes\UserSpace\Default\Appearances\Default\appearance.css" />
     <Content Include="Themes\UserSpace\Default\Appearances\Default\Images\spb-allctn-bg.png" />
     <Content Include="Themes\UserSpace\Default\Appearances\Default\Images\spb-allmyhome-bg.png" />
     <Content Include="Themes\UserSpace\Default\Appearances\Default\Images\spb-btn-bg01.png" />
@@ -1950,6 +1969,7 @@
     <Content Include="Uploads\NavigationImage\img.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Applications\" />
     <Folder Include="App_Data\HttpCache\" />
     <Folder Include="App_Data\IndexFiles\" />
     <Folder Include="App_Data\Logs\" />
@@ -1957,6 +1977,7 @@
     <Folder Include="Scripts\tinymce\plugins\spellchecker\classes\utils\" />
     <Folder Include="Scripts\tinymce\plugins\spellchecker\includes\" />
     <Folder Include="Themes\Channel\Default\Appearances\Default\Images\" />
+    <Folder Include="Themes\Channel\Dw3c\Layouts\" />
     <Folder Include="Themes\Channel\Layouts\" />
     <Folder Include="Themes\Channel\Portal\Layouts\" />
     <Folder Include="Themes\ControlPanel\Default\Appearances\" />

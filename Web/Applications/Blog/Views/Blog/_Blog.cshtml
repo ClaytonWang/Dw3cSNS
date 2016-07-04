@@ -1,20 +1,22 @@
 ﻿@model BlogThread
 @{
+    Layout = null;
     string spaceKey = UserIdToUserNameDictionary.GetUserName(Model.UserId);
     IUser currentUser = UserContext.CurrentUser;
     bool isSubscribePage = ViewData.Get<bool>("isSubscribePage", false);
 }
 @if (Model != null)
-{ 
+{
 <li class="tn-list-item tn-helper-clearfix tn-border-gray tn-border-bottom">
-    @if(!string.IsNullOrEmpty(Model.FeaturedImage)){
-        <div class="tn-list-item-area-left"><img alt="@Model.ResolvedSubject" src="@SiteUrls.Instance().ImageUrl(Model.FeaturedImage,TenantTypeIds.Instance().BlogThread(),ImageSizeTypeKeys.Instance().Small())" /></div>
+    @if (!string.IsNullOrEmpty(Model.FeaturedImage))
+    {
+        <div class="tn-list-item-area-left"><img alt="@Model.ResolvedSubject" src="@SiteUrls.Instance().ImageUrl(Model.FeaturedImage, TenantTypeIds.Instance().BlogThread(), ImageSizeTypeKeys.Instance().Small())" /></div>
     }
     <div class="tn-list-item-row tn-list-item-heading">
         <h5 class="tn-helper-reset"> 
             <a target="_blank" href="@SiteUrls.Instance().BlogDetail(spaceKey, Model.ThreadId)">@Model.ResolvedSubject</a> 
             @if (Model.IsSticky)
-            { 
+            {
                 <span title="置顶" class="tn-icon-colorful tn-icon-colorful-top tn-icon-inline"></span>
             }
             @if (Model.IsEssential)
@@ -26,7 +28,7 @@
             <span title="不公开" class="tn-icon-colorful tn-icon-colorful-secret tn-icon-inline"></span>
             }
             else if (Model.PrivacyStatus == PrivacyStatus.Part)
-            { 
+            {
             <span title="特定用户可见" class="tn-icon tn-icon-limit tn-icon-inline"></span>
             }
         </h5>

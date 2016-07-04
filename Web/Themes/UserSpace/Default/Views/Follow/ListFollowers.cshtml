@@ -1,6 +1,6 @@
 ﻿@model  PagingDataSet<User>
 @{
-    Layout = "_Follow";
+    Layout = "_UserSpace_Common";
     GenderType gender = ViewData.Get<GenderType>("Gender", GenderType.NotSet);
     Follow_SortBy sortBy = ViewData.Get<Follow_SortBy>("sortBy", Follow_SortBy.DateCreated_Desc);
     FollowService followService = new FollowService();

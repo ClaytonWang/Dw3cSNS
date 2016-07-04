@@ -44,9 +44,20 @@ namespace Spacebuilder.Common
 
             #region Channel
 
+            //context.MapRoute(
+            //    "Channel_SiteHome", // Route name
+            //    "", // URL with parameters
+            //    new { controller = "Channel", action = "SimpleHome" } // Parameter defaults
+            //);
+
+            context.MapRoute(
+                "Channel_TimeLine", // Route name
+                "timeline", // URL with parameters
+                new { controller = "Channel", action = "Home" } // Parameter defaults
+            );
             context.MapRoute(
                 "Channel_SiteHome", // Route name
-                "", // URL with parameters
+                "login", // URL with parameters
                 new { controller = "Channel", action = "SimpleHome" } // Parameter defaults
             );
 

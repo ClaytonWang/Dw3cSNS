@@ -20,7 +20,7 @@ namespace Spacebuilder.Blog
     {
         
         /// <summary>
-        /// 日志有新评论
+        /// 文章有新评论
         /// </summary>
         public static string NewBlogComment(this NoticeTemplateNames noticeTemplateNames)
         {

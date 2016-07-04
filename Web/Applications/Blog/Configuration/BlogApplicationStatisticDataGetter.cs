@@ -17,7 +17,7 @@ using Tunynet.Common;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志应用数据Url获取器
+    /// 文章应用数据Url获取器
     /// </summary>
     public class BlogApplicationStatisticDataGetter : IApplicationStatisticDataGetter
     {
@@ -34,17 +34,17 @@ namespace Spacebuilder.Blog
             Dictionary<string, long> manageableDatas = blogService.GetManageableDatas(tenantTypeId);
 
             if (manageableDatas.ContainsKey(ApplicationStatisticDataKeys.Instance().PendingCount()))
-                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().PendingCount(), "日志",
-                 "日志待审核数", manageableDatas[ApplicationStatisticDataKeys.Instance().PendingCount()])
+                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().PendingCount(), "文章",
+                 "文章待审核数", manageableDatas[ApplicationStatisticDataKeys.Instance().PendingCount()])
                 {
-                    DescriptionPattern = "{0}个日志待审核",
+                    DescriptionPattern = "{0}个文章待审核",
                     Url = SiteUrls.Instance().BlogControlPanelManage(auditStatus: AuditStatus.Pending)
                 });
             if (manageableDatas.ContainsKey(ApplicationStatisticDataKeys.Instance().AgainCount()))
-                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().AgainCount(), "日志",
-                 "日志需再审核数", manageableDatas[ApplicationStatisticDataKeys.Instance().AgainCount()])
+                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().AgainCount(), "文章",
+                 "文章需再审核数", manageableDatas[ApplicationStatisticDataKeys.Instance().AgainCount()])
                 {
-                    DescriptionPattern = "{0}个日志需再审核",
+                    DescriptionPattern = "{0}个文章需再审核",
                     Url = SiteUrls.Instance().BlogControlPanelManage(auditStatus: AuditStatus.Again)
                 });
             return applicationStatisticDatas;
@@ -60,17 +60,17 @@ namespace Spacebuilder.Blog
             IList<ApplicationStatisticData> applicationStatisticDatas = new List<ApplicationStatisticData>();
             Dictionary<string, long> statisticDatas = blogService.GetStatisticDatas(tenantTypeId);
             if (statisticDatas.ContainsKey(ApplicationStatisticDataKeys.Instance().TotalCount()))
-                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().TotalCount(), "日志",
-                 "日志总数", statisticDatas[ApplicationStatisticDataKeys.Instance().TotalCount()])
+                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().TotalCount(), "文章",
+                 "文章总数", statisticDatas[ApplicationStatisticDataKeys.Instance().TotalCount()])
                 {
-                    DescriptionPattern = "共{0}个日志",
+                    DescriptionPattern = "共{0}个文章",
                     Url = SiteUrls.Instance().BlogControlPanelManage()
                 });
             if (statisticDatas.ContainsKey(ApplicationStatisticDataKeys.Instance().Last24HCount()))
-                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().Last24HCount(), "日志",
-                 "日志24小时新增数", statisticDatas[ApplicationStatisticDataKeys.Instance().Last24HCount()])
+                applicationStatisticDatas.Add(new ApplicationStatisticData(ApplicationStatisticDataKeys.Instance().Last24HCount(), "文章",
+                 "文章24小时新增数", statisticDatas[ApplicationStatisticDataKeys.Instance().Last24HCount()])
                 {
-                    DescriptionPattern = "24小时新增{0}个日志",
+                    DescriptionPattern = "24小时新增{0}个文章",
                     Url = SiteUrls.Instance().BlogControlPanelManage()
                 });
             return applicationStatisticDatas;

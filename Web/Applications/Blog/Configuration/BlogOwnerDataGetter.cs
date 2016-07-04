@@ -22,7 +22,7 @@ namespace Spacebuilder.Blog
         /// </summary>
         public string DataName
         {
-            get { return "日志数"; }
+            get { return "文章数"; }
         }
 
         /// <summary>

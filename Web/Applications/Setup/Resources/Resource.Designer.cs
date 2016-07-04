@@ -61,7 +61,7 @@ namespace Spacebuilder.Setup.Resources {
         }
         
         /// <summary>
-        ///   查找类似 日志 的本地化字符串。
+        ///   查找类似 文章 的本地化字符串。
         /// </summary>
         internal static string ApplicationName_1111 {
             get {
@@ -70,7 +70,7 @@ namespace Spacebuilder.Setup.Resources {
         }
         
         /// <summary>
-        ///   查找类似 日志 的本地化字符串。
+        ///   查找类似 文章 的本地化字符串。
         /// </summary>
         internal static string ApplicationName_Setup {
             get {
@@ -79,7 +79,7 @@ namespace Spacebuilder.Setup.Resources {
         }
         
         /// <summary>
-        ///   查找类似 日志 的本地化字符串。
+        ///   查找类似 文章 的本地化字符串。
         /// </summary>
         internal static string CountObject_Setup {
             get {

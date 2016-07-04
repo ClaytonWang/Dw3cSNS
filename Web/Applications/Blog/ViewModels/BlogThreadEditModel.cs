@@ -24,7 +24,7 @@ using Tunynet.Utilities;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 编辑日志的EditModel
+    /// 编辑文章的EditModel
     /// </summary>
     public class BlogThreadEditModel
     {
@@ -38,8 +38,8 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 标题
         /// </summary>
-        [WaterMark(Content = "在此输入日志标题")]
-        [Required(ErrorMessage = "请输入日志标题")]
+        [WaterMark(Content = "在此输入文章标题")]
+        [Required(ErrorMessage = "请输入文章标题")]
         [StringLength(TextLengthSettings.TEXT_SUBJECT_MAXLENGTH, MinimumLength = TextLengthSettings.TEXT_SUBJECT_MINLENGTH, ErrorMessage = "最多可以输入{1}个字")]
         [DataType(DataType.Text)]
         public string Subject { get; set; }
@@ -47,7 +47,7 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 正文
         /// </summary>
-        [Required(ErrorMessage = "请输入日志内容")]
+        [Required(ErrorMessage = "请输入文章内容")]
         [StringLength(TextLengthSettings.TEXT_BODY_MAXLENGTH * 5, ErrorMessage = "最多可以输入{1}个字")]
         [AllowHtml]
         [DataType(DataType.Html)]
@@ -74,7 +74,7 @@ namespace Spacebuilder.Blog
         /// 标题
         /// </summary>
         [Display(Name = "关键字")]
-        [WaterMark(Content = "关键字用于设置日志页面的Meta标签，利于SEO")]
+        [WaterMark(Content = "关键字用于设置文章页面的Meta标签，利于SEO")]
         [StringLength(64, ErrorMessage = "最多可以输入64个字")]
         [DataType(DataType.Text)]
         public string Keywords { get; set; }
@@ -93,12 +93,12 @@ namespace Spacebuilder.Blog
         public long? OwnerId { get; set; }
 
         /// <summary>
-        /// 用户日志分类
+        /// 用户文章分类
         /// </summary>
         public string OwnerCategoryIds { get; set; }
 
         /// <summary>
-        /// 站点日志分类
+        /// 站点文章分类
         /// </summary>
         public long? SiteCategoryId { get; set; }
 
@@ -141,12 +141,12 @@ namespace Spacebuilder.Blog
         /// <summary>
         /// 转换成BlogThread类型
         /// </summary>
-        /// <returns>日志实体</returns>
+        /// <returns>文章实体</returns>
         public BlogThread AsBlogThread()
         {
             BlogThread blogThread = null;
 
-            //写日志
+            //写文章
             if (this.ThreadId <= 0)
             {
                 blogThread = BlogThread.New();
@@ -165,7 +165,7 @@ namespace Spacebuilder.Blog
                 blogThread.OriginalAuthorId = UserContext.CurrentUser.UserId;
                 blogThread.IsDraft = this.IsDraft;
             }
-            //编辑日志
+            //编辑文章
             else
             {
                 BlogService blogService = new BlogService();
@@ -217,15 +217,15 @@ namespace Spacebuilder.Blog
     }
 
     /// <summary>
-    /// 日志实体的扩展类
+    /// 文章实体的扩展类
     /// </summary>
     public static class BlogThreadExtensions
     {
         /// <summary>
         /// 将数据库中的信息转换成EditModel实体
         /// </summary>
-        /// <param name="blogThread">日志实体</param>
-        /// <returns>编辑日志的EditModel</returns>
+        /// <param name="blogThread">文章实体</param>
+        /// <returns>编辑文章的EditModel</returns>
         public static BlogThreadEditModel AsEditModel(this BlogThread blogThread)
         {
             return new BlogThreadEditModel

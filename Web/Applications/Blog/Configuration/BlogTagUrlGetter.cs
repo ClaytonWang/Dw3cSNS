@@ -21,7 +21,7 @@ using Tunynet.Utilities;
 namespace Spacebuilder.Blog
 {
     /// <summary>
-    /// 日志标签云Url获取
+    /// 文章标签云Url获取
     /// </summary>
     public class BlogTagUrlGetter : ITagUrlGetter
     {
