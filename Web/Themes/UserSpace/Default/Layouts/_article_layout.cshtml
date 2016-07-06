@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@{  var currentUser = UserContext.CurrentUser;}
+<!DOCTYPE html>
 <html>
 @using (Html.BeginHead())
 {
@@ -12,14 +13,54 @@
         <div id="tn-header" class="tn-header-bg">
             <div class="tn-wrapper">
                 @Html.Action("_Header", "Channel", new { spaceKey = Url.SpaceKey(), Area = "Common" })
+                <div id="articleHead" class="article-head" style="border-top:none;border-left:none;border-right:none;">
+                    <div class="article-related pull-left">
+                        <a class="collection-menu-btn"><i class="fa fa-th"></i></a>
+                        <a class="notebooks-menu-btn"><i class="fa fa-list-ul"></i></a>
+                    </div>
+                    <div class="article-related-right">
+                        @if (currentUser != null)
+                        {
+                            <div class="aft-login-opr">
+                                <div class="head-avatar-img">
+                                    @Html.ShowUserAvatar(currentUser, AvatarSizeType.Small, navigateTarget: HyperLinkTarget._self, isShowUserCard: true, isShowTitle: false, htmlAttributes: new RouteValueDictionary { { "class", "abc" } })
+                                </div>
+                                <a href="#"><i class="fa fa-share-square-o"></i></a>
+                                <a href="#"><i class="fa fa-bookmark-o"></i></a>
+                                <a href="#"><i class="fa fa-plus"></i></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="spb-menu-link"
+                               href="@SiteUrls.Instance().Login(true, SiteUrls.LoginModal._LoginInModal)"
+                               title="登录"
+                               id="login"
+                               plugin="dialog"
+                               rel="nofollow">
+                                登录
+                                <i class="fa fa-sign-in"></i>
+                            </a>
+                            <a class="spb-menu-link"
+                               href="@SiteUrls.Instance().Register()"
+                               title="注册"
+                               rel="nofollow">
+                                注册
+                                <i class="fa fa-user"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="tn-content" class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                @RenderBody()
+        <div id="tn-content" style="margin-top:80px;">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    @RenderBody()
+                </div>
+                <div class="col-md-2"></div>
             </div>
-            <div class="col-md-2"></div>
         </div>
         <div id="tn-footer" class="tn-footer-bg">
             <div class="tn-wrapper">

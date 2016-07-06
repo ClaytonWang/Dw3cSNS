@@ -7,16 +7,16 @@
 
     Authorizer authorizer = DIContainer.Resolve<Authorizer>();
     IUser currentUser = UserContext.CurrentUser;
-
+    User user = ViewData["User"] as User;
     IEnumerable<Attachment> attachments = ViewData.Get<IEnumerable<Attachment>>("attachments", null);
 
 }
 @*@section Aside{
-    @Html.Action("_Panel", "Blog", new RouteValueDictionary { { "spaceKey", Url.SpaceKey() } })
-    @Html.Action("_Categories", "Blog", new { spaceKey = Url.SpaceKey() })
-    @Html.Action("_Tags", "Blog", new { spaceKey = Url.SpaceKey() })
-    @Html.Action("_Newest", "Blog", new { spaceKey = Url.SpaceKey(), topNum = 10 })
-}*@
+        @Html.Action("_Panel", "Blog", new RouteValueDictionary { { "spaceKey", Url.SpaceKey() } })
+        @Html.Action("_Categories", "Blog", new { spaceKey = Url.SpaceKey() })
+        @Html.Action("_Tags", "Blog", new { spaceKey = Url.SpaceKey() })
+        @Html.Action("_Newest", "Blog", new { spaceKey = Url.SpaceKey(), topNum = 10 })
+    }*@
 @Html.PointMessage()
 @if (authorizer.IsAdministrator(BlogConfig.Instance().ApplicationId) && (int)Model.AuditStatus < (int)(new AuditService().GetPubliclyAuditStatus(BlogConfig.Instance().ApplicationId)))
 {
@@ -24,11 +24,11 @@
         <a href="#" class="tn-icon tn-smallicon-cross tn-helper-right" id="hidespan"></a>
         <span class="tn-helper-left"><span class="tn-icon tn-icon-exclamation"></span></span>
         <div class="tn-helper-flowfix">
-            <strong>提示：</strong>当前文章尚未通过审核，你可以<a href="@SiteUrls.Instance()._BlogControlPanelUpdateAuditStatu(Model.ThreadId, true)" id = "audit-success">通过审核</a>
+            <strong>提示：</strong>当前文章尚未通过审核，你可以<a href="@SiteUrls.Instance()._BlogControlPanelUpdateAuditStatu(Model.ThreadId, true)" id="audit-success">通过审核</a>
             @if (Model.AuditStatus == AuditStatus.Pending)
             {
                 @:或者
-                <a href="@SiteUrls.Instance()._BlogControlPanelUpdateAuditStatu(Model.ThreadId, false)" id = "audit-fail">不通过审核</a>
+                <a href="@SiteUrls.Instance()._BlogControlPanelUpdateAuditStatu(Model.ThreadId, false)" id="audit-fail">不通过审核</a>
             }
         </div>
     </div>
@@ -60,9 +60,32 @@
     <div class="tn-box-content tn-widget-content tn-corner-all">
         <div class="tn-detail">
             <div class="tn-text-heading">
-                <h1 class="tn-title">@Model.ResolvedSubject
+                <div class="author-info">
+                    <div class="btn btn-small btn-success follow">
+                        <a href="#">
+                            <i class="fa fa-plus"></i>
+                            <span>添加关注</span>
+                        </a>
+                    </div>
+                    <div class="avatar-img">
+                        @Html.ShowUserAvatar(user, AvatarSizeType.Small, navigateTarget: HyperLinkTarget._self, isShowUserCard: true, isShowTitle: false, htmlAttributes: new RouteValueDictionary { { "class", "abc" } })
+                    </div>
+                    <div style="float:left;margin-top:5px;margin-left:10px;">
+                        <div class="articl-info" style="margin-top:0px;">
+                            <span class="label-auth">作者</span>
+                            <a href="@SiteUrls.Instance().SpaceHome(user.UserId)" title="@user.DisplayName">@(StringUtility.Trim(user.DisplayName, 8, ""))</a>
+                            <em class="tn-date">@Model.DateCreated.ToUserDateString(true)</em>
+                        </div>
+                        <div class="articl-info">
+                            <a class="tn-count" href="#comment" style="margin-left:0px;">评论(@Model.CommentCount)</a>
+                            <em class="tn-view">浏览(@Model.HitTimes)</em>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="tn-title" style="font-size:32px;font-weight:bold;">
+                    @Model.ResolvedSubject
                     @if (Model.IsSticky)
-                    { 
+                    {
                         <span title="置顶" class="tn-icon-colorful tn-icon-colorful-top tn-icon-inline"></span>
                     }
                     @if (Model.IsEssential)
@@ -75,20 +98,20 @@
                         </span>
                     }
                     else if (Model.PrivacyStatus == PrivacyStatus.Part)
-                    { 
+                    {
                         <span title="特定用户可见" class="tn-icon tn-icon-limit tn-icon-inline"></span>
                     }
                 </h1>
             </div>
-            <div class="tn-text-note tn-border-gray tn-border-top tn-detail-info">
-                @if (authorizer.BlogThread_Edit(Model)
-                || authorizer.BlogThread_Delete(Model)
-                || authorizer.BlogThread_Manage())
+            <div class="tn-text-note tn-border-top tn-detail-info">
+                @if (authorizer.BlogThread_Edit(Model) || authorizer.BlogThread_Delete(Model) || authorizer.BlogThread_Manage())
                 {
                     <div class="tn-actions">
                         <span class="tn-action tn-action-text-icon-right tn-action-has-drop-menu tn-border-trl"
-                            menu="#manage-blog"><span class="tn-icon tn-smallicon-triangle-down"></span><a href="javascript:;"
-                                class="tn-action-text">管理操作</a> </span>
+                              menu="#manage-blog">
+                            <span class="tn-icon tn-smallicon-triangle-down"></span>
+                            <a href="javascript:;" class="tn-action-text">管理操作</a>
+                        </span>
                         <div id="manage-blog" class="tn-more-options tn-widget-content tn-border-gray" style="display: none">
                             <ul class="tn-more-list">
                                 @if (authorizer.BlogThread_Edit(Model))
@@ -103,31 +126,30 @@
                                 {
                                     if (Model.IsSticky)
                                     {
-                                    <li>@Html.Link("取消置顶", SiteUrls.Instance()._BlogSetSticky(Url.SpaceKey(), Model.ThreadId, false), "取消置顶", new { @class = "tn-item-link", id = "blog-set-sticky" })</li>
+                                        <li>@Html.Link("取消置顶", SiteUrls.Instance()._BlogSetSticky(Url.SpaceKey(), Model.ThreadId, false), "取消置顶", new { @class = "tn-item-link", id = "blog-set-sticky" })</li>
                                     }
                                     else
-                                    { 
-                                    <li>@Html.Link("置顶", SiteUrls.Instance()._BlogSetSticky(Url.SpaceKey(), Model.ThreadId, true), "置顶", new { @class = "tn-item-link", id = "blog-set-sticky" })</li>
+                                    {
+                                        <li>@Html.Link("置顶", SiteUrls.Instance()._BlogSetSticky(Url.SpaceKey(), Model.ThreadId, true), "置顶", new { @class = "tn-item-link", id = "blog-set-sticky" })</li>
                                     }
                                 }
                                 @if (authorizer.BlogThread_Manage())
                                 {
                                     if (Model.IsEssential)
                                     {
-                                    <li>@Html.Link("取消精华", SiteUrls.Instance()._BlogControlPanelSetEssential(Model.ThreadId, false), "取消精华", new { @class = "tn-item-link", id = "blog-set-essential" })</li>
+                                        <li>@Html.Link("取消精华", SiteUrls.Instance()._BlogControlPanelSetEssential(Model.ThreadId, false), "取消精华", new { @class = "tn-item-link", id = "blog-set-essential" })</li>
                                     }
                                     else
                                     {
-                                    <li>@Html.Link("加精", SiteUrls.Instance()._BlogControlPanelSetEssential(Model.ThreadId, true), "加精", new { @class = "tn-item-link", id = "blog-set-essential" })</li>
+                                        <li>@Html.Link("加精", SiteUrls.Instance()._BlogControlPanelSetEssential(Model.ThreadId, true), "加精", new { @class = "tn-item-link", id = "blog-set-essential" })</li>
                                     }
                                     <li>@Html.Link("管理员推荐", SiteUrls.Instance()._RecommendItem(TenantTypeIds.Instance().BlogThread(), Model.ThreadId, Model.ResolvedSubject, userId: Model.UserId), "管理员推荐", new { @class = "tn-item-link", id = "blog-set-recommend", plugin = "dialog" })</li>
                                 }
                             </ul>
                         </div>
-                    </div>            
+                    </div>
                 }
-                <em class="tn-date">@Model.DateCreated.ToUserDateString(true)</em><a class="tn-count"
-                    href="#comment">评论(@Model.CommentCount)</a> <em class="tn-view">浏览(@Model.HitTimes)</em>
+
                 @if (Model.IsReproduced)
                 {
                     <span class="tn-source">转自：<a href="@SiteUrls.Instance().Blog(UserIdToUserNameDictionary.GetUserName(Model.OriginalAuthorId))" target="_blank">@Model.OriginalAuthorName</a></span>
@@ -150,7 +172,8 @@
                         <dl class="tn-before">
                             <dt>前一篇：</dt>
                             <dd>
-                                <a href="@SiteUrls.Instance().BlogDetail(Url.SpaceKey(), prevThread.ThreadId)" title="@prevThread.Subject">@prevThread.Subject</a></dd>
+                                <a href="@SiteUrls.Instance().BlogDetail(Url.SpaceKey(), prevThread.ThreadId)" title="@prevThread.Subject">@prevThread.Subject</a>
+                            </dd>
                         </dl>
                     }
                     @if (nextThread != null)
@@ -158,12 +181,13 @@
                         <dl class="tn-after">
                             <dt>后一篇：</dt>
                             <dd>
-                                <a href="@SiteUrls.Instance().BlogDetail(Url.SpaceKey(), nextThread.ThreadId)"  title="@nextThread.Subject">@nextThread.Subject</a></dd>
+                                <a href="@SiteUrls.Instance().BlogDetail(Url.SpaceKey(), nextThread.ThreadId)" title="@nextThread.Subject">@nextThread.Subject</a>
+                            </dd>
                         </dl>
                     }
                 </div>
                 @if (ownerCategories != null && ownerCategories.Count() > 0)
-                {        
+                {
                     <div class="tn-info-part tn-sort-vest">
                         <dl>
                             <dt>分类：</dt>
@@ -177,7 +201,7 @@
                     </div>
                 }
                 @if (tagNames != null && tagNames.Count() > 0)
-                {  
+                {
                     <div class="tn-info-part tn-tags-vest">
                         <dl>
                             <dt>标签：</dt>
@@ -197,7 +221,8 @@
                 {
                     <div class="tn-follow">
                         <a class="tn-button tn-corner-all tn-button-text-only tn-button-default tn-button-hollow" href="@Html.Raw(SiteUrls.Instance()._ImpeachReport(Model.UserId,SiteUrls.Instance().BlogDetail(Model.User.UserName, Model.ThreadId),Model.Subject))" rel="nofollow" plugin="dialog">
-                            <span class="tn-button-text">举报</span></a>
+                            <span class="tn-button-text">举报</span>
+                        </a>
                         @Html.Action("_SubscribeButton", "Blog", new { spaceKey = Url.SpaceKey(), threadId = Model.ThreadId })
                     </div>
                 }
@@ -206,19 +231,21 @@
                         string content = string.Format("@{0} 的文章 \"{1}\" {2} 很不错 推荐给大家看看", Model.User.NickName, Model.Subject, SiteUrls.FullUrl(SiteUrls.Instance().BlogDetail(Model.User.UserName, Model.ThreadId)));
                         string imageUrl = null;
                         if (Model.FeaturedImageAttachmentId != 0)
-                        { 
+                        {
                             imageUrl = SiteUrls.Instance().ImageUrl(Model.FeaturedImageAttachmentId, TenantTypeIds.Instance().BlogThread(), ImageSizeTypeKeys.Instance().Big());
                         }
                     }
-                    <a href="@SiteUrls.Instance()._ShareToMicroblog(content, imageUrl)" plugin="dialog" >
-                        分享</a>
+                    <a href="@SiteUrls.Instance()._ShareToMicroblog(content, imageUrl)" plugin="dialog">
+                        分享
+                    </a>
                     @if (currentUser != null && currentUser.UserId != Model.UserId)
                     {
-                        <a class="tn-action tn-repost" href="@SiteUrls.Instance()._BlogReproduce(Url.SpaceKey(), Model.ThreadId)" plugin = "dialog" >
-                            <span class="tn-action-text">转载(@Model.ReproduceCount)</span></a>
+                        <a class="tn-action tn-repost" href="@SiteUrls.Instance()._BlogReproduce(Url.SpaceKey(), Model.ThreadId)" plugin="dialog">
+                            <span class="tn-action-text">转载(@Model.ReproduceCount)</span>
+                        </a>
                     }
                     else
-                    { 
+                    {
                         <text>转载(@Model.ReproduceCount)</text>
                     }
                     @Html.SupportOppose(TenantTypeIds.Instance().BlogThread(), Model.ThreadId, Model.UserId, AttitudeMode.Unidirection, AttitudeStyle.Support)
@@ -287,4 +314,4 @@
         });
 
     });
-</script>)
+    </script>)

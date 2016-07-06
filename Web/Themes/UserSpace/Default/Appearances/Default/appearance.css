@@ -18,6 +18,9 @@ a {
         color: #075b8d;
         text-decoration:none;
     }
+    a:active {
+        text-decoration:none;
+    }
 
 .tn-header-bg,
 .spb-app-page .tn-content-bg,
@@ -202,8 +205,9 @@ a {
 }
 
 .tn-button-hollow {
-    background: #adaaaa;
+    background: #49be38;
     border: #d5d5d7 solid 1px;
+    color:white;
 }
 
 .tn-button-default:hover {

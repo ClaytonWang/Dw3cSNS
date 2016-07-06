@@ -135,9 +135,56 @@
         });
     };
 
+    jQuery.fn.autoHeader = function (settings) {
+        settings = jQuery.extend({
+            min: 1,
+            fadeSpeed: 200,
+            ieOffset: 50
+        }, settings);
+        function scroll(fn) {
+            var beforeScrollTop = document.body.scrollTop,
+                fn = fn || function () { };
+            window.addEventListener("scroll", function () {
+                var afterScrollTop = document.body.scrollTop,
+                    delta = afterScrollTop - beforeScrollTop;
+                if (delta === 0) return false;
+                fn(delta > 0 ? "down" : "up");
+                beforeScrollTop = afterScrollTop;
+            }, false);
+        }
+        return this.each(function () {
+            //listen for scroll  
+            var el = $(this);
+            el.css('display', 'block'); //in case the user forgot
+            var beforeScrollTop = $(window).scrollTop();
+            $(window).scroll(function () {
+                var afterScrollTop = $(window).scrollTop(),
+                delta = afterScrollTop - beforeScrollTop;
+                if (delta === 0) return false;
+                var dir=delta > 0 ? "down" : "up";
+                beforeScrollTop = afterScrollTop;
+
+                if (dir === "down") {
+                    if ($(window).scrollTop() >= settings.min) {
+                        el.css({ top: '-50px' });
+                    }
+                }
+                else {
+                    if ($(window).scrollTop() >= settings.min) {
+                        el.css({ top: '0px' });
+                    }
+                }
+            });
+        });
+    }
+
     $(document).ready(function () {
         $('#to_top').topLink({
             min: 10,
+            fadeSpeed: 500
+        });
+        $('#articleHead').autoHeader({
+            min: 30,
             fadeSpeed: 500
         });
         //smoothscroll

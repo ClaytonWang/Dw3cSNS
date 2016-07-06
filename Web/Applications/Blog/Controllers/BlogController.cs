@@ -588,7 +588,7 @@ namespace Spacebuilder.Blog.Controllers
                 pageResourceManager.SetMetaOfDescription(HtmlUtility.StripHtml(blogThread.Summary, true, false));
             }
 
-
+            ViewData["User"] = blogThread.User;
             return View(blogThread);
         }
 
