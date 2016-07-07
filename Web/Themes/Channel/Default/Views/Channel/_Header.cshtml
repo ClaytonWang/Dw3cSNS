@@ -34,11 +34,34 @@
             @if (currentUser != null)
             {
                 <div class="drop-wrap">
-                    <a class="spb-menu-link" href="/u/@currentUser.UserName/myhome" title="我的主页"><i class="fa fa-user"></i></a>
+                    <a class="spb-menu-link" href="/u/@currentUser.UserName/myhome" title="我的主页">
+                        <i class="fa fa-user"></i>
+                    </a>
                     <span>我的主页</span>
                 </div>
+                
                 <div class="drop-wrap">
-                    <a class="spb-menu-link" href="@SiteUrls.Instance().Logout()" title="注销"><i class="fa fa-sign-in"></i></a>
+                    <a class="spb-menu-link" href="@SiteUrls.Instance().EditUserProfile(currentUser.UserName)" title="编辑资料">
+                        <i class="fa fa-book"></i>
+                    </a>
+                    <span>编辑资料</span>
+                </div>
+                <div class="drop-wrap">
+                    <a class="spb-menu-link" href="@SiteUrls.Instance().UserPrivacyItemsSettings(currentUser.UserName)" title="隐私设置">
+                        <i class="fa fa-key"></i>
+                    </a>
+                    <span>隐私设置</span>
+                </div>
+                <div class="drop-wrap">
+                    <a class="spb-menu-link" href="@SiteUrls.Instance().UpdateIdentification(currentUser.UserName)" title="身份认证">
+                        <i class="fa fa-male"></i>
+                    </a>
+                    <span>身份认证</span>
+                </div>
+                <div class="drop-wrap">
+                    <a class="spb-menu-link" href="@SiteUrls.Instance().Logout()" title="注销">
+                        <i class="fa fa-power-off"></i>
+                    </a>
                     <span>注销</span>
                 </div>
             }
@@ -60,7 +83,15 @@
                 <a class="spb-menu-link" href="#"><i class="fa fa-font"></i></a>
                 <span>字体设置</span>
             </div>
-
+            @if (currentUser != null && currentUser.IsAllowEntryControlPannel())
+            {
+            <div class="drop-wrap">
+                <a class="spb-menu-link" href="@SiteUrls.Instance().ManageHome()" title="后台管理">
+                    <i class="fa fa-cogs"></i>
+                </a>
+                <span>后台管理</span>
+            </div>
+            }
         </div>
     </div>
 </div>

@@ -9,7 +9,7 @@
     IUser currentUser = UserContext.CurrentUser;
     User user = ViewData["User"] as User;
     IEnumerable<Attachment> attachments = ViewData.Get<IEnumerable<Attachment>>("attachments", null);
-
+    ViewData["threadId"] = Model.ThreadId;
 }
 @*@section Aside{
         @Html.Action("_Panel", "Blog", new RouteValueDictionary { { "spaceKey", Url.SpaceKey() } })
@@ -61,12 +61,15 @@
         <div class="tn-detail">
             <div class="tn-text-heading">
                 <div class="author-info">
-                    <div class="btn btn-small btn-success follow">
-                        <a href="#">
-                            <i class="fa fa-plus"></i>
-                            <span>添加关注</span>
-                        </a>
-                    </div>
+                    @if (currentUser == null || currentUser.UserId != Model.UserId)
+                    {
+                        <div class="follow">
+                            <a class="tn-button tn-corner-all tn-button-text-only tn-button-default tn-button-hollow" href="@Html.Raw(SiteUrls.Instance()._ImpeachReport(Model.UserId,SiteUrls.Instance().BlogDetail(Model.User.UserName, Model.ThreadId),Model.Subject))" rel="nofollow" plugin="dialog">
+                                <span class="tn-button-text">举报</span>
+                            </a>
+                            @Html.Action("_SubscribeButton", "Blog", new { spaceKey = Url.SpaceKey(), threadId = Model.ThreadId })
+                        </div>
+                    }
                     <div class="avatar-img">
                         @Html.ShowUserAvatar(user, AvatarSizeType.Small, navigateTarget: HyperLinkTarget._self, isShowUserCard: true, isShowTitle: false, htmlAttributes: new RouteValueDictionary { { "class", "abc" } })
                     </div>
@@ -217,15 +220,6 @@
             </div>
             <div class="tn-border-gray tn-border-top tn-helper-clearfix tn-feedback">
                 @Html.ShareToThird()
-                @if (currentUser == null || currentUser.UserId != Model.UserId)
-                {
-                    <div class="tn-follow">
-                        <a class="tn-button tn-corner-all tn-button-text-only tn-button-default tn-button-hollow" href="@Html.Raw(SiteUrls.Instance()._ImpeachReport(Model.UserId,SiteUrls.Instance().BlogDetail(Model.User.UserName, Model.ThreadId),Model.Subject))" rel="nofollow" plugin="dialog">
-                            <span class="tn-button-text">举报</span>
-                        </a>
-                        @Html.Action("_SubscribeButton", "Blog", new { spaceKey = Url.SpaceKey(), threadId = Model.ThreadId })
-                    </div>
-                }
                 <div class="tn-actions">
                     @{
                         string content = string.Format("@{0} 的文章 \"{1}\" {2} 很不错 推荐给大家看看", Model.User.NickName, Model.Subject, SiteUrls.FullUrl(SiteUrls.Instance().BlogDetail(Model.User.UserName, Model.ThreadId)));
@@ -235,9 +229,9 @@
                             imageUrl = SiteUrls.Instance().ImageUrl(Model.FeaturedImageAttachmentId, TenantTypeIds.Instance().BlogThread(), ImageSizeTypeKeys.Instance().Big());
                         }
                     }
-                    <a href="@SiteUrls.Instance()._ShareToMicroblog(content, imageUrl)" plugin="dialog">
+                    @*<a href="@SiteUrls.Instance()._ShareToMicroblog(content, imageUrl)" plugin="dialog">
                         分享
-                    </a>
+                    </a>*@
                     @if (currentUser != null && currentUser.UserId != Model.UserId)
                     {
                         <a class="tn-action tn-repost" href="@SiteUrls.Instance()._BlogReproduce(Url.SpaceKey(), Model.ThreadId)" plugin="dialog">

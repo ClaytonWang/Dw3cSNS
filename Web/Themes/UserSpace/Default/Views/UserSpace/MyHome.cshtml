@@ -44,7 +44,7 @@
     </div>
 </div>
 
-@section Aside_Second{
+@*@section Aside_Second{
     @if (ThemeService.Validate(PresentAreaKeysOfBuiltIn.UserSpace, UserIdToUserNameDictionary.GetUserId(Url.SpaceKey())))
     { 
         <div class="tn-skin-switch">
@@ -56,4 +56,4 @@
     @Html.AjaxAction("_InterestedWithAllSide", "FindUser", new { pageSize = 5 })
     @Html.AjaxAction("_HomeLastVisitList", "UserSpace", new { spaceKey = Url.SpaceKey(), area = "Common" })
     @Html.AjaxAction("_ListTopUsers", "UserSpace", new { spaceKey = Url.SpaceKey(), topNumber = 12, area = "Common" })
-}
+}*@

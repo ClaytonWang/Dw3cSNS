@@ -1,4 +1,6 @@
-﻿@{  var currentUser = UserContext.CurrentUser;}
+﻿@{  var currentUser = UserContext.CurrentUser;
+    long threadId = long.Parse(ViewData["threadId"].ToString());
+    }
 <!DOCTYPE html>
 <html>
 @using (Html.BeginHead())
@@ -25,7 +27,9 @@
                                 <div class="head-avatar-img">
                                     @Html.ShowUserAvatar(currentUser, AvatarSizeType.Small, navigateTarget: HyperLinkTarget._self, isShowUserCard: true, isShowTitle: false, htmlAttributes: new RouteValueDictionary { { "class", "abc" } })
                                 </div>
-                                <a href="#"><i class="fa fa-share-square-o"></i></a>
+                                <a href="@SiteUrls.Instance()._BlogReproduce(Url.SpaceKey(), threadId)" plugin="dialog">
+                                    <i class="fa fa-share-square-o"></i>
+                                </a>
                                 <a href="#"><i class="fa fa-bookmark-o"></i></a>
                                 <a href="#"><i class="fa fa-plus"></i></a>
                             </div>
